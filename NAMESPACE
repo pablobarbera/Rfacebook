@@ -1,0 +1,8 @@
+export(fbOAuth)
+export(getFriends)
+export(getNetwork)
+export(getUsers)
+export(searchFacebook)
+export(updateStatus)
+import(httr)
+import(rjson)
