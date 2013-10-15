@@ -1,5 +1,5 @@
 Rfacebook: Access to Facebook API via R
-=============
+---------
 
 Initial and very preliminary release! Vignettes and more functions coming soon.
 
