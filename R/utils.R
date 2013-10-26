@@ -5,11 +5,79 @@ searchDataToDF <- function(json){
 		message = unlistWithNA(json, 'message'),
 		created_time = unlistWithNA(json, 'created_time'),
 		type = unlistWithNA(json, 'type'),
+		link = unlistWithNA(json, 'link'),
 		id = unlistWithNA(json, 'id'),
 		likes_count = unlistWithNA(json, c('likes', 'summary', 'total_count')),
 		comments_count = unlistWithNA(json, c('comments', 'summary', 'total_count')),
 		shares_count = unlistWithNA(json, c('shares', 'count')),
 		stringsAsFactors=F)
+	return(df)
+}
+
+pageDataToDF <- function(json){
+	df <- data.frame(
+		from_id = unlistWithNA(json, c('from', 'id')),
+		from_name = unlistWithNA(json, c('from', 'name')),
+		message = unlistWithNA(json, 'message'),
+		created_time = unlistWithNA(json, 'created_time'),
+		type = unlistWithNA(json, 'type'),
+		link = unlistWithNA(json, 'link'),
+		id = unlistWithNA(json, 'id'),
+		likes_count = unlistWithNA(json, c('likes', 'summary', 'total_count')),
+		comments_count = unlistWithNA(json, c('comments', 'summary', 'total_count')),
+		shares_count = unlistWithNA(json, c('shares', 'count')),
+		stringsAsFactors=F)
+	return(df)
+}
+
+postDataToDF <- function(json){
+	df <- data.frame(
+		from_id = json$from$id,
+		from_name = json$from$name,
+		message = ifelse(!is.null(json$message),json$message, NA),
+		created_time = json$created_time,
+		type = json$type,
+		link = json$link,
+		id = json$id,
+		likes_count = ifelse(!is.null(json$likes$summary$total_count),
+			json$likes$summary$total_count, 0),
+		comments_count = ifelse(!is.null(json$comments$summary$total_count),
+			json$comments$summary$total_count, 0),
+		shares_count = ifelse(!is.null(json$shares$count),
+			json$shares$count, 0),
+		stringsAsFactors=F)
+	return(df)
+}
+
+likesDataToDF <- function(json){
+	mat <- matrix(unlist(json), 
+		ncol=2, byrow=TRUE)
+	df <- data.frame(mat, stringsAsFactors=F)
+	names(df) <- c("from_name", "from_id")
+	return(df)
+}
+
+commentsDataToDF <- function(json){
+	if (length(json)>1){
+		df <- data.frame(
+			from_id = unlistWithNA(json, c('from', 'id')),
+			from_name = unlistWithNA(json, c('from', 'name')),
+			message = unlistWithNA(json, 'message'),
+			created_time = unlistWithNA(json, 'created_time'),
+			likes_count = unlistWithNA(json, 'like_count'),
+			id = unlistWithNA(json, 'id'),
+		stringsAsFactors=F)
+	}
+	if (length(json)==1){
+		df <- data.frame(
+			from_id = json$from$id,
+			from_name = json$from$name,
+			message = json$message,
+			created_time = json$created_time,
+			likes_count = json$like_count,
+			id = json$id,
+		stringsAsFactors=F)
+	}
 	return(df)
 }
 

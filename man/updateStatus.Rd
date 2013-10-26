@@ -29,6 +29,6 @@
   Pablo Barbera \email{pablo.barbera@nyu.edu}
 }
 \seealso{
-  \code{\link{getUsers}}, \code{\link{getPosts}}
+  \code{\link{getUsers}}, \code{\link{getPost}}
 }
 

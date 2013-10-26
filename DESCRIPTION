@@ -19,3 +19,5 @@ Collate:
     'getNetwork.R'
     'Rfacebook-package.R'
     'utils.R'
+    'getPage.R'
+    'getPost.R'

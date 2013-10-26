@@ -14,7 +14,7 @@
 #'
 #' @author
 #' Pablo Barbera \email{pablo.barbera@@nyu.edu}
-#' @seealso \code{\link{getFriends}}, \code{\link{getPosts}}, \code{\link{searchFacebook}}
+#' @seealso \code{\link{getFriends}}, \code{\link{getPost}}, \code{\link{searchFacebook}}
 #'
 #' @param users A vector of either user IDs or screen names or a mix of both.
 #' 

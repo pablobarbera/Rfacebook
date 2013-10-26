@@ -10,7 +10,7 @@
 #'
 #' @author
 #' Pablo Barbera \email{pablo.barbera@@nyu.edu}
-#' @seealso \code{\link{getUsers}}, \code{\link{getPosts}}
+#' @seealso \code{\link{getUsers}}, \code{\link{getPost}}
 #'
 #' @param text string, text of the status update
 #' 

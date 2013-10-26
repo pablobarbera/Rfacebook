@@ -53,7 +53,7 @@
   Pablo Barbera \email{pablo.barbera@nyu.edu}
 }
 \seealso{
-  \code{\link{getFriends}}, \code{\link{getPosts}},
+  \code{\link{getFriends}}, \code{\link{getPost}},
   \code{\link{searchFacebook}}
 }
 

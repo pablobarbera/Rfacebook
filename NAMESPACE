@@ -1,6 +1,8 @@
 export(fbOAuth)
 export(getFriends)
 export(getNetwork)
+export(getPage)
+export(getPost)
 export(getUsers)
 export(searchFacebook)
 export(updateStatus)

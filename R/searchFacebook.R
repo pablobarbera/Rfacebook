@@ -75,7 +75,7 @@ searchFacebook <- function(string, token, n=200, since=NULL, until=NULL)
 
 	## making query
 	content <- callAPI(url=url, token=token)
-	l <- length(content$data); cat(l, " ")
+	l <- length(content$data); cat(l, "posts ")
 	
 	## retrying 3 times if error was found
 	error <- 0

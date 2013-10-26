@@ -36,7 +36,7 @@
 #'
 #' @author
 #' Pablo Barbera \email{pablo.barbera@@nyu.edu}
-#' @seealso \code{\link{getUsers}}, \code{\link{getPosts}}, \code{\link{searchFacebook}}
+#' @seealso \code{\link{getUsers}}, \code{\link{getPost}}, \code{\link{searchFacebook}}
 #'
 #' @param app_id numeric, App ID of application to be used to create OAUth token. Available
 #' at \url{https://developers.facebook.com/apps}

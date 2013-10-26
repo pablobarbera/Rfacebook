@@ -13,7 +13,7 @@
 #'
 #' @author
 #' Pablo Barbera \email{pablo.barbera@@nyu.edu}
-#' @seealso \code{\link{getUsers}}, \code{\link{getPosts}}, \code{\link{fbOAuth}}
+#' @seealso \code{\link{getUsers}}, \code{\link{getPost}}, \code{\link{fbOAuth}}
 #'
 #' @param token Either a temporary access token created at
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
