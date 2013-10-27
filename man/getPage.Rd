@@ -2,7 +2,7 @@
 \alias{getPage}
 \title{Extract list of posts from a public Facebook page}
 \usage{
-  getPage(page, token, n = 50)
+  getPage(page, token, n = 100)
 }
 \arguments{
   \item{page}{A page ID or page name.}

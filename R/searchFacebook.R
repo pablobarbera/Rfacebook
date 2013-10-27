@@ -95,8 +95,6 @@ searchFacebook <- function(string, token, n=200, since=NULL, until=NULL)
 	if (n>200){
 		df.list <- list(df)
 		while (l<n & length(content$data)>0){
-			# waiting one second before making next API call...
-			Sys.sleep(0.5)
 			url <- content$paging$`next`
 			if (!is.null(since)){
 				url <- paste(url, "&since=", since, sep="")

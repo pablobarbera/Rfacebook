@@ -31,17 +31,17 @@
 #' }
 #'
 
-getPage <- function(page, token, n=50){
+getPage <- function(page, token, n=100){
 	require(httr); require(rjson)
 
 	url <- paste0('https://graph.facebook.com/', page,
 		'/posts?fields=from,message,created_time,type,link,comments.summary(true)',
 		',likes.summary(true),shares&limit=')
-	if (n<=50){
+	if (n<=100){
 		url <- paste(url, n, sep="")
 	}
-	if (n>50){
-		url <- paste(url, "50", sep="")
+	if (n>100){
+		url <- paste(url, "100", sep="")
 	}
 	# making query
 	content <- callAPI(url=url, token=token)
@@ -61,8 +61,8 @@ getPage <- function(page, token, n=50){
 	}
 	df <- pageDataToDF(content$data)
 
-	## paging if n>50
-	if (n>50){
+	## paging if n>100
+	if (n>100){
 		df.list <- list(df)
 		while (l<n & length(content$data)>0){
 			# waiting one second before making next API call...

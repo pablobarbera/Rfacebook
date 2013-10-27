@@ -26,12 +26,6 @@
   \code{getUsers} retrieves public information about one or
   more Facebook users.
 }
-\details{
-  When applied to a large number of users (500 or less),
-  it's probably better to split the vector of user IDs in
-  batches of 500 to reduce probability of errors in the API
-  calls.
-}
 \examples{
 \dontrun{
 ## See examples for fbOAuth to know how token was created.

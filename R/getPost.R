@@ -55,6 +55,9 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE){
 			url <- paste0(url, ".limit(", n, ")")
 		}
 	}
+	if (comments==FALSE){
+		url <- paste0(url, ",comments.summary(true)")
+	}
 	if (likes==TRUE){
 		url <- paste0(url, ",likes.summary(true).",
 			"fields(id,name)")
@@ -64,6 +67,9 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE){
 		if (n<500){
 			url <- paste0(url, ".limit(", n, ")")
 		}
+	}
+	if (likes==FALSE){
+		url <- paste0(url, ",likes.summary(true)")
 	}
 
 	# making query
