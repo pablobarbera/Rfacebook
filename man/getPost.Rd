@@ -13,6 +13,12 @@
   the OAuth token created with \code{fbOAuth}.}
 
   \item{n}{Maximum number of comments and likes to return.}
+
+  \item{comments}{logical, default is \code{TRUE}, which
+  will return data frame with comments to the post.}
+
+  \item{likes}{logical, default is \code{TRUE}, which will
+  return data frame with likes for the post.}
 }
 \description{
   \code{getPost} retrieves information about a public

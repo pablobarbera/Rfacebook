@@ -13,7 +13,7 @@
 #'
 #' @author
 #' Pablo Barbera \email{pablo.barbera@@nyu.edu}
-#' @seealso \code{\link{getUsers}}, \code{\link{getPost}}, \code{\link{fbOAuth}}
+#' @seealso \code{\link{getUsers}}, \code{\link{fbOAuth}}
 #'
 #' @param token Either a temporary access token created at
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
@@ -36,7 +36,6 @@
 
 
 getFriends <- function(token, simplify=FALSE){
-	require(httr); require(rjson)
 	if (simplify==TRUE){
 		query <- 'https://graph.facebook.com/me/friends?limit=5000'
 		content <- callAPI(query, token)

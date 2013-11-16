@@ -32,7 +32,6 @@
 #'
 
 getPage <- function(page, token, n=100){
-	require(httr); require(rjson)
 
 	url <- paste0('https://graph.facebook.com/', page,
 		'/posts?fields=from,message,created_time,type,link,comments.summary(true)',

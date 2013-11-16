@@ -29,6 +29,12 @@
 #'
 #' @param n Maximum number of comments and likes to return.
 #'
+#' @param comments logical, default is \code{TRUE}, which will return data frame
+#' with comments to the post.
+#'
+#' @param likes logical, default is \code{TRUE}, which will return data frame
+#' with likes for the post.
+#'
 #' @examples \dontrun{
 #' ## See examples for fbOAuth to know how token was created.
 #' ## Getting information about Facebook's Facebook Page
@@ -40,7 +46,6 @@
 #'
 
 getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE){
-	require(httr); require(rjson)
 
 	url <- paste0("https://graph.facebook.com/", post,
 				"?fields=from,message,created_time,type,link,name,shares")

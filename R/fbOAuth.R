@@ -17,17 +17,17 @@
 #' which can be used as argument in any of the functions in Rfacebook. An example is 
 #' shown below.
 #'
-#' However, this token has a 2 hour lifetime by default and after it expires, it
+#' However, this token has a 2-hour lifetime by default and after it expires, it
 #' needs to be renewed. The second alternative is to create an OAuth token. The 
 #' process to create it is a bit more tedious. It is divided in three steps.
 #' 
 #' First, go to \url{https://developers.facebook.com/apps}, register as a developer
 #' and create a new app. You will also need a verified Facebook account.
-#' After that, click in 'Show' under 'App Secret' to find your 'App ID' and 'App Secret'.
+#' After that, click in "Show" under "App Secret" to find your 'App ID' and 'App Secret'.
 #'
-#' Second, run the \code{fbOAuth} function with your 'App ID' and 'App Secret' as 
-#' arguments. It will return a URL, which you will need to paste into the 'Website with
-#' Facebook login' field in your App Settings on Facebook. Once you've done so, press Enter.
+#' Second, run the \code{fbOAuth} function with your "App ID" and "App Secret" as 
+#' arguments. It will return a URL, which you will need to paste into the "Website with
+#' Facebook login" field in your App Settings on Facebook. Once you've done so, press Enter.
 #'
 #' Third, after pressing Enter, R will try to open a browser window to sign the token. If 
 #' everything works well, you will get a message that says you can return to R. If not,
@@ -69,11 +69,11 @@
 
 fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
 {
-	require(httr); require(rjson)
 	## getting callback URL
 	full_url <- oauth_callback()
-	full_url <- gsub("(.*localhost:[0-9]{1,5}/).*", x=full_url, repl="\\1")
-	message <- paste("Copy and paste into Site URL on Facebook App Settings:", full_url, "\nWhen done, press any key to continue...")
+	full_url <- gsub("(.*localhost:[0-9]{1,5}/).*", x=full_url, replacement="\\1")
+	message <- paste("Copy and paste into Site URL on Facebook App Settings:", 
+		full_url, "\nWhen done, press any key to continue...")
 	## prompting user to introduce callback URL in app page
 	invisible(readline(message))
 	## a simplified version of the example in httr package

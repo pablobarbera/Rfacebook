@@ -14,6 +14,9 @@
   dimensions (n x n), with n being the number of friends,
   and 0 or 1 indicating whether friend i is also friends
   with friend j.}
+
+  \item{verbose}{logical, default is \code{TRUE}, which
+  will print additional information on the console.}
 }
 \description{
   \code{getNetwork} retrives list of mutual friendships and

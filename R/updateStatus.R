@@ -21,7 +21,7 @@
 #'
 #' @examples \dontrun{
 #' ## See examples for fbOAuth to know how token was created.
-#'	load("fb_oauth")
+#'  load("fb_oauth")
 #'  updateStatus("this is just a test", token=fb_oauth)
 #' }
 #'
