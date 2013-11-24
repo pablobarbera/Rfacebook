@@ -7,7 +7,7 @@ Current CRAN release is 0.2. To install most updated version (from GitHub), type
 
 ```
 library(devtools)
-install_github("Rfacebook", "pablobarbera", subdir="Rfaceboook")
+install_github("Rfacebook", "pablobarbera", subdir="Rfacebook")
 ```
 
 Click <a href="http://github.com/pablobarbera/Rfacebook/blob/master/Rfacebook-manual.pdf?raw=true">here</a> to read the documentation. Vignettes coming soon on my <a href="http://www.pablobarbera.com/blog">blog</a>.
