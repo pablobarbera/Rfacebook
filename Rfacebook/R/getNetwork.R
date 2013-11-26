@@ -5,7 +5,7 @@
 #' Extract network of friends of authenticated user
 #'
 #' @description
-#' \code{getNetwork} retrives list of mutual friendships and returns the
+#' \code{getNetwork} retrieves list of mutual friendships and returns the
 #' adjacency matrix or edge list for the network representing the neighborhood
 #' of the authenticated user.
 #'

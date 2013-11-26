@@ -13,6 +13,10 @@
 #' @seealso \code{\link{getUsers}}, \code{\link{getPost}}
 #'
 #' @param text string, text of the status update
+#'
+#' @param link string, URL of link to be added to status update
+#'
+#' @param source string, source of status update
 #' 
 #' @param token Either a temporary access token created at
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
@@ -26,10 +30,14 @@
 #' }
 #'
 
-updateStatus <- function(text, token)
+updateStatus <- function(text, token, link=NULL)
 {
 	## query including text
 	query <- paste('https://graph.facebook.com/me/feed?message=', text, sep="")
+	## adding URL
+	if (!is.null(link)){
+		query <- paste(query, "&link=", link, sep="")
+	}
 	## making query
 	if (class(token)=="config"){
 		url.data <- POST(query, config=token)
@@ -44,7 +52,11 @@ updateStatus <- function(text, token)
 	## output
 	if (url.data$status_code==200){
 		id <- fromJSON(rawToChar(url.data$content))$id
-		message("Success! Link to status update:", paste("http://www.facebook.com/", id, sep=""))
+		if (!is.null(id)){
+			message("Failed update. OAuth token does not have permission to update status. ",
+				"See ?fbOAuth for more details.")
+		}
+		message("Success! Link to status update: ", paste("http://www.facebook.com/", id, sep=""))
 	}
 	if (url.data$status_code==400){
 		error <- fromJSON(rawToChar(url.data$content))$error$code

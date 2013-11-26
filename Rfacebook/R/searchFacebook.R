@@ -5,7 +5,7 @@
 #' Search public posts that mention a string
 #'
 #' @description
-#' \code{searchFacebook} retrives public status updates that mention a given keyword
+#' \code{searchFacebook} retrieves public status updates that mention a given keyword
 #'
 #' @details
 #'

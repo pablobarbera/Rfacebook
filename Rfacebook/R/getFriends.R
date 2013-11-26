@@ -5,7 +5,7 @@
 #' Extract list of friends with their information
 #'
 #' @description
-#' \code{getFriends} retrives information about the user's friends.
+#' \code{getFriends} retrieves information about the user's friends.
 #'
 #' @details
 #' 
@@ -53,7 +53,7 @@ getFriends <- function(token, simplify=FALSE){
 
 	if (simplify==FALSE){
 		query <- paste("https://graph.facebook.com/me/friends?",
-			"fields=id,name,first_name,last_name,gender,birthday,location,",
+			"fields=id,name,first_name,last_name,gender,locale,birthday,location,",
 			"hometown,relationship_status,picture.type(large)&limit=100", sep="")
 		content <- callAPI(query, token)
 		friends <- userDataToDF(content$data, private_info=TRUE)
