@@ -15,8 +15,6 @@
 #' @param text string, text of the status update
 #'
 #' @param link string, URL of link to be added to status update
-#'
-#' @param source string, source of status update
 #' 
 #' @param token Either a temporary access token created at
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
