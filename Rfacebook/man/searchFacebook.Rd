@@ -29,19 +29,16 @@
   \url{http://php.net/manual/en/function.strtotime.php}}
 }
 \description{
-  \code{searchFacebook} retrives public status updates that
-  mention a given keyword
+  \code{searchFacebook} retrieves public status updates
+  that mention a given keyword
 }
 \details{
-  For now, \code{searchFacebook} only accepts a single
-  string due to limitations of the Facebook API.
-
   The search is performed also on the text of the comments
   too, which explains why some of the returned messages do
   not mention the string that is being searched.
 
-  Note that messages only around two weeks old or less can
-  be returned.
+  Note that only messages up to around two weeks old or
+  less can be returned.
 }
 \examples{
 \dontrun{
@@ -51,7 +48,7 @@
 	posts <- searchFacebook( string="facebook", token=fb_oauth, n=100 )
 ## Searching 100 public posts that mention "facebook" from yesterday
 	posts <- searchFacebook( string="facebook", token=fb_oauth, n=100 ,
-		since = "yesterday 00:00", until = "yesterday 23:59")
+   since = "yesterday 00:00", until = "yesterday 23:59")
 }
 }
 \author{

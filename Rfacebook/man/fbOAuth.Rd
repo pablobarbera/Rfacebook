@@ -38,7 +38,7 @@
   which can be used as argument in any of the functions in
   Rfacebook. An example is shown below.
 
-  However, this token has a 2 hour lifetime by default and
+  However, this token has a 2-hour lifetime by default and
   after it expires, it needs to be renewed. The second
   alternative is to create an OAuth token. The process to
   create it is a bit more tedious. It is divided in three
@@ -47,13 +47,13 @@
   First, go to \url{https://developers.facebook.com/apps},
   register as a developer and create a new app. You will
   also need a verified Facebook account. After that, click
-  in 'Show' under 'App Secret' to find your 'App ID' and
+  in "Show" under "App Secret" to find your 'App ID' and
   'App Secret'.
 
-  Second, run the \code{fbOAuth} function with your 'App
-  ID' and 'App Secret' as arguments. It will return a URL,
-  which you will need to paste into the 'Website with
-  Facebook login' field in your App Settings on Facebook.
+  Second, run the \code{fbOAuth} function with your "App
+  ID" and "App Secret" as arguments. It will return a URL,
+  which you will need to paste into the "Website with
+  Facebook login" field in your App Settings on Facebook.
   Once you've done so, press Enter.
 
   Third, after pressing Enter, R will try to open a browser

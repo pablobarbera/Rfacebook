@@ -30,7 +30,7 @@
 \dontrun{
 ## See examples for fbOAuth to know how token was created.
 ## Getting information about me
-	load("fb_oauth")
+ load("fb_oauth")
 	me <- getUsers("me", token=fb_oauth, private_info=FALSE)
 	me$username
 ## Getting information about my friends

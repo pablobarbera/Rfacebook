@@ -2,10 +2,13 @@
 \alias{updateStatus}
 \title{Update Facebook status from R}
 \usage{
-  updateStatus(text, token)
+  updateStatus(text, token, link = NULL)
 }
 \arguments{
   \item{text}{string, text of the status update}
+
+  \item{link}{string, URL of link to be added to status
+  update}
 
   \item{token}{Either a temporary access token created at
   \url{https://developers.facebook.com/tools/explorer} or
@@ -21,7 +24,7 @@
 \examples{
 \dontrun{
 ## See examples for fbOAuth to know how token was created.
-	load("fb_oauth")
+ load("fb_oauth")
  updateStatus("this is just a test", token=fb_oauth)
 }
 }

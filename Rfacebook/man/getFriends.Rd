@@ -16,7 +16,7 @@
   and profile picture.}
 }
 \description{
-  \code{getFriends} retrives information about the user's
+  \code{getFriends} retrieves information about the user's
   friends.
 }
 \details{
@@ -37,7 +37,6 @@
   Pablo Barbera \email{pablo.barbera@nyu.edu}
 }
 \seealso{
-  \code{\link{getUsers}}, \code{\link{getPost}},
-  \code{\link{fbOAuth}}
+  \code{\link{getUsers}}, \code{\link{fbOAuth}}
 }
 
