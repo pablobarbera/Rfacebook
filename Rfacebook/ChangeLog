@@ -2,3 +2,7 @@
    - Initial release on GitHub (a few functions still missing)
 2013-11-15 - version 0.2:
     - Initial release on CRAN
+2013-11-26 - version 0.2.1:
+    - Added 'link' argument to updateStatus 
+    - Fixed typos in documentation
+    - Now getFriends returns also locale of friends
