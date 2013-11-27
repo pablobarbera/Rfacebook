@@ -188,7 +188,7 @@ ggplot(df, aes(x = month, y = x, group = metric)) + geom_line(aes(color = metric
     breaks = c(10, 100, 1000, 10000, 50000)) + theme_bw() + theme(axis.title.x = element_blank())
 </code></pre>
 
-<center><img src="images/humans.png" style="width: 500px;"/></center>
+<center><img src="images/humans.png" style="width: 700px;"/></center>
 
 <p>To retrieve more information about each individual post, you can use the <code>getPost</code> function, which will return the same variables as above, as well as a list of comments and likes. Continuing with my example, the code below shows how to collect a list of 1,000 users who liked the most recent post, for which we will also gather information in order to analyze the audience of this page in terms of gender, language, and country.</p>
 
