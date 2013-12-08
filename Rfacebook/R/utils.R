@@ -103,6 +103,21 @@ userDataToDF <- function(user_data, private_info){
 	return(df)
 }
 
+checkinDataToDF <- function(checkin_data){
+	df <- data.frame(
+		checkin_time = unlistWithNA(checkin_data, 'created_time'),
+		place_id = unlistWithNA(checkin_data, c('place', 'id')),
+		place_name = unlistWithNA(checkin_data, c('place', 'name')),
+		place_city = unlistWithNA(checkin_data, c('place', 'location','city')),
+		place_state = unlistWithNA(checkin_data, c('place', 'location','state')),
+		place_country = unlistWithNA(checkin_data, c('place', 'location','country')),
+		place_lat = unlistWithNA(checkin_data, c('place', 'location', 'latitude')),
+		place_long = unlistWithNA(checkin_data, c('place', 'location', 'longitude')),
+		stringsAsFactors=F)
+	return(df)
+}
+
+
 unlistWithNA <- function(lst, field){
 	if (length(field)==1){
 		notnulls <- unlist(lapply(lst, function(x) !is.null(x[[field]])))
