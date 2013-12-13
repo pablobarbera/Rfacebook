@@ -6,5 +6,7 @@
     - Added 'link' argument to updateStatus 
     - Fixed typos in documentation
     - Now getFriends returns also locale of friends
-2013-12-08 - version 0.2.2:
+2013-12-10 - version 0.2.2:
     - Added 'getCheckins' function
+    - Fixed error in parsing getPost output
+    - Fixed error with getPost when n>200 and n<500

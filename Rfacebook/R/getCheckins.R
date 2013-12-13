@@ -23,18 +23,28 @@
 #'
 #' @param n Maximum number of checkins to return for each user.
 #'
+#' @param tags If \code{TRUE}, output of function will include a list of users
+#' tagged in each checkin.
+#'
 #' @examples \dontrun{
 #'  token <- 'XXXXX'
 #'  my_checkins <- getCheckins(user="me", token=token)
 #' }
 #'
 
-getCheckins <- function(user, n=10, token){
+getCheckins <- function(user, n=10, token, tags=FALSE){
 	query <- paste0('https://graph.facebook.com/', user, 
-		'?fields=checkins.limit(', n, ').fields(created_time,',
+		'?fields=checkins.limit(', n, ').fields(tags,created_time,',
 			'place.fields(id,name,location))')
 	content <- callAPI(query, token)
 	df <- checkinDataToDF(content$checkins$data)
-	return(df)
+    tags_list <- tagsDataToList(content)
+    if (tags) out <- list(df, tags_list)
+    if (!tags) out <- df
+	return(out)
 }
+
+
+
+
 

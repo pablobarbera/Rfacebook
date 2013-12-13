@@ -63,7 +63,8 @@ getPage <- function(page, token, n=100){
 	## paging if n>100
 	if (n>100){
 		df.list <- list(df)
-		while (l<n & length(content$data)>0){
+		while (l<n & length(content$data)>0 & 
+			!is.null(content$paging$`next`)){
 			# waiting one second before making next API call...
 			Sys.sleep(0.5)
 			url <- content$paging$`next`

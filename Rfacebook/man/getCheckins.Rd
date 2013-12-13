@@ -2,7 +2,7 @@
 \alias{getCheckins}
 \title{Extract list of checkins of a Facebook friend}
 \usage{
-  getCheckins(user, n = 10, token)
+  getCheckins(user, n = 10, token, tags = FALSE)
 }
 \arguments{
   \item{token}{A temporary access token created at
@@ -12,6 +12,9 @@
 
   \item{n}{Maximum number of checkins to return for each
   user.}
+
+  \item{tags}{If \code{TRUE}, output of function will
+  include a list of users tagged in each checkin.}
 }
 \description{
   \code{getCheckins} retrieves information about a friend's

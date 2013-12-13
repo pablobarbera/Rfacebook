@@ -37,7 +37,7 @@ postDataToDF <- function(json){
 		message = ifelse(!is.null(json$message),json$message, NA),
 		created_time = json$created_time,
 		type = json$type,
-		link = json$link,
+		link = ifelse(!is.null(json$link), json$link, NA),
 		id = json$id,
 		likes_count = ifelse(!is.null(json$likes$summary$total_count),
 			json$likes$summary$total_count, 0),
@@ -115,6 +115,13 @@ checkinDataToDF <- function(checkin_data){
 		place_long = unlistWithNA(checkin_data, c('place', 'location', 'longitude')),
 		stringsAsFactors=F)
 	return(df)
+}
+
+tagsDataToList <- function(tags){
+    tags <- lapply(content[[2]]$data, '[[', "tags")
+    tags <- lapply(tags, '[[', 'data')
+    return(tags)
+
 }
 
 

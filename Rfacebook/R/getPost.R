@@ -54,7 +54,7 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE){
 		url <- paste0(url, ",comments.summary(true).",
 			"fields(id,from,message,created_time,like_count)")
 		if (n>=500){
-			url <- paste0(url, ".limit(200)")
+			url <- paste0(url, ".limit(500)")
 		}
 		if (n<500){
 			url <- paste0(url, ".limit(", n, ")")
@@ -67,7 +67,7 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE){
 		url <- paste0(url, ",likes.summary(true).",
 			"fields(id,name)")
 		if (n>=500){
-			url <- paste0(url, ".limit(200)")
+			url <- paste0(url, ".limit(500)")
 		}
 		if (n<500){
 			url <- paste0(url, ".limit(", n, ")")
@@ -101,21 +101,22 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE){
 	if (comments) out[["comments"]] <- commentsDataToDF(content$comments$data)
 	if (comments) n.c <- dim(out$comments)[1]
 	
-	# paging if n>200
-	if (n>200){
-		# saving URLs for next 200 likes and next 200 comments
+	# paging if n>500
+	if (n>500){
+		# saving URLs for next 500 likes and next 500 comments
 		if (likes) url.likes <- content$likes$paging$`next`
 		if (comments) url.comments <- content$comments$paging$`next`
 
 		if (likes){
-			# retrieving next 200 likes
+			# retrieving next 500 likes
 			url <- content$likes$paging$`next`
 			content <- callAPI(url=url.likes, token=token)
 			out[["likes"]] <- rbind(out[["likes"]],
 					likesDataToDF(content$data))
 			n.l <- dim(out$likes)[1]
-			# next likes, in batches of 200
-			while (n.l < n & length(content$data)>0){
+			# next likes, in batches of 500
+			while (n.l < n & length(content$data)>0 &
+				!is.null(url <- content$paging$`next`)){
 				url <- content$paging$`next`
 				content <- callAPI(url=url, token=token)
 				out[["likes"]] <- rbind(out[["likes"]],
@@ -124,13 +125,14 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE){
 			}
 		}
 		if (comments){
-			# retriving next 200 comments
+			# retriving next 500 comments
 			content <- callAPI(url=url.comments, token=token)
 			out[["comments"]] <- rbind(out[["comments"]],
 					commentsDataToDF(content$data))
 			n.c <- dim(out$comments)[1]
-			# next comments, in batches of 200
-			while (n.c < n & length(content$data)>0){
+			# next comments, in batches of 500
+			while (n.c < n & length(content$data)>0 &
+				!is.null(content$paging$`next`)){
 				url <- content$paging$`next`
 				content <- callAPI(url=url, token=token)
 				out[["comments"]] <- rbind(out[["comments"]],

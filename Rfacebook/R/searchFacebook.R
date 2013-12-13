@@ -92,7 +92,8 @@ searchFacebook <- function(string, token, n=200, since=NULL, until=NULL)
 	## paging if n>200
 	if (n>200){
 		df.list <- list(df)
-		while (l<n & length(content$data)>0){
+		while (l<n & length(content$data)>0 &
+			!is.null(content$paging$`next`)){
 			url <- content$paging$`next`
 			if (!is.null(since)){
 				url <- paste(url, "&since=", since, sep="")
