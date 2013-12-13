@@ -23,8 +23,9 @@
 #'
 #' @param n Maximum number of checkins to return for each user.
 #'
-#' @param tags If \code{TRUE}, output of function will include a list of users
-#' tagged in each checkin.
+#' @param tags If \code{TRUE}, output of function will be a list of two
+#' elements: a data frame with user's checkins and a list of data frames,
+#' where each element contains information about users tagged in each checkin.
 #'
 #' @examples \dontrun{
 #'  token <- 'XXXXX'
@@ -38,8 +39,8 @@ getCheckins <- function(user, n=10, token, tags=FALSE){
 			'place.fields(id,name,location))')
 	content <- callAPI(query, token)
 	df <- checkinDataToDF(content$checkins$data)
-    tags_list <- tagsDataToList(content)
-    if (tags) out <- list(df, tags_list)
+    tags.df <- tagsDataToDF(content)
+    if (tags) out <- list(checkins=df, tagged=tags.df)
     if (!tags) out <- df
 	return(out)
 }

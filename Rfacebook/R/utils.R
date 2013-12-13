@@ -117,11 +117,22 @@ checkinDataToDF <- function(checkin_data){
 	return(df)
 }
 
-tagsDataToList <- function(tags){
-    tags <- lapply(content[[2]]$data, '[[', "tags")
+tagsDataToDF <- function(tags){
+    tags <- lapply(tags[[2]]$data, '[[', "tags")
     tags <- lapply(tags, '[[', 'data')
+    tagsListToDF <- function(x){
+    	if (!is.null(x)){
+    	    values <- data.frame(matrix(unlist(x),ncol=2,byrow=TRUE),
+    	    	stringsAsFactors=F)
+    		names(values) <- c("id", "name")	
+    	}
+    	if (is.null(x)){
+    		values <- NULL
+    	}
+    	return(values)
+    }
+    tags <- lapply(tags, tagsListToDF)
     return(tags)
-
 }
 
 

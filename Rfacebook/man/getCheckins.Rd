@@ -13,8 +13,10 @@
   \item{n}{Maximum number of checkins to return for each
   user.}
 
-  \item{tags}{If \code{TRUE}, output of function will
-  include a list of users tagged in each checkin.}
+  \item{tags}{If \code{TRUE}, output of function will be a
+  list of two elements: a data frame with user's checkins
+  and a list of data frames, where each element contains
+  information about users tagged in each checkin.}
 }
 \description{
   \code{getCheckins} retrieves information about a friend's
