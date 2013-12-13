@@ -38,8 +38,13 @@ getCheckins <- function(user, n=10, token, tags=FALSE){
 		'?fields=checkins.limit(', n, ').fields(tags,created_time,',
 			'place.fields(id,name,location))')
 	content <- callAPI(query, token)
-	df <- checkinDataToDF(content$checkins$data)
-    tags.df <- tagsDataToDF(content)
+    if (length(content$checkins)>0){
+	   df <- checkinDataToDF(content$checkins$data)
+        tags.df <- tagsDataToDF(content)}
+    if (length(content$checkins)==0){
+        df <- NULL
+        tags.df <- rep(NULL, n)
+    }
     if (tags) out <- list(checkins=df, tagged=tags.df)
     if (!tags) out <- df
 	return(out)

@@ -153,9 +153,11 @@ unlistWithNA <- function(lst, field){
 		vect[notnulls] <- unlist(lapply(lst, function(x) x[[field[1]]][[field[2]]]))
 	}
 	if (length(field)==3){
-		notnulls <- unlist(lapply(lst, function(x) !is.null(x[[field[1]]][[field[2]]][[field[3]]])))
+		notnulls <- unlist(lapply(lst, function(x) 
+			tryCatch(!is.null(x[[field[1]]][[field[2]]][[field[3]]]), 
+				error=function(e) FALSE)))
 		vect <- rep(NA, length(lst))
-		vect[notnulls] <- unlist(lapply(lst, function(x) x[[field[1]]][[field[2]]][[field[3]]]))
+		vect[notnulls] <- unlist(lapply(lst[notnulls], function(x) x[[field[1]]][[field[2]]][[field[3]]]))
 	}
 	if (field[1] %in% c("comments", "likes") & !is.na(field[2])){
 		notnulls <- unlist(lapply(lst, function(x) !is.null(x[[field[1]]][[field[2]]][[field[3]]])))
