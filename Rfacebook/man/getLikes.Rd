@@ -15,7 +15,7 @@
   user.}
 }
 \description{
-  \code{getCheckins} retrieves information about a friend's
+  \code{getLikes} retrieves information about a friend's
   likes
 }
 \details{

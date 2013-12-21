@@ -5,7 +5,7 @@
 #' Extract list of likes of a Facebook friend
 #'
 #' @description
-#' \code{getCheckins} retrieves information about a friend's likes
+#' \code{getLikes} retrieves information about a friend's likes
 #'
 #' @details
 #' 
