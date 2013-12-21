@@ -10,3 +10,5 @@
     - Added 'getCheckins' function
     - Fixed error in parsing getPost output
     - Fixed error with getPost when n>200 and n<500
+2013-12-21 - version 0.2.3:
+    - Added 'getLikes' function

@@ -117,6 +117,16 @@ checkinDataToDF <- function(checkin_data){
 	return(df)
 }
 
+userLikesToDF <- function(user_likes){
+	df <- data.frame(
+		id = unlistWithNA(user_likes, 'id'),
+		names = unlistWithNA(user_likes, 'name'),
+		website = unlistWithNA(user_likes, 'website'),
+		stringsAsFactors=F)
+	return(df)
+}
+
+
 tagsDataToDF <- function(tags){
     tags <- lapply(tags[[2]]$data, '[[', "tags")
     tags <- lapply(tags, '[[', 'data')

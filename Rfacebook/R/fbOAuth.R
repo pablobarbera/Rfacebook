@@ -85,7 +85,7 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
 	if (extended_permissions==TRUE){
 		scope <- paste("user_birthday,user_hometown,user_location,user_relationships,",
 			"friends_birthday,friends_hometown,friends_location,friends_relationships,publish_actions,",
-			"user_status,user_checkins,friends_status,friends_checkins", collapse="")
+			"user_status,user_checkins,friends_status,friends_checkins,user_likes,friends_likes", collapse="")
 	}
 	else { scope <- NULL}
 	facebook_token <- oauth2.0_token(facebook, myapp,

@@ -16,8 +16,9 @@
 #' Pablo Barbera \email{pablo.barbera@@nyu.edu}
 #' @seealso \code{\link{getFriends}}
 #'
-#' @param token A temporary access token created at
-#' \url{https://developers.facebook.com/tools/explorer}
+#' @param token Either a temporary access token created at
+#' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
+#' created with \code{fbOAuth}.
 #'
 #' @param user A user ID or screen name.
 #'

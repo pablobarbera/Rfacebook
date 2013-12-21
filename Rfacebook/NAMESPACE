@@ -1,6 +1,7 @@
 export(fbOAuth)
 export(getCheckins)
 export(getFriends)
+export(getLikes)
 export(getNetwork)
 export(getPage)
 export(getPost)

@@ -5,8 +5,9 @@
   getCheckins(user, n = 10, token, tags = FALSE)
 }
 \arguments{
-  \item{token}{A temporary access token created at
-  \url{https://developers.facebook.com/tools/explorer}}
+  \item{token}{Either a temporary access token created at
+  \url{https://developers.facebook.com/tools/explorer} or
+  the OAuth token created with \code{fbOAuth}.}
 
   \item{user}{A user ID or screen name.}
 
