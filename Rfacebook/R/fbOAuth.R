@@ -47,9 +47,9 @@
 #' @param extended_permissions If \code{TRUE}, the token will give access to some of
 #' the authenticated user's private information (birthday, hometown, location,
 #' relationships) and that of his/her friends, and permissions to post
-#' status updates as well as to access checkins. If \code{FALSE}, token will 
-#' give access only to public information. Note that \code{updateStatus} will 
-#' only work for tokens with extended permissions.
+#' status updates as well as to access checkins, likes, and the user's newsfeed. 
+#' If \code{FALSE}, token will give access only to public information. Note 
+#' that \code{updateStatus} will only work for tokens with extended permissions.
 #'
 #' @examples \dontrun{
 #' ## an example of an authenticated request after creating the OAuth token
@@ -85,7 +85,8 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
 	if (extended_permissions==TRUE){
 		scope <- paste("user_birthday,user_hometown,user_location,user_relationships,",
 			"friends_birthday,friends_hometown,friends_location,friends_relationships,publish_actions,",
-			"user_status,user_checkins,friends_status,friends_checkins,user_likes,friends_likes", collapse="")
+			"user_status,user_checkins,friends_status,friends_checkins,user_likes,friends_likes,read_stream,export_stream", 
+			collapse="")
 	}
 	else { scope <- NULL}
 	facebook_token <- oauth2.0_token(facebook, myapp,

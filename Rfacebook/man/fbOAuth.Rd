@@ -19,9 +19,10 @@
   private information (birthday, hometown, location,
   relationships) and that of his/her friends, and
   permissions to post status updates as well as to access
-  checkins. If \code{FALSE}, token will give access only to
-  public information. Note that \code{updateStatus} will
-  only work for tokens with extended permissions.}
+  checkins, likes, and the user's newsfeed. If
+  \code{FALSE}, token will give access only to public
+  information. Note that \code{updateStatus} will only work
+  for tokens with extended permissions.}
 }
 \description{
   \code{fbOAuth} creates a long-lived OAuth access token

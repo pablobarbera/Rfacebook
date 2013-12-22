@@ -14,6 +14,24 @@ searchDataToDF <- function(json){
 	return(df)
 }
 
+newsDataToDF <- function(json){
+	df <- data.frame(
+		from_id = unlistWithNA(json, c('from', 'id')),
+		from_name = unlistWithNA(json, c('from', 'name')),
+		to_id = unlistWithNA(json, c('to', 'data', "1", 'id')),
+		to_name = unlistWithNA(json, c('to', 'data', '1', 'name')),
+		message = unlistWithNA(json, 'message'),
+		created_time = unlistWithNA(json, 'created_time'),
+		type = unlistWithNA(json, 'type'),
+		link = unlistWithNA(json, 'link'),
+		id = unlistWithNA(json, 'id'),
+		likes_count = unlistWithNA(json, c('likes', 'summary', 'total_count')),
+		comments_count = unlistWithNA(json, c('comments', 'summary', 'total_count')),
+		shares_count = unlistWithNA(json, c('shares', 'count')),
+		stringsAsFactors=F)
+	return(df)
+}
+
 pageDataToDF <- function(json){
 	df <- data.frame(
 		from_id = unlistWithNA(json, c('from', 'id')),
@@ -168,6 +186,13 @@ unlistWithNA <- function(lst, field){
 				error=function(e) FALSE)))
 		vect <- rep(NA, length(lst))
 		vect[notnulls] <- unlist(lapply(lst[notnulls], function(x) x[[field[1]]][[field[2]]][[field[3]]]))
+	}
+	if (length(field)==4 & field[1]=="to"){
+		notnulls <- unlist(lapply(lst, function(x) 
+			tryCatch(!is.null(x[[field[1]]][[field[2]]][[as.numeric(field[3])]][[field[4]]]), 
+				error=function(e) FALSE)))
+		vect <- rep(NA, length(lst))
+		vect[notnulls] <- unlist(lapply(lst[notnulls], function(x) x[[field[1]]][[field[2]]][[as.numeric(field[3])]][[field[4]]]))
 	}
 	if (field[1] %in% c("comments", "likes") & !is.na(field[2])){
 		notnulls <- unlist(lapply(lst, function(x) !is.null(x[[field[1]]][[field[2]]][[field[3]]])))
