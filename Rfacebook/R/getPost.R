@@ -27,13 +27,18 @@
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
 #' created with \code{fbOAuth}.
 #'
-#' @param n Maximum number of comments and likes to return.
+#' @param n numeric, maximum number of comments and likes to return.
 #'
 #' @param comments logical, default is \code{TRUE}, which will return data frame
 #' with comments to the post.
 #'
 #' @param likes logical, default is \code{TRUE}, which will return data frame
 #' with likes for the post.
+#'
+#' @param n.likes numeric, maximum number of likes to return. Default is \code{n}.
+#'
+#' @param n.comments numeric, maximum number of likes to return. Default is 
+#' \code{n}.
 #'
 #' @examples \dontrun{
 #' ## See examples for fbOAuth to know how token was created.
@@ -45,7 +50,8 @@
 #' }
 #'
 
-getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE){
+getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
+	n.comments=n){
 
 	url <- paste0("https://graph.facebook.com/", post,
 				"?fields=from,message,created_time,type,link,name,shares")
@@ -53,11 +59,11 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE){
 	if (comments==TRUE){
 		url <- paste0(url, ",comments.summary(true).",
 			"fields(id,from,message,created_time,like_count)")
-		if (n>=500){
+		if (n.comments>=500){
 			url <- paste0(url, ".limit(500)")
 		}
-		if (n<500){
-			url <- paste0(url, ".limit(", n, ")")
+		if (n.comments<500){
+			url <- paste0(url, ".limit(", n.comments, ")")
 		}
 	}
 	if (comments==FALSE){
@@ -66,11 +72,11 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE){
 	if (likes==TRUE){
 		url <- paste0(url, ",likes.summary(true).",
 			"fields(id,name)")
-		if (n>=500){
-			url <- paste0(url, ".limit(500)")
+		if (n.likes>=2000){
+			url <- paste0(url, ".limit(2000)")
 		}
-		if (n<500){
-			url <- paste0(url, ".limit(", n, ")")
+		if (n.likes<2000){
+			url <- paste0(url, ".limit(", n.likes, ")")
 		}
 	}
 	if (likes==FALSE){
@@ -98,24 +104,26 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE){
 	out[["post"]] <- postDataToDF(content)
 	if (likes) out[["likes"]] <- likesDataToDF(content$likes$data)
 	if (likes) n.l <- dim(out$likes)[1]
+	if (!likes) n.l <- Inf
 	if (comments) out[["comments"]] <- commentsDataToDF(content$comments$data)
 	if (comments) n.c <- dim(out$comments)[1]
+	if (!comments) n.c <- Inf
 	
-	# paging if n>500
-	if (n>500){
-		# saving URLs for next 500 likes and next 500 comments
+	# paging if we n.comments OR n.likes haven't been downloaded
+	if (n.likes > n.l || n.comments > n.c){
+		# saving URLs for next batch of likes and comments
 		if (likes) url.likes <- content$likes$paging$`next`
 		if (comments) url.comments <- content$comments$paging$`next`
 
-		if (likes){
-			# retrieving next 500 likes
+		if (likes && n.likes > n.l){
+			# retrieving next batch of likes
 			url <- content$likes$paging$`next`
 			content <- callAPI(url=url.likes, token=token)
 			out[["likes"]] <- rbind(out[["likes"]],
 					likesDataToDF(content$data))
 			n.l <- dim(out$likes)[1]
 			# next likes, in batches of 500
-			while (n.l < n & length(content$data)>0 &
+			while (n.l < n.likes & length(content$data)>0 &
 				!is.null(url <- content$paging$`next`)){
 				url <- content$paging$`next`
 				content <- callAPI(url=url, token=token)
@@ -124,14 +132,14 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE){
 				n.l <- dim(out$likes)[1]
 			}
 		}
-		if (comments){
-			# retriving next 500 comments
+		if (comments && n.comments > n.c){
+			# retriving next batch of comments
 			content <- callAPI(url=url.comments, token=token)
 			out[["comments"]] <- rbind(out[["comments"]],
 					commentsDataToDF(content$data))
 			n.c <- dim(out$comments)[1]
 			# next comments, in batches of 500
-			while (n.c < n & length(content$data)>0 &
+			while (n.c < n.comments & length(content$data)>0 &
 				!is.null(content$paging$`next`)){
 				url <- content$paging$`next`
 				content <- callAPI(url=url, token=token)

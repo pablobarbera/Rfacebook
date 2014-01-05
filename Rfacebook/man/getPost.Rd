@@ -3,7 +3,7 @@
 \title{Extract information about a public Facebook post}
 \usage{
   getPost(post, token, n = 500, comments = TRUE,
-    likes = TRUE)
+    likes = TRUE, n.likes = n, n.comments = n)
 }
 \arguments{
   \item{post}{A post ID}
@@ -12,13 +12,20 @@
   \url{https://developers.facebook.com/tools/explorer} or
   the OAuth token created with \code{fbOAuth}.}
 
-  \item{n}{Maximum number of comments and likes to return.}
+  \item{n}{numeric, maximum number of comments and likes to
+  return.}
 
   \item{comments}{logical, default is \code{TRUE}, which
   will return data frame with comments to the post.}
 
   \item{likes}{logical, default is \code{TRUE}, which will
   return data frame with likes for the post.}
+
+  \item{n.likes}{numeric, maximum number of likes to
+  return. Default is \code{n}.}
+
+  \item{n.comments}{numeric, maximum number of likes to
+  return. Default is \code{n}.}
 }
 \description{
   \code{getPost} retrieves information about a public

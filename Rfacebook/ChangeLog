@@ -11,5 +11,9 @@
     - Fixed error in parsing getPost output
     - Fixed error with getPost when n>200 and n<500
 2013-12-21 - version 0.2.3:
-    - Added 'getLikes' function
-    - Added 'getNewsfeed' function
+    - Added 'getLikes' and 'getNewsfeed' functions
+2013-12-30 - version 0.2.4:
+    - 'getPost' now has separate n.likes and n.comments
+2014-01-05 - version 0.3:
+    - Updated documentation
+    - CRAN release
