@@ -245,5 +245,17 @@ users &lt;- getUsers(post$likes$from_id, token)
 <p>You can contact me at pablo.barbera[at]nyu.edu or via twitter (<a href="http://www.twitter.com/p_barbera">@p_barbera</a>) for any question or suggestion you might have, or to report any bugs in the code.</p>
 
 
+<script type="text/javascript">
 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1191254-10']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 
