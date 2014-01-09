@@ -102,11 +102,13 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
 	# putting it together
 	out <- list()
 	out[["post"]] <- postDataToDF(content)
-	if (likes) out[["likes"]] <- likesDataToDF(content$likes$data)
-	if (likes) n.l <- dim(out$likes)[1]
+	if (likes && n.likes > 0) out[["likes"]] <- likesDataToDF(content$likes$data)
+	if (likes && n.likes > 0) n.l <- dim(out$likes)[1]
+	if (n.likes == 0) n.l <- 0
 	if (!likes) n.l <- Inf
-	if (comments) out[["comments"]] <- commentsDataToDF(content$comments$data)
-	if (comments) n.c <- dim(out$comments)[1]
+	if (comments && n.likes > 0) out[["comments"]] <- commentsDataToDF(content$comments$data)
+	if (comments && n.likes > 0) n.c <- dim(out$comments)[1]
+	if (n.comments == 0) n.c <- 0
 	if (!comments) n.c <- Inf
 	
 	# paging if we n.comments OR n.likes haven't been downloaded
