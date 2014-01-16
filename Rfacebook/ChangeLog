@@ -17,3 +17,6 @@
 2014-01-05 - version 0.3:
     - Updated documentation
     - CRAN release
+2014-01-05 - version 0.3.1:
+    - Fixed errors in getPost when existing likes are fewer than request
+    - Fixed error in how likes are converted into a data frame

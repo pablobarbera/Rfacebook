@@ -68,10 +68,21 @@ postDataToDF <- function(json){
 }
 
 likesDataToDF <- function(json){
-	mat <- matrix(unlist(json), 
-		ncol=2, byrow=TRUE)
-	df <- data.frame(mat, stringsAsFactors=F)
-	names(df) <- c("from_name", "from_id")
+	if (length(json)>1){
+		df <- data.frame(
+			from_name = unlistWithNA(json, "name"),
+			from_id = unlistWithNA(json, "id"),
+			stringsAsFactors=F
+			)
+	}
+	if (length(json)==1){
+		df <- data.frame(
+			from_name = json$name,
+			from_id = json$id)
+	}
+	if (length(json)==0){
+		df <- NULL
+	}
 	return(df)
 }
 

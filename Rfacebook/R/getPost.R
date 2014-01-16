@@ -117,7 +117,7 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
 		if (likes) url.likes <- content$likes$paging$`next`
 		if (comments) url.comments <- content$comments$paging$`next`
 
-		if (likes && n.likes > n.l){
+		if (!is.null(url.likes) && likes && n.likes > n.l){
 			# retrieving next batch of likes
 			url <- content$likes$paging$`next`
 			content <- callAPI(url=url.likes, token=token)
@@ -134,7 +134,7 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
 				n.l <- dim(out$likes)[1]
 			}
 		}
-		if (comments && n.comments > n.c){
+		if (!is.null(url.comments) && comments && n.comments > n.c){
 			# retriving next batch of comments
 			content <- callAPI(url=url.comments, token=token)
 			out[["comments"]] <- rbind(out[["comments"]],
