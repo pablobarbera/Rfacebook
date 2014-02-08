@@ -103,11 +103,11 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
 	out <- list()
 	out[["post"]] <- postDataToDF(content)
 	if (likes && n.likes > 0) out[["likes"]] <- likesDataToDF(content$likes$data)
-	if (likes && n.likes > 0) n.l <- dim(out$likes)[1]
+	if (likes && n.likes > 0) n.l <- ifelse(!is.null(out$likes), dim(out$likes)[1], 0)
 	if (n.likes == 0) n.l <- 0
 	if (!likes) n.l <- Inf
 	if (comments && n.likes > 0) out[["comments"]] <- commentsDataToDF(content$comments$data)
-	if (comments && n.likes > 0) n.c <- dim(out$comments)[1]
+	if (comments && n.likes > 0) n.c <- ifelse(!is.null(out$comments), dim(out$comments)[1], 0)
 	if (n.comments == 0) n.c <- 0
 	if (!comments) n.c <- Inf
 	
@@ -115,7 +115,9 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
 	if (n.likes > n.l || n.comments > n.c){
 		# saving URLs for next batch of likes and comments
 		if (likes) url.likes <- content$likes$paging$`next`
+		if (!likes) url.likes <- NULL
 		if (comments) url.comments <- content$comments$paging$`next`
+		if (!comments) url.comments <- NULL
 
 		if (!is.null(url.likes) && likes && n.likes > n.l){
 			# retrieving next batch of likes

@@ -68,17 +68,12 @@ postDataToDF <- function(json){
 }
 
 likesDataToDF <- function(json){
-	if (length(json)>1){
+	if (!is.null(json)){
 		df <- data.frame(
 			from_name = unlistWithNA(json, "name"),
 			from_id = unlistWithNA(json, "id"),
 			stringsAsFactors=F
 			)
-	}
-	if (length(json)==1){
-		df <- data.frame(
-			from_name = json$name,
-			from_id = json$id)
 	}
 	if (length(json)==0){
 		df <- NULL
@@ -87,7 +82,7 @@ likesDataToDF <- function(json){
 }
 
 commentsDataToDF <- function(json){
-	if (length(json)>1){
+	if (!is.null(json)){
 		df <- data.frame(
 			from_id = unlistWithNA(json, c('from', 'id')),
 			from_name = unlistWithNA(json, c('from', 'name')),
@@ -97,15 +92,8 @@ commentsDataToDF <- function(json){
 			id = unlistWithNA(json, 'id'),
 		stringsAsFactors=F)
 	}
-	if (length(json)==1){
-		df <- data.frame(
-			from_id = json$from$id,
-			from_name = json$from$name,
-			message = json$message,
-			created_time = json$created_time,
-			likes_count = json$like_count,
-			id = json$id,
-		stringsAsFactors=F)
+	if (is.null(json)){
+		df <- NULL
 	}
 	return(df)
 }
