@@ -201,6 +201,24 @@ unlistWithNA <- function(lst, field){
 	return(vect)
 }
 
+pageDataToDF <- function(json){
+  df <- data.frame(
+    id = unlistWithNA(json, 'id'),
+    about = unlistWithNA(json, 'about'),
+    category = unlistWithNA(json, 'category'),
+    description = unlistWithNA(json, 'description'),
+    general_info = unlistWithNA(json, 'general_info'),
+    likes = unlistWithNA(json, 'likes'),
+    link = unlistWithNA(json, 'link'),
+    #    location = unlistWithNA(json, 'location'),
+    name = unlistWithNA(json, 'name'),
+    talking_about_count = unlistWithNA(json, 'talking_about_count'),
+    username = unlistWithNA(json, 'username'),
+    website = unlistWithNA(json, 'website'),
+    stringsAsFactors=F)
+  return(df)
+}
+
 callAPI <- function(url, token){
 	if (class(token)=="config"){
 		url.data <- GET(url, config=token)
