@@ -59,9 +59,15 @@ searchPages <- function(string, token, n=200)
     if (error==3){ stop(content$error_msg) }
   }
   if (length(content$data)==0){ 
+<<<<<<< HEAD
     stop("No public page mentioning the string was found")
   }
   df <- searchPageDataToDF(content$data)
+=======
+    stop("No public page mentioning the string were found")
+  }
+  df <- pageDataToDF(content$data)
+>>>>>>> 649b0730f30509fb195619e21d663bfd6099cf6f
   
   ## paging if n>200
   if (n>200){
@@ -86,7 +92,11 @@ searchPages <- function(string, token, n=200)
         if (error==3){ stop(content$error_msg) }
       }
       
+<<<<<<< HEAD
       df.list <- c(df.list, list(searchPageDataToDF(content$data)))
+=======
+      df.list <- c(df.list, list(pageDataToDF(content$data)))
+>>>>>>> 649b0730f30509fb195619e21d663bfd6099cf6f
     }
     df <- do.call(rbind, df.list)
   }

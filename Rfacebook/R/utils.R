@@ -201,7 +201,11 @@ unlistWithNA <- function(lst, field){
 	return(vect)
 }
 
+<<<<<<< HEAD
 searchPageDataToDF <- function(json){
+=======
+pageDataToDF <- function(json){
+>>>>>>> 649b0730f30509fb195619e21d663bfd6099cf6f
   df <- data.frame(
     id = unlistWithNA(json, 'id'),
     about = unlistWithNA(json, 'about'),
