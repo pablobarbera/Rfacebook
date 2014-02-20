@@ -61,7 +61,7 @@ searchPages <- function(string, token, n=200)
   if (length(content$data)==0){ 
     stop("No public page mentioning the string were found")
   }
-  df <- pageDataToDF(content$data)
+  df <- searchPageDataToDF(content$data)
 
   ## paging if n>200
   if (n>200){
