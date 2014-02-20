@@ -1,8 +1,8 @@
 Package: Rfacebook
 Title: Access to Facebook API via R
 Description: Provides an interface to the Facebook API
-Version: 0.3.2
-Date: 2014/02/07
+Version: 0.3.3
+Date: 2014/02/20
 Author: Pablo Barbera <pablo.barbera@nyu.edu>
 Maintainer: Pablo Barbera <pablo.barbera@nyu.edu>
 Depends:
@@ -24,3 +24,4 @@ Collate:
     'getCheckins.R'
     'getLikes.R'
     'getNewsfeed.R'
+    'searchPages.R'

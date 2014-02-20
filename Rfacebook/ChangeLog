@@ -22,3 +22,5 @@
     - Fixed error in how likes are converted into a data frame
 2014-02-07 - version 0.3.2:
     - Fixed errors in getPost when there few likes/comments
+2014-02-20 - version 0.3.3:
+    - Added searchPages function (thanks Joel Gombin!)
