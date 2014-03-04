@@ -27,10 +27,10 @@
 #' ## See examples for fbOAuth to know how token was created.
 #' ## Getting information about Facebook's Facebook Page
 #'	load("fb_oauth")
-#'	fb_page <- getPage(users="facebook", token=fb_oauth)
+#'	fb_page <- getPage(page="facebook", token=fb_oauth)
 #' ## Getting posts on Humans of New York page, including posts by others users
 #' ## (not only owner of page)
-#'  fb_page <- getPage(users="humansofnewyork", token=fb_oauth, feed=TRUE)
+#'  page <- getPage(page="humansofnewyork", token=fb_oauth, feed=TRUE)
 #' }
 #'
 
