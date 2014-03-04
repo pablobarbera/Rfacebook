@@ -2,7 +2,7 @@
 \alias{getPage}
 \title{Extract list of posts from a public Facebook page}
 \usage{
-  getPage(page, token, n = 100)
+  getPage(page, token, n = 100, feed = FALSE)
 }
 \arguments{
   \item{page}{A page ID or page name.}
@@ -27,6 +27,9 @@
 ## Getting information about Facebook's Facebook Page
 	load("fb_oauth")
 	fb_page <- getPage(users="facebook", token=fb_oauth)
+## Getting posts on Humans of New York page, including posts by others users
+## (not only owner of page)
+ fb_page <- getPage(users="humansofnewyork", token=fb_oauth, feed=TRUE)
 }
 }
 \author{
