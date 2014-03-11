@@ -224,7 +224,7 @@ callAPI <- function(url, token){
 		url.data <- GET(url, config=token)
 	}
 	if (class(token)=="Token2.0"){
-		url.data <- GET(url, config(token=fb_oauth))
+		url.data <- GET(url, config(token=token))
 	}	
 	if (class(token)=="character"){
 		url <- paste0(url, "&access_token=", token)
