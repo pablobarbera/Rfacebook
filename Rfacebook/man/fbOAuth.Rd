@@ -62,12 +62,6 @@
   will get a message that says you can return to R. If not,
   try again in a few minutes to make sure your app had its
   settings updated properly.
-
-  Note that the authentication process will NOT work
-  correctly in RStudio. As an alternative, create your
-  token in R from the command line interface or the R
-  application, save it as a file, and then open it up from
-  RStudio.
 }
 \examples{
 \dontrun{
