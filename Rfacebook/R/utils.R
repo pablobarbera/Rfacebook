@@ -230,7 +230,7 @@ callAPI <- function(url, token){
 		url <- paste0(url, "&access_token=", token)
 		url.data <- GET(url)
 	}
-	if (class(token)!="character" & class(token)!="config"){
+	if (class(token)!="character" & class(token)!="config" & class(token)!="Token2.0"){
 		stop("Error in access token. See help for details.")
 	}
 	content <- fromJSON(rawToChar(url.data$content))
