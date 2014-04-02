@@ -9,7 +9,7 @@ Rfacebook: Access to Facebook API via R
 
 This package provides a series of functions that allow R users to access Facebook's API to get information about users and posts, and collect public status updates that mention specific keywords.
 
-Current CRAN release is 0.3. To install most updated version (0.3.3) from GitHub, type:
+Current CRAN release is 0.3. To install the most updated version (0.4) from GitHub, type:
 
 ```
 library(devtools)
@@ -17,6 +17,8 @@ install_github("Rfacebook", "pablobarbera", subdir="Rfacebook")
 ```
 
 Click <a href="http://github.com/pablobarbera/Rfacebook/blob/master/Rfacebook-manual.pdf?raw=true">here</a> to read the documentation and <a href="http://pablobarbera.com/blog/archives/3.html">here</a> to read the vignette.
+
+__New__ in version 0.4: support for FQL queries.
 
 <h3>Installation and authentication</h3>
 
@@ -223,6 +225,55 @@ users &lt;- getUsers(post$likes$from_id, token)
 ##   1   1   2   8   8   1 904  12   1   1   6   1   3   1   9   1   3   6 
 ##  pl  pt  ro  ru  sk  sl  sr  sv  th 
 ##   5  10   1   8   1   1   1   2   1
+</code></pre>
+
+<h3>Extracting personal information</h3>
+
+Rfacebook also allows to read personal information about the authenticated users, such as the content from the Newsfeed, and friends' likes and checkins.
+
+<pre><code class="r">getLikes('pablobarbera', n=1, token)
+</code></pre>
+
+<pre><code>## id           names
+## 1 687958677914631 FiveThirtyEight
+## website
+## 1 http://www.fivethirtyeight.com/ 
+
+</code></pre>
+
+<pre><code class="r">getCheckins('pablobarbera', n=1, token=token)
+</code></pre>
+
+<pre><code>##              checkin_time        place_id       place_name
+## 1 2012-09-02T18:33:58+0000 120922987989887 Governors Island
+## place_city place_state place_country place_lat place_long
+## 1   New York          NY United States  40.69305  -74.01608
+</code></pre>
+
+
+<pre><code class="r">getNewsfeed(token, n=1)
+</code></pre>
+
+<pre><code>##       from_id      from_name to_id to_name
+## 1 51191684997 Rob DenBleyker  <NA>    <NA>
+##                                                                    message
+## 1 Sorry for the late comic, it's up now!\n\nhttp://explosm.net/comics/3512/
+##               created_time type                            link
+## 1 2014-04-02T12:38:46+0000 link http://explosm.net/comics/3512/
+##                              id likes_count comments_count   shares_count
+## 1 51191684997_10152084439949998        6942            110            497
+</code></pre>
+
+<h3>Executing FQL queries</h3>
+
+To facilitate making API queries not implemented in the current version of the package, I have added the <code>getFQL</code> function, which will return an R list with the result of the query. A trivial example:
+
+<pre><code class="r">getFQL('SELECT name FROM profile where id = me()', token)
+</code></pre>
+
+<pre><code>## [[1]]
+## [[1]]$name
+## [1] "Pablo Barberá"
 </code></pre>
 
 <h3>Updating your Facebook status from R</h3>
