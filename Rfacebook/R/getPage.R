@@ -22,6 +22,9 @@
 #' @param n Number of posts of page to return. Note that number can be sometimes
 #' higher or lower, depending on status of API.
 #'
+#' @param feed If \code{TRUE}, the function will also return posts on the page
+#' that were made by others (not only the admin of the page).
+#'
 #'
 #' @examples \dontrun{
 #' ## See examples for fbOAuth to know how token was created.

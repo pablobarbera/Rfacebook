@@ -2,7 +2,7 @@
 \alias{getLikes}
 \title{Extract list of likes of a Facebook friend}
 \usage{
-  getLikes(user, n = 500, token)
+getLikes(user, n = 500, token)
 }
 \arguments{
   \item{token}{Either a temporary access token created at
@@ -15,12 +15,12 @@
   user.}
 }
 \description{
-  \code{getLikes} retrieves information about a friend's
-  likes
+\code{getLikes} retrieves information about a friend's
+likes
 }
 \details{
-  This function requires the use of an OAuth token with the
-  following permissions: user_likes, friends_likes
+This function requires the use of an OAuth token with the
+following permissions: user_likes, friends_likes
 }
 \examples{
 \dontrun{
@@ -29,9 +29,9 @@
 }
 }
 \author{
-  Pablo Barbera \email{pablo.barbera@nyu.edu}
+Pablo Barbera \email{pablo.barbera@nyu.edu}
 }
 \seealso{
-  \code{\link{getFriends}}, \code{\link{fbOAuth}}
+\code{\link{getFriends}}, \code{\link{fbOAuth}}
 }
 

@@ -2,7 +2,7 @@
 \alias{getCheckins}
 \title{Extract list of checkins of a Facebook friend}
 \usage{
-  getCheckins(user, n = 10, token, tags = FALSE)
+getCheckins(user, n = 10, token, tags = FALSE)
 }
 \arguments{
   \item{token}{Either a temporary access token created at
@@ -20,13 +20,13 @@
   information about users tagged in each checkin.}
 }
 \description{
-  \code{getCheckins} retrieves information about a friend's
-  checkins
+\code{getCheckins} retrieves information about a friend's
+checkins
 }
 \details{
-  This function requires the use of an OAuth token with the
-  following permissions: user_status, user_checkins,
-  friends_status, friends_checkins
+This function requires the use of an OAuth token with the
+following permissions: user_status, user_checkins,
+friends_status, friends_checkins
 }
 \examples{
 \dontrun{
@@ -35,9 +35,9 @@
 }
 }
 \author{
-  Pablo Barbera \email{pablo.barbera@nyu.edu}
+Pablo Barbera \email{pablo.barbera@nyu.edu}
 }
 \seealso{
-  \code{\link{getFriends}}
+\code{\link{getFriends}}
 }
 

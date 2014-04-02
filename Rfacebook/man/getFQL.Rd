@@ -1,0 +1,31 @@
+\name{getFQL}
+\alias{getFQL}
+\title{Executes a FQL query to the Facebook Graph API}
+\usage{
+getFQL(query, token)
+}
+\arguments{
+  \item{query}{Text of query}
+
+  \item{token}{Either a temporary access token created at
+  \url{https://developers.facebook.com/tools/explorer} or
+  the OAuth token created with \code{fbOAuth}.}
+}
+\description{
+\code{getFQL} connects to Facebook's Graph API and executes
+a FQL query. See
+\url{https://developers.facebook.com/docs/technical-guides/fql/}
+for an overview of the Facebook Query Language.
+}
+\examples{
+\dontrun{
+## See examples for fbOAuth to know how token was created.
+## Getting list of friends of authenticated user
+	load("fb_oauth")
+	d <- getFQL("SELECT uid2 FROM friend WHERE uid1=me()", token=fb_oauth)
+}
+}
+\author{
+Pablo Barbera \email{pablo.barbera@nyu.edu}
+}
+

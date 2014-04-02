@@ -2,7 +2,7 @@
 \alias{fbOAuth}
 \title{Create OAuth token to Facebook R session}
 \usage{
-  fbOAuth(app_id, app_secret, extended_permissions = TRUE)
+fbOAuth(app_id, app_secret, extended_permissions = TRUE)
 }
 \arguments{
   \item{app_id}{numeric, App ID of application to be used
@@ -25,43 +25,43 @@
   for tokens with extended permissions.}
 }
 \description{
-  \code{fbOAuth} creates a long-lived OAuth access token
-  that enables R to make authenticated calls to the
-  Facebook API. The token can be saved as a file in disk to
-  be re-used in future sessions. This function relies on
-  the \code{httr} package to create the OAuth token, and is
-  a simplified version of one of its examples.
+\code{fbOAuth} creates a long-lived OAuth access token that
+enables R to make authenticated calls to the Facebook API.
+The token can be saved as a file in disk to be re-used in
+future sessions. This function relies on the \code{httr}
+package to create the OAuth token, and is a simplified
+version of one of its examples.
 }
 \details{
-  There are two different ways of making authenticated
-  requests. One is to obtain a temporary access token from
-  \url{https://developers.facebook.com/tools/explorer/},
-  which can be used as argument in any of the functions in
-  Rfacebook. An example is shown below.
+There are two different ways of making authenticated
+requests. One is to obtain a temporary access token from
+\url{https://developers.facebook.com/tools/explorer/},
+which can be used as argument in any of the functions in
+Rfacebook. An example is shown below.
 
-  However, this token has a 2-hour lifetime by default and
-  after it expires, it needs to be renewed. The second
-  alternative is to create an OAuth token. The process to
-  create it is a bit more tedious. It is divided in three
-  steps.
+However, this token has a 2-hour lifetime by default and
+after it expires, it needs to be renewed. The second
+alternative is to create an OAuth token. The process to
+create it is a bit more tedious. It is divided in three
+steps.
 
-  First, go to \url{https://developers.facebook.com/apps},
-  register as a developer and create a new app. You will
-  also need a verified Facebook account. After that, click
-  in "Show" under "App Secret" to find your 'App ID' and
-  'App Secret'.
+First, go to \url{https://developers.facebook.com/apps},
+register as a developer and create a new app. You will also
+need a verified Facebook account. After that, click in
+"Show" under "App Secret" to find your 'App ID' and 'App
+Secret'.
 
-  Second, run the \code{fbOAuth} function with your "App
-  ID" and "App Secret" as arguments. It will return a URL,
-  which you will need to paste into the "Website with
-  Facebook login" field in your App Settings on Facebook.
-  Once you've done so, press Enter.
+Second, run the \code{fbOAuth} function with your "App ID"
+and "App Secret" as arguments. It will return a URL, which
+you will need to paste into the "Website with Facebook
+login" field in your App Settings on Facebook. Once you've
+done so, press Enter.
 
-  Third, after pressing Enter, R will try to open a browser
-  window to sign the token. If everything works well, you
-  will get a message that says you can return to R. If not,
-  try again in a few minutes to make sure your app had its
-  settings updated properly.
+Third, after pressing Enter, R will try to open a browser
+window to sign the token. If everything works well, you
+will get a message that says you can return to R. If not,
+try again in a few minutes to make sure your app had its
+settings updated properly.
 }
 \examples{
 \dontrun{
@@ -80,10 +80,10 @@
 }
 }
 \author{
-  Pablo Barbera \email{pablo.barbera@nyu.edu}
+Pablo Barbera \email{pablo.barbera@nyu.edu}
 }
 \seealso{
-  \code{\link{getUsers}}, \code{\link{getPost}},
-  \code{\link{searchFacebook}}
+\code{\link{getUsers}}, \code{\link{getPost}},
+\code{\link{searchFacebook}}
 }
 

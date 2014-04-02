@@ -2,7 +2,7 @@
 \alias{getUsers}
 \title{Extract information about one or more Facebook users}
 \usage{
-  getUsers(users, token, private_info = FALSE)
+getUsers(users, token, private_info = FALSE)
 }
 \arguments{
   \item{users}{A vector of either user IDs or screen names
@@ -23,8 +23,8 @@
   via web.}
 }
 \description{
-  \code{getUsers} retrieves public information about one or
-  more Facebook users.
+\code{getUsers} retrieves public information about one or
+more Facebook users.
 }
 \examples{
 \dontrun{
@@ -44,10 +44,10 @@
 }
 }
 \author{
-  Pablo Barbera \email{pablo.barbera@nyu.edu}
+Pablo Barbera \email{pablo.barbera@nyu.edu}
 }
 \seealso{
-  \code{\link{getFriends}}, \code{\link{getPost}},
-  \code{\link{searchFacebook}}
+\code{\link{getFriends}}, \code{\link{getPost}},
+\code{\link{searchFacebook}}
 }
 

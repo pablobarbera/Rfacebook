@@ -2,7 +2,7 @@
 \alias{getNewsfeed}
 \title{Download recent posts from the authenticated user's newsfeed}
 \usage{
-  getNewsfeed(token, n = 200)
+getNewsfeed(token, n = 200)
 }
 \arguments{
   \item{token}{Either a temporary access token created at
@@ -12,8 +12,8 @@
   \item{n}{Maximum number of posts to return.}
 }
 \description{
-  \code{getNewsfeed} retrieves status updates from the
-  authenticated user's News Feed
+\code{getNewsfeed} retrieves status updates from the
+authenticated user's News Feed
 }
 \examples{
 \dontrun{
@@ -24,9 +24,9 @@
 }
 }
 \author{
-  Pablo Barbera \email{pablo.barbera@nyu.edu}
+Pablo Barbera \email{pablo.barbera@nyu.edu}
 }
 \seealso{
-  \code{\link{fbOAuth}}, \code{\link{getPost}}
+\code{\link{fbOAuth}}, \code{\link{getPost}}
 }
 

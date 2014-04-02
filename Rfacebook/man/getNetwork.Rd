@@ -2,7 +2,7 @@
 \alias{getNetwork}
 \title{Extract network of friends of authenticated user}
 \usage{
-  getNetwork(token, format = "edgelist", verbose = TRUE)
+getNetwork(token, format = "edgelist", verbose = TRUE)
 }
 \arguments{
   \item{token}{Either a temporary access token created at
@@ -19,14 +19,13 @@
   will print additional information on the console.}
 }
 \description{
-  \code{getNetwork} retrieves list of mutual friendships
-  and returns the adjacency matrix or edge list for the
-  network representing the neighborhood of the
-  authenticated user.
+\code{getNetwork} retrieves list of mutual friendships and
+returns the adjacency matrix or edge list for the network
+representing the neighborhood of the authenticated user.
 }
 \details{
-  This function requires the use of an OAuth token with
-  extended permissions.
+This function requires the use of an OAuth token with
+extended permissions.
 }
 \examples{
 \dontrun{
@@ -42,9 +41,9 @@
 }
 }
 \author{
-  Pablo Barbera \email{pablo.barbera@nyu.edu}
+Pablo Barbera \email{pablo.barbera@nyu.edu}
 }
 \seealso{
-  \code{\link{getFriends}}, \code{\link{fbOAuth}}
+\code{\link{getFriends}}, \code{\link{fbOAuth}}
 }
 

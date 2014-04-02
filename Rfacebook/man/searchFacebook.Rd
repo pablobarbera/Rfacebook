@@ -2,8 +2,7 @@
 \alias{searchFacebook}
 \title{Search public posts that mention a string}
 \usage{
-  searchFacebook(string, token, n = 200, since = NULL,
-    until = NULL)
+searchFacebook(string, token, n = 200, since = NULL, until = NULL)
 }
 \arguments{
   \item{string}{string or string vector containing keywords
@@ -29,16 +28,16 @@
   \url{http://php.net/manual/en/function.strtotime.php}}
 }
 \description{
-  \code{searchFacebook} retrieves public status updates
-  that mention a given keyword
+\code{searchFacebook} retrieves public status updates that
+mention a given keyword
 }
 \details{
-  The search is performed also on the text of the comments
-  too, which explains why some of the returned messages do
-  not mention the string that is being searched.
+The search is performed also on the text of the comments
+too, which explains why some of the returned messages do
+not mention the string that is being searched.
 
-  Note that only messages up to around two weeks old or
-  less can be returned.
+Note that only messages up to around two weeks old or less
+can be returned.
 }
 \examples{
 \dontrun{
@@ -52,9 +51,9 @@
 }
 }
 \author{
-  Pablo Barbera \email{pablo.barbera@nyu.edu}
+Pablo Barbera \email{pablo.barbera@nyu.edu}
 }
 \seealso{
-  \code{\link{fbOAuth}}
+\code{\link{fbOAuth}}
 }
 

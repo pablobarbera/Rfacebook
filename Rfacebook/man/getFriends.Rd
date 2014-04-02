@@ -2,7 +2,7 @@
 \alias{getFriends}
 \title{Extract list of friends with their information}
 \usage{
-  getFriends(token, simplify = FALSE)
+getFriends(token, simplify = FALSE)
 }
 \arguments{
   \item{token}{Either a temporary access token created at
@@ -16,12 +16,12 @@
   and profile picture.}
 }
 \description{
-  \code{getFriends} retrieves information about the user's
-  friends.
+\code{getFriends} retrieves information about the user's
+friends.
 }
 \details{
-  This function requires the use of an OAuth token with
-  extended permissions.
+This function requires the use of an OAuth token with
+extended permissions.
 }
 \examples{
 \dontrun{
@@ -34,9 +34,9 @@
 }
 }
 \author{
-  Pablo Barbera \email{pablo.barbera@nyu.edu}
+Pablo Barbera \email{pablo.barbera@nyu.edu}
 }
 \seealso{
-  \code{\link{getUsers}}, \code{\link{fbOAuth}}
+\code{\link{getUsers}}, \code{\link{fbOAuth}}
 }
 

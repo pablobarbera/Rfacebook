@@ -2,7 +2,7 @@
 \alias{updateStatus}
 \title{Update Facebook status from R}
 \usage{
-  updateStatus(text, token, link = NULL)
+updateStatus(text, token, link = NULL)
 }
 \arguments{
   \item{text}{string, text of the status update}
@@ -17,9 +17,9 @@
   to the Facebook profile.}
 }
 \description{
-  \code{updateStatus} sends a status update that will be
-  displayed on the Facebook profile of the authenticated
-  user.
+\code{updateStatus} sends a status update that will be
+displayed on the Facebook profile of the authenticated
+user.
 }
 \examples{
 \dontrun{
@@ -29,9 +29,9 @@
 }
 }
 \author{
-  Pablo Barbera \email{pablo.barbera@nyu.edu}
+Pablo Barbera \email{pablo.barbera@nyu.edu}
 }
 \seealso{
-  \code{\link{getUsers}}, \code{\link{getPost}}
+\code{\link{getUsers}}, \code{\link{getPost}}
 }
 

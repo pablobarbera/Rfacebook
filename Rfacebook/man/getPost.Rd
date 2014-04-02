@@ -2,8 +2,8 @@
 \alias{getPost}
 \title{Extract information about a public Facebook post}
 \usage{
-  getPost(post, token, n = 500, comments = TRUE,
-    likes = TRUE, n.likes = n, n.comments = n)
+getPost(post, token, n = 500, comments = TRUE, likes = TRUE,
+  n.likes = n, n.comments = n)
 }
 \arguments{
   \item{post}{A post ID}
@@ -28,19 +28,19 @@
   return. Default is \code{n}.}
 }
 \description{
-  \code{getPost} retrieves information about a public
-  Facebook post, including list of comments and likes.
+\code{getPost} retrieves information about a public
+Facebook post, including list of comments and likes.
 }
 \details{
-  \code{getPost} returns a list with three components:
-  \code{post}, \code{likes}, and \code{comments}. First,
-  \code{post} contains information about the post: author,
-  creation date, id, counts of likes, comments, and shares,
-  etc. Second, \code{likes} is a data frame that contains
-  names and Facebook IDs of all the users that liked the
-  post. Finally, \code{comments} is a data frame with
-  information about the comments to the post (author,
-  message, creation time, id).
+\code{getPost} returns a list with three components:
+\code{post}, \code{likes}, and \code{comments}. First,
+\code{post} contains information about the post: author,
+creation date, id, counts of likes, comments, and shares,
+etc. Second, \code{likes} is a data frame that contains
+names and Facebook IDs of all the users that liked the
+post. Finally, \code{comments} is a data frame with
+information about the comments to the post (author,
+message, creation time, id).
 }
 \examples{
 \dontrun{
@@ -53,10 +53,10 @@
 }
 }
 \author{
-  Pablo Barbera \email{pablo.barbera@nyu.edu}
+Pablo Barbera \email{pablo.barbera@nyu.edu}
 }
 \seealso{
-  \code{\link{getUsers}}, \code{\link{getPage}},
-  \code{\link{fbOAuth}}
+\code{\link{getUsers}}, \code{\link{getPage}},
+\code{\link{fbOAuth}}
 }
 

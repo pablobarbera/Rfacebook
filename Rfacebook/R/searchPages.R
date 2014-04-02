@@ -8,7 +8,7 @@
 #' \code{searchPages} retrieves public status updates that mention a given keyword
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}, Joël Gombin \email{joel.gombin@@gmail.com}
+#' Pablo Barbera \email{pablo.barbera@@nyu.edu}, Joel Gombin \email{joel.gombin@@gmail.com}
 #' @seealso \code{\link{fbOAuth}}, \code{\link{searchFacebook}}
 #'
 #' @param string string or string vector containing keywords to search.
@@ -69,9 +69,6 @@ searchPages <- function(string, token, n=200)
     while (l<n & length(content$data)>0 &
              !is.null(content$paging$`next`)){
       url <- content$paging$`next`
-      if (!is.null(since)){
-        url <- paste(url, "&since=", since, sep="")
-      }
       content <- callAPI(url=url, token=token)
       l <- l + length(content$data)
       if (length(content$data)>0){ cat(l, " ") }

@@ -2,7 +2,7 @@
 \alias{searchPages}
 \title{Search pages that mention a string}
 \usage{
-  searchPages(string, token, n = 200)
+searchPages(string, token, n = 200)
 }
 \arguments{
   \item{string}{string or string vector containing keywords
@@ -16,8 +16,8 @@
   \item{n}{Maximum number of pages to return.}
 }
 \description{
-  \code{searchPages} retrieves public status updates that
-  mention a given keyword
+\code{searchPages} retrieves public status updates that
+mention a given keyword
 }
 \examples{
 \dontrun{
@@ -28,10 +28,10 @@
 }
 }
 \author{
-  Pablo Barbera \email{pablo.barbera@nyu.edu}, Joël Gombin
-  \email{joel.gombin@gmail.com}
+Pablo Barbera \email{pablo.barbera@nyu.edu}, Joel Gombin
+\email{joel.gombin@gmail.com}
 }
 \seealso{
-  \code{\link{fbOAuth}}, \code{\link{searchFacebook}}
+\code{\link{fbOAuth}}, \code{\link{searchFacebook}}
 }
 
