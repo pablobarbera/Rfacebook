@@ -29,7 +29,8 @@ user.
 }
 }
 \author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
+Pablo Barbera \email{pablo.barbera@nyu.edu}, Zakharov
+Kyrylo (\url{https://github.com/Amice13})
 }
 \seealso{
 \code{\link{getUsers}}, \code{\link{getPost}}
