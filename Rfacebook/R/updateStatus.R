@@ -30,6 +30,10 @@
 
 updateStatus <- function(text, token, link=NULL)
 {
+    ## text prepocessing
+    text <- enc2utf8(text)
+	text <- gsub(" ", "+",text)
+		
 	## query including text
 	query <- paste('https://graph.facebook.com/me/feed?message=', text, sep="")
 	## adding URL
@@ -42,7 +46,7 @@ updateStatus <- function(text, token, link=NULL)
 	}
 	if (class(token)=="character"){
 		url <- paste0(query, "&access_token=", token)
-		url.data <- GET(url)
+		url.data <- POST(url)
 	}
 	if (class(token)!="character" & class(token)!="config"){
 		stop("Error in access token. See help for details.")
