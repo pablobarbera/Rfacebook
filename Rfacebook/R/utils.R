@@ -228,6 +228,7 @@ callAPI <- function(url, token){
 	}	
 	if (class(token)=="character"){
 		url <- paste0(url, "&access_token=", token)
+		url <- gsub(" ", "%20", url)
 		url.data <- GET(url)
 	}
 	if (class(token)!="character" & class(token)!="config" & class(token)!="Token2.0"){
