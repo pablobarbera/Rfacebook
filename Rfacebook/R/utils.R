@@ -145,7 +145,7 @@ userLikesToDF <- function(user_likes){
 
 
 tagsDataToDF <- function(tags){
-    tags <- lapply(tags[[2]]$data, '[[', "tags")
+    tags <- lapply(tags, '[[', "tags")
     tags <- lapply(tags, '[[', 'data')
     tagsListToDF <- function(x){
     	if (!is.null(x)){
