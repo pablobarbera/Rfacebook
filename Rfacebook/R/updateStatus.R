@@ -30,49 +30,51 @@
 #' }
 #'
 
-updateStatus <- function(text, token, link=NULL)
-{
-    ## text prepocessing
-    text <- enc2utf8(text)
-	text <- gsub(" ", "+",text)
-		
-	## query including text
-	query <- paste('https://graph.facebook.com/me/feed?message=', text, sep="")
-	## adding URL
-	if (!is.null(link)){
-		query <- paste(query, "&link=", link, sep="")
-	}
-	## making query
-	if (class(token)=="config"){
-		url.data <- POST(query, config=token)
-	}
-	if (class(token)=="character"){
-		url <- paste0(query, "&access_token=", token)
-		url.data <- POST(url)
-	}
-	if (class(token)!="character" & class(token)!="config"){
-		stop("Error in access token. See help for details.")
-	}
-	## output
-	if (url.data$status_code==200){
-		id <- fromJSON(rawToChar(url.data$content))$id
-		if (is.null(id)){
-			message("Failed update. OAuth token does not have permission to update status. ",
-				"See ?fbOAuth for more details.")
-		}
-		message("Success! Link to status update: ", paste("http://www.facebook.com/", id, sep=""))
-	}
-	if (url.data$status_code==400){
-		error <- fromJSON(rawToChar(url.data$content))$error$code
-		message <- fromJSON(rawToChar(url.data$content))$error$message
-		if (error==2500){
-			message("Failed update. OAuth token does not have permission to update status. ",
-				"See ?fbOAuth for more details.")
-		}
-		if (error!=2500){
-			message("Failed update.", message)
-		}
-	}
+updateStatus <- function(text, token, link=NULL) {
+  ## text prepocessing
+  text <- enc2utf8(text)
+  text <- gsub(" ", "+",text)
+  
+  ## query including text
+  query <- paste('https://graph.facebook.com/me/feed?message=', text, sep="")
+  ## adding URL
+  if (!is.null(link)){
+    query <- paste(query, "&link=", link, sep="")
+  }
+  ## making query
+  if (class(token)=="config"){
+    url.data <- POST(query, config=token)
+  }
+  if (class(token)=="Token2.0"){
+    url.data <- POST(query, config(token=token))
+  }  
+  if (class(token)=="character"){
+    url <- paste0(query, "&access_token=", token)
+    url.data <- POST(url)
+  }
+  if (class(token)!="character" & class(token)!="config" & class(token)!="Token2.0") {
+    stop("Error in access token. See help for details.")
+  }
+  ## output
+  if (url.data$status_code==200){
+    id <- fromJSON(rawToChar(url.data$content))$id
+    if (is.null(id)){
+      message("Failed update. OAuth token does not have permission to update status. ",
+              "See ?fbOAuth for more details.")
+    }
+    message("Success! Link to status update: ", paste("http://www.facebook.com/", id, sep=""))
+  }
+  if (url.data$status_code==400){
+    error <- fromJSON(rawToChar(url.data$content))$error$code
+    message <- fromJSON(rawToChar(url.data$content))$error$message
+    if (error==2500){
+      message("Failed update. OAuth token does not have permission to update status. ",
+              "See ?fbOAuth for more details.")
+    }
+    if (error!=2500){
+      message("Failed update.", message)
+    }
+  }
 }
 
 
