@@ -52,7 +52,7 @@ getNetwork <- function(token, format='edgelist', verbose=TRUE){
 	if (verbose==TRUE){ pb <- txtProgressBar(min=1,max=n, style=3) }
 	for (i in 1:n){
 		#query <- paste0("https://graph.facebook.com/me.context/mutual_friends/", friends$id[i], "?")
-		query <- paste0("https://graph.facebook.com/me.context/mutual_friends/")
+		query <- paste0("https://graph.facebook.com/me.context/mutual_friends","?")
 		content <- callAPI(query, token)
 		mutual.friends <- unlist(lapply(content[[1]], '[[', 'name'))
 		for (friend in mutual.friends){
