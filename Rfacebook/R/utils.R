@@ -48,6 +48,17 @@ pageDataToDF <- function(json){
 	return(df)
 }
 
+insightsDataToDF <- function(json, values){
+  df <- data.frame(
+    id = unlistWithNA(json, 'id'),
+    metric_name = unlistWithNA(json, 'name'),
+    period = unlistWithNA(json, 'period'),
+    values = unlistWithNA(values, 'value'),
+    end_time = unlistWithNA(values, 'end_time'),
+    stringsAsFactors=F)
+  return(df)
+}
+
 postDataToDF <- function(json){
 	df <- data.frame(
 		from_id = json$from$id,
