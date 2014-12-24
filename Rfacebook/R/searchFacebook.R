@@ -70,7 +70,9 @@ searchFacebook <- function(string, token, n=200, since=NULL, until=NULL)
 	if (!is.null(until)){
 		url <- paste(url, "&until=", until, sep="")
 	}
-
+	
+	url <- URLencode(url)
+	
 	## making query
 	content <- callAPI(url=url, token=token)
 	l <- length(content$data); cat(l, "posts ")
