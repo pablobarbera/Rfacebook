@@ -22,6 +22,14 @@
 #' @param n Number of posts of page to return. Note that number can be sometimes
 #' higher or lower, depending on status of API.
 #'
+#' @param since A UNIX timestamp or strtotime data value that points to
+#' the start of the time range to be searched. For more information on the
+#' accepted values, see: \url{http://php.net/manual/en/function.strtotime.php}
+#'
+#' @param until A UNIX timestamp or strtotime data value that points to
+#' the end of the time range to be searched. For more information on the
+#' accepted values, see: \url{http://php.net/manual/en/function.strtotime.php}
+#'
 #' @param feed If \code{TRUE}, the function will also return posts on the page
 #' that were made by others (not only the admin of the page).
 #'
@@ -34,10 +42,14 @@
 #' ## Getting posts on Humans of New York page, including posts by others users
 #' ## (not only owner of page)
 #'  page <- getPage(page="humansofnewyork", token=fb_oauth, feed=TRUE)
+#' ## Getting posts on Humans of New York page in January 2013
+#'  page <- getPage(page="humansofnewyork", token=fb_oauth, n=1000
+#'		since='2013/01/01', until='2013/01/31')
 #' }
 #'
 
-getPage <- function(page, token, n=100, feed=FALSE){
+
+getPage <- function(page, token, n=100, since=NULL, until=NULL, feed=FALSE){
 
 	url <- paste0('https://graph.facebook.com/', page,
 		'/posts?fields=from,message,created_time,type,link,comments.summary(true)',
@@ -45,13 +57,19 @@ getPage <- function(page, token, n=100, feed=FALSE){
 	if (feed){
 		url <- paste0('https://graph.facebook.com/', page,
 		'/feed?fields=from,message,created_time,type,link,comments.summary(true)',
-		',likes.summary(true),shares&limit=')
+		',likes.summary(true),shares')
+	}
+	if (!is.null(until)){
+		url <- paste0(url, '&until=', until)
+	}
+	if (!is.null(since)){
+		url <- paste0(url, '&since=', since)
 	}
 	if (n<=100){
-		url <- paste(url, n, sep="")
+		url <- paste0(url, "&limit=", n)
 	}
 	if (n>100){
-		url <- paste(url, "100", sep="")
+		url <- paste0(url, "&limit=100")
 	}
 	# making query
 	content <- callAPI(url=url, token=token)
@@ -67,15 +85,23 @@ getPage <- function(page, token, n=100, feed=FALSE){
 		if (error==3){ stop(content$error_msg) }
 	}
 	if (length(content$data)==0){ 
-		stop("No public posts mentioning the string were found")
+		stop("No public posts were found")
 	}
 	df <- pageDataToDF(content$data)
+
+	# sometimes posts older than 'until' are returned, so here
+	# I'm making sure the function stops when that happens
+	if (!is.null(since)){
+		dates <- formatFbDate(df$created_time, 'date')
+		mindate <- min(dates)
+		sincedate <- as.Date(since)
+	}
 
 	## paging if n>100
 	if (n>100){
 		df.list <- list(df)
 		while (l<n & length(content$data)>0 & 
-			!is.null(content$paging$`next`)){
+			!is.null(content$paging$`next`) & sincedate <= mindate){
 			# waiting one second before making next API call...
 			Sys.sleep(0.5)
 			url <- content$paging$`next`
@@ -92,10 +118,21 @@ getPage <- function(page, token, n=100, feed=FALSE){
 				content <- callAPI(url=url, token=token)		
 				if (error==3){ stop(content$error_msg) }
 			}
+			new.df <- pageDataToDF(content$data)
+			df.list <- c(df.list, list(new.df))
 
-			df.list <- c(df.list, list(pageDataToDF(content$data)))
+			if (!is.null(since)){
+				dates <- formatFbDate(new.df$created_time, 'date')
+				mindate <- min(dates)
+			}
 		}
 		df <- do.call(rbind, df.list)
 	}
+	# deleting posts after specified date
+	if (!is.null(since)){
+		dates <- formatFbDate(df$created_time, 'date')
+		df <- df[dates>=sincedate,]
+	}
 	return(df)
 }
+
