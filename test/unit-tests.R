@@ -151,218 +151,71 @@ str(fb_page)
 page <- getPage(page="humansofnewyork", token=fb_oauth, feed=TRUE)
 str(page)
 page <- getPage(page="humansofnewyork", token=fb_oauth, n=250, 
-	since=as.Date('2013/01/01'), until=as.Date('2013/01/31'))
+	since='2012/12/15', until='2013/01/31')
 str(page)
 
 ## test of Facebook app, v2.0
 load("~/Dropbox/credentials/facebook/tokenv2")
 fb_page <- getPage(page="facebook", token=fb_oauth)
 page <- getPage(page="humansofnewyork", token=fb_oauth, feed=TRUE)
-page <- getPage(page="humansofnewyork", token=fb_oauth, n=1000, since='2013/01/01', until='2013/01/31')
+page <- getPage(page="humansofnewyork", token=fb_oauth, n=250, 
+	since='2012/12/15', until='2013/01/31')
 
 
 ## test of Facebook token, Unversioned
 token <- tokenv1
 fb_page <- getPage(page="facebook", token=token)
 page <- getPage(page="humansofnewyork", token=token, feed=TRUE)
-page <- getPage(page="humansofnewyork", token=token, n=1000, since='2013/01/01', until='2013/01/31')
+page <- getPage(page="humansofnewyork", token=token, n=1000, 
+	since='2012/12/15', until='2013/01/31')
 
 
 ## test of Facebook token, v2.x
 token <- tokenv2
 fb_page <- getPage(page="facebook", token=token)
 page <- getPage(page="humansofnewyork", token=token, feed=TRUE)
-page <- getPage(page="humansofnewyork", token=token, n=1000, since='2013/01/01', until='2013/01/31')
+page <- getPage(page="humansofnewyork", token=token, n=1000, 
+	since='2012/12/15', until='2013/01/31')
 
+##########################################
+## searchFacebook
+##########################################
 
+# deprecated?
 
+##########################################
+## getLikes
+##########################################
 
+# updated this, need to add to public repo
 
+##########################################
+## getPost
+##########################################
 
+# check that it works with 2.0 API
+# does it also support pagination?
+# nested comments?
 
-## to-do
+##########################################
+## getNewsfeed
+##########################################
 
-# fix extended permissions in fbOAuth to comply with new Facebook API
+# does it work with 2.0 API?
 
+##########################################
+## searchPage
+##########################################
 
+# does it work with 2.0 API?
 
-get_domain_url <- function(){
-	require(httr)
-	full_url <- oauth_callback()
-	message("Copy and paste into Site URL: ", 
-		gsub("(.*localhost:[0-9]{1,5}/).*", x=full_url, repl="\\1"))
-}
+##########################################
+## updateStatus
+##########################################
 
-get_domain_url()
+# does it work with 2.0 API?
 
-get_fb_oauth <- function(app_id, app_secret){
-	require(httr)
-	facebook <- oauth_endpoint(
-	  authorize = "https://www.facebook.com/dialog/oauth",
-	  access = "https://graph.facebook.com/oauth/access_token")	
-	myapp <- oauth_app("facebook", key, secret)
 
-	facebook_token <- oauth2.0_token(facebook, myapp,
-	  type = "application/x-www-form-urlencoded")
-	facebook_sig <- sign_oauth2.0(facebook_token$access_token)
-	return(facebook_sig)
-}
-
-get_domain_url <- function(){
-	require(httr)
-	full_url <- oauth_callback()
-	message("Copy and paste into Site URL: ", 
-		gsub("(.*localhost:[0-9]{1,5}/).*", x=full_url, repl="\\1"))
-}
-
-getFBOAuth <- function(app_id, app_secret){
-	require(httr); require(rjson)
-	## getting callback URL
-	full_url <- oauth_callback()
-	full_url <- gsub("(.*localhost:[0-9]{1,5}/).*", x=full_url, repl="\\1")
-	message <- paste("Copy and paste into Site URL on Facebook App Settings:", full_url, "\nWhen done, press any key to continue...")
-	invisible(readline(message))
-	facebook <- oauth_endpoint(
-	  authorize = "https://www.facebook.com/dialog/oauth",
-	  access = "https://graph.facebook.com/oauth/access_token")	
-	myapp <- oauth_app("facebook", app_id, app_secret)
-
-	facebook_token <- oauth2.0_token(facebook, myapp,
-	  type = "application/x-www-form-urlencoded")
-	fb_oauth <- sign_oauth2.0(facebook_token$access_token)
-	## testing that authentication successful. 
-	if (GET("https://graph.facebook.com/me", config=fb_oauth)$status==200){
-		message("Authentication successful.")
-	}
-	return(fb_oauth)
-}
-
-fb_oauth <- getFBOAuth(app_id="136359959907305", app_secret="d9179adc873190147ec03de7b939e2b7")
-
-
-
-
-
-
-
-my_oauth <- get_fb_oauth(key="136359959907305", secret="d9179adc873190147ec03de7b939e2b7")
-
-save(my_oauth, file="~/oauth_fb")
-
-load("~/oauth_fb")
-
-library(httr)
-
-## get one user (test)
-getUser <- function(id, df=TRUE)
-
-GET("https://graph.facebook.com/barackobama", config=my_oauth)
-
-
-fromJSON(rawToChar(GET("https://graph.facebook.com/me", config=my_oauth)$content))$username
-
-## multiple users in one query
-getUsers <- function(ids, df=TRUE)
-
-GET("https://graph.facebook.com/?ids=100003357890267,100000809628582", config=my_oauth)
-
-## search posts
-GET("https://graph.facebook.com/search?q=rajoy&type=post", config=my_oauth)
-
-## search for first 500 (note that it will search on comments too!) ## it lets you go back in time around 2 weeks
-searchFacebook <- function(q, limit, likes, comments, df=TRUE)
-url.data <- GET(URLencode("https://graph.facebook.com/search?q=barathon&type=post&limit=500&fields=from.fields(name,id,category),message,created_time,type,link,shares,likes.fields(id,name),comments"), config=my_oauth)
-
-library(rjson)
-json.data <- fromJSON(rawToChar(url.data$content))
-
-lapply(lapply(json.data[[1]], '[[', "likes"), length)
-
-url.data <- GET(URLencode("https://graph.facebook.com/search?q=barathon&type=post&limit=500&since=2013-07-20&until=2013-07-25"), config=my_oauth)
-
-library(rjson)
-json.data <- fromJSON(rawToChar(url.data$content))
-
-## get an individual post
-getPost
-
-url.data <- GET("https://graph.facebook.com/6815841748_10151732588336749?fields=from.fields(name,id,category),message,created_time,type,link,shares,comments.limit(10).summary(true),likes.limit(10).summary(true)", config=my_oauth)
-library(rjson)
-json.data <- fromJSON(rawToChar(url.data$content))
-
-
-
-
-url.data <- GET(URLencode("https://graph.facebook.com/search?q=rajoy&type=post&limit=500"), config=my_oauth)
-
-library(rjson)
-json.data <- fromJSON(rawToChar(url.data$content))
-
-lapply(json.data[[1]], '[[', "message")
-
-url.data <- GET("https://graph.facebook.com/search?fields=from,message,created_time,type&q=rajoy&limit=10000&type=post&access_token=CAAB8BMb4yZBkBAEhZBqBmpjJxtzONLf60nsUCRzOklRsZASuMKCxZBJylx2dIT976dE8hV3ZAgSdkrGdGJrPj4KAmxxpBIvXUs56lC0FWo1HURtUfuaKhAizYV5qE0yhKJjQzG4g5GRuNEE4Icn7uYDRZCpmKLqUcZD&until=1375612932", config=my_oauth)
-
-library(rjson)
-json.data <- fromJSON(rawToChar(url.data$content))
-
-
-url.data <- GET("https://graph.facebook.com/search?fields=from,message,created_time,type&q=rajoy&limit=10000&type=post&access_token=CAAB8BMb4yZBkBAEhZBqBmpjJxtzONLf60nsUCRzOklRsZASuMKCxZBJylx2dIT976dE8hV3ZAgSdkrGdGJrPj4KAmxxpBIvXUs56lC0FWo1HURtUfuaKhAizYV5qE0yhKJjQzG4g5GRuNEE4Icn7uYDRZCpmKLqUcZD&until=1375595086", config=my_oauth)
-
-library(rjson)
-json.data <- fromJSON(rawToChar(url.data$content))
-
-
-
-GET("https://graph.facebook.com/me", config=my_oauth)
-
-url.data <- GET("https://graph.facebook.com/search?q=rajoy&type=post&limit=10&fields=from,message,created_time,type", 
-	config=my_oauth)
-
-library(rjson)
-json.data <- fromJSON(rawToChar(url.data$content))
-
-cbind(
-lapply(json.data[[1]], '[[', "id"),
-lapply(json.data[[1]], '[[', "message"),
-unlist(lapply(lapply(json.data[[1]], '[[', "from"), function(x) x[['name']])),
-unlist(lapply(json.data[[1]], '[[', "created_time")),
-unlist(lapply(json.data[[1]], '[[', "type"))
-)
-
-
-
-## this is inspired by: http://applyr.blogspot.com/2012/01/mining-facebook-data-most-liked-status.html?spref=tw
-
-library(rjson)
-url.data <- GET("https://graph.facebook.com/me/friends", config=my_oauth)
-json.data <- fromJSON(rawToChar(url.data$content))
-
-friends.ids <- unlist(lapply(json.data[[1]], '[[', 'id'))
-friends.names <- unlist(lapply(json.data[[1]], '[[', 'name'))
-
-edge.list <- NULL
-
-for (i in 1:length(friends.ids)){
-	url.data <- GET(paste0("https://graph.facebook.com/me/mutualfriends/", friends.ids[i]), config=my_oauth)
-	json.data <- fromJSON(rawToChar(url.data$content))
-	mutual.friends <- unlist(lapply(json.data[[1]], '[[', 'name'))
-	for (friend in mutual.friends){
-		edge.list <- rbind(edge.list, c(friends.names[i], friend))
-	}
-#	edge.list[[friends.names[i]]] <- 
-	cat(i, " ")
-}
-
-library(igraph)
-network <- graph.edgelist(edge.list, directed=FALSE)
-plot(network)
-
-
-colnames(friendship.matrix) <- rownames(friendship.matrix) <- friends.names
-
-library(igraph)
-network <- graph.adjacency(friendship.matrix)
-plot(network)
 
 
 
