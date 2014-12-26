@@ -11,6 +11,8 @@
 #' \code{httr} package to create the OAuth token, and is a simplified version
 #' of one of its examples.
 #'
+#' This function will automatically detect the API version for the token you create. 
+#'
 #' @details
 #' There are two different ways of making authenticated requests. One is to obtain
 #' a temporary access token from \url{https://developers.facebook.com/tools/explorer/},
@@ -69,6 +71,7 @@
 
 fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
 {
+	require(httpuv)
 	## getting callback URL
 	full_url <- oauth_callback()
 	full_url <- gsub("(.*localhost:[0-9]{1,5}/).*", x=full_url, replacement="\\1")
@@ -82,7 +85,7 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
 	  access = "https://graph.facebook.com/oauth/access_token")	
 	myapp <- oauth_app("facebook", app_id, app_secret)
 	if (extended_permissions==TRUE){
-		scope <- paste("user_birthday,user_hometown,user_location,user_relationships,",
+		scope <- paste("user_friends,user_birthday,user_hometown,user_location,user_relationships,",
 			"friends_birthday,friends_hometown,friends_location,friends_relationships,publish_actions,",
 			"user_status,user_checkins,friends_status,friends_checkins,user_likes,friends_likes,read_stream,export_stream", 
 			collapse="")
@@ -106,6 +109,16 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
 		if (GET("https://graph.facebook.com/me", config(token=fb_oauth))$status==200){
 	      	message("Authentication successful.")
 	  	}	
+	}
+
+	## identifying API version of token
+	error <- tryCatch(callAPI('https://graph.facebook.com/pablobarbera', fb_oauth),
+		error = function(e) e)
+	if (inherits(error, 'error')){
+		class(fb_oauth)[4] <- 'v2'
+	}
+	if (!inherits(error, 'error')){
+		class(fb_oauth)[4] <- 'v1'
 	}
 
 	return(fb_oauth)
