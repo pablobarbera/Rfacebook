@@ -7,11 +7,14 @@
 #' @description
 #' \code{getUsers} retrieves public information about one or more Facebook users.
 #'
+#' After version 2.0 of the Facebook API, only id, name, and picture are available
+#' through the API. All the remaining fields will be missing.
+#'
 #' @author
 #' Pablo Barbera \email{pablo.barbera@@nyu.edu}
 #' @seealso \code{\link{getFriends}}, \code{\link{getPost}}, \code{\link{searchFacebook}}
 #'
-#' @param users A vector of either user IDs or screen names or a mix of both.
+#' @param users A vector of user IDs.
 #' 
 #' @param token Either a temporary access token created at
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
@@ -21,35 +24,40 @@
 #' publicly available for all users (name, gender, locale, profile picture). 
 #' If \code{TRUE}, will return additional information for users who are friends 
 #' with the authenticated user: birthday, location, hometown, and relationship 
-#' status. Note that these fields will only be returned for friends. For other 
+#' status. Note that these fields will ONLY be returned for friends and when
+#' the version of the token that is used to query the API is 1.0. For other 
 #' users, they will be \code{NA}, even if they are visible on Facebook via web.
 #'
 #' @examples \dontrun{
 #' ## See examples for fbOAuth to know how token was created.
-#' ## Getting information about me
+#' ## Getting information about the authenticated user
 #'  load("fb_oauth")
-#'	me <- getUsers("me", token=fb_oauth, private_info=FALSE)
-#'	me$username
-#' ## Getting information about my friends
-#'	my_friends <- getFriends(token=fb_oauth, simplify=TRUE)
-#'	my_friends_info <- getUsers(my_friends$id, token=fb_oauth, private_info=TRUE)
-#'	table(my_friends_info$relationship_status)
-#' ## Searching public posts about facebook and looking at gender of users
-#'  fb.posts <- searchFacebook( "facebook", token=fb_oauth, n=100)
-#'	fb.users <- getUsers( fb.posts$from_id, token=fb_oauth )
-#' 	table(fb.users$gender)
+#'	fb <- getUsers("me", token=fb_oauth)
+#'	fb$username
 #' }
 #'
 
 getUsers <- function(users, token, private_info=FALSE)
 {
 
+	tkversion <- getTokenVersion(token)
+	api.max <- ifelse(tkversion=='v2', 50, 500)
+
+	if (length(users)==1 && users=='me'){
+		query <- paste0('https://graph.facebook.com/',
+			ifelse(tkversion=='v2', 'v2.0/', ''), 'me?')
+		content <- callAPI(query, token)
+		df <- userDataToDF(list(content), private_info=private_info)
+		return(df)
+	}
+
 	n.users <- length(users)
-	first.n <- ifelse(n.users > 500, 500, n.users)
+	first.n <- ifelse(n.users > api.max, api.max, n.users)
 	
 	users.query <- paste(users[1:first.n], collapse=",")
 	## first query: checking what users are actual users vs pages
-	query <- paste0('https://graph.facebook.com/?ids=', users.query)
+	query <- paste0('https://graph.facebook.com/',
+		ifelse(tkversion=='v2', 'v2.0/', ''), '?ids=', users.query)
 	## making query
 	content <- callAPI(query, token)
 	if (length(content$error_code)>0){
@@ -60,13 +68,15 @@ getUsers <- function(users, token, private_info=FALSE)
 	## getting data for users	
 	if (length(actual.users)>0){
 		if (private_info==TRUE){
-		query <- paste('https://graph.facebook.com/?ids=', 
+		query <- paste('https://graph.facebook.com/',
+			ifelse(tkversion=='v2', 'v2.0/', ''), '?ids=', 
 			paste(names(actual.users), collapse=","), 
 			"&fields=id,name,first_name,last_name,gender,locale,birthday,",
 			"location,hometown,relationship_status,picture.type(large)", sep="")
 		}
 		if (private_info==FALSE){
-		query <- paste('https://graph.facebook.com/?ids=', 
+		query <- paste('https://graph.facebook.com/',
+			ifelse(tkversion=='v2', 'v2.0/', ''), '?ids=', 
 			paste(names(actual.users), collapse=","),
 			"&fields=id,name,first_name,last_name,gender,locale,",
 			"picture.type(large)", sep="")
@@ -80,7 +90,8 @@ getUsers <- function(users, token, private_info=FALSE)
 	}
 	if (length(pages)>0){
 		## getting data for pages
-		query <- paste('https://graph.facebook.com/?ids=', 
+		query <- paste('https://graph.facebook.com/',
+			ifelse(tkversion=='v2', 'v2.0/', ''), '?ids=', 
 			paste(names(pages), collapse=","), 
 			"&fields=id,name,category,likes,picture.type(large)", sep="")
 		## making query
@@ -94,15 +105,16 @@ getUsers <- function(users, token, private_info=FALSE)
 	#df <- df[!is.na(df$id),]
 
 	# next users, in batches of 500
-	if (n.users > 500){
+	if (n.users > api.max){
 		n.done <- dim(df)[1]
 		cat(n.done, "users -- ")
 		while (n.done < n.users){
 			first.n <- n.done + 1
-			last.n <- ifelse(n.done + 500 > n.users, n.users, n.done + 500)
+			last.n <- ifelse(n.done + api.max > n.users, n.users, n.done + api.max)
 			users.query <- paste(users[first.n:last.n], collapse=",")
 			## first query: checking what users are actual users vs pages
-			query <- paste0('https://graph.facebook.com/?ids=', users.query)
+			query <- paste0('https://graph.facebook.com/',
+				ifelse(tkversion=='v2', 'v2.0/', ''), '?ids=', users.query)
 			## making query
 			content <- callAPI(query, token)
 			if (length(content$error_code)>0){
@@ -113,13 +125,15 @@ getUsers <- function(users, token, private_info=FALSE)
 			## getting data for users	
 			if (length(actual.users)>0){
 				if (private_info==TRUE){
-				query <- paste('https://graph.facebook.com/?ids=', 
+				query <- paste('https://graph.facebook.com/', 
+					ifelse(tkversion=='v2', 'v2.0/', ''), '?ids=', 
 					paste(names(actual.users), collapse=","), 
 					"&fields=id,name,first_name,last_name,gender,locale,birthday,",
 					"location,hometown,relationship_status,picture.type(large)", sep="")
 				}
 				if (private_info==FALSE){
-				query <- paste('https://graph.facebook.com/?ids=', 
+				query <- paste('https://graph.facebook.com/', 
+					ifelse(tkversion=='v2', 'v2.0/', ''), '?ids=', 
 					paste(names(actual.users), collapse=","),
 					"&fields=id,name,first_name,last_name,gender,locale,",
 					"picture.type(large)", sep="")
@@ -133,7 +147,8 @@ getUsers <- function(users, token, private_info=FALSE)
 			}
 			if (length(pages)>0){
 				## getting data for pages
-				query <- paste('https://graph.facebook.com/?ids=', 
+				query <- paste('https://graph.facebook.com/', 
+					ifelse(tkversion=='v2', 'v2.0/', ''), '?ids=', 
 					paste(names(pages), collapse=","), 
 					"&fields=id,name,category,likes,picture.type(large)", sep="")
 				## making query
