@@ -9,7 +9,10 @@
 #'
 #' @details
 #' 
-#' This function requires the use of an OAuth token with extended permissions.
+#' This function requires the use of a OAuth token with extended 
+#' permissions. After the introduction of version 2.0 of the Graph API,
+#' only friends who are using the application that you used to generate the 
+#' token to query the API will be returned.
 #'
 #' @author
 #' Pablo Barbera \email{pablo.barbera@@nyu.edu}
@@ -24,21 +27,34 @@
 #' location, hometown, relationship status and profile picture. 
 #'
 #' @examples \dontrun{
-#' ## See examples for fbOAuth to know how token was created.
-#' ## Getting information about my friends
-#'	load("fb_oauth")
-#'	my_friends <- getFriends(token=fb_oauth, simplify=TRUE)
+#' ## Copy and paste token created at FB Graph API Explorer
+#'  token <- "XXXXXX"
+#'	my_friends <- getFriends(token=token, simplify=TRUE)
 #' ## Since users are ordered by ID, this will return 10 oldest user accounts
 #'	head(my_friends, n=10)
 #' }
 #'
 
-
-
 getFriends <- function(token, simplify=FALSE){
+	
+	tkversion <- getTokenVersion(token)
+
+	if (tkversion=="v2"){
+		message("Only friends who use the application will be returned\n",
+			"See ?getFriends for more details")
+		base_url <- 'https://graph.facebook.com/v2.0'
+	}
+
+	if (tkversion=="v1"){
+		base_url <- 'https://graph.facebook.com/'
+	}
+
 	if (simplify==TRUE){
-		query <- 'https://graph.facebook.com/me/friends?limit=5000'
+		query <- paste0(base_url, '/me/friends?limit=5000')
 		content <- callAPI(query, token)
+		if (length(content$data)==0){
+			stop("No friend information is available.")
+		}
 		friends <- matrix(unlist(content$data), ncol=2, byrow=TRUE)
 		while (length(content$data)>0){
 			query <- content$paging$`next`
@@ -52,10 +68,13 @@ getFriends <- function(token, simplify=FALSE){
 	}	
 
 	if (simplify==FALSE){
-		query <- paste("https://graph.facebook.com/me/friends?",
+		query <- paste(base_url, "/me/friends?",
 			"fields=id,name,first_name,last_name,gender,locale,birthday,location,",
 			"hometown,relationship_status,picture.type(large)&limit=100", sep="")
 		content <- callAPI(query, token)
+		if (length(content$data)==0){
+			stop("No friend information is available.")
+		}
 		friends <- userDataToDF(content$data, private_info=TRUE)
 		while (length(content$data)>0){
 			query <- content$paging$`next`
