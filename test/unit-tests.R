@@ -6,16 +6,8 @@ install.packages("Rfacebook_0.5.tar.gz", repo=NULL, type="source")
 
 library(Rfacebook)
 load('test/credentials.dta')
+source('test/creating-credentials.r')
 
-tokenv1 <- paste0(
-	'CAACEdEose0cBABUajrGv8mcZBnKeHXsaSVodjlfrCDD5Ywt2WHCXPcVrNzQB',
-	'wndEmYaVUhZBtghNTDHf6oLyiAzAo0HJh9ThRSDrQc2JkZCsGYfPWZCqllfVonI',
-	'BeHtIh37yf1KumMma3AnMXB3mRT5MPpTNJA4TmDAjQZCcmamP0JeqbOC4y6AXYfZ',
-	'Ba57J0XLQ7Kjl2zoRS6IKSfVZBPN')
-tokenv2 <- paste0('CAACEdEose0cBAGnuypoH4kxrjSoTD2avuiYLEjRxAWv3KGZBis',
-	'ufSDHUnsZARFa19mpnkZCUzKPp94SeEjsqQAN24UTERMbalgIFpca3SemdL7T18kK7',
-	'W5Ul9kiL12eH5TAbZCMFxD9ax4bL2Hx5njlOZBpKhDZBJYTyavyDGbJoe0Hoe1hrC9',
-	'GHgBFq0wB45FzNZBBIn6lVzs7q2SCBN9E')
 
 ##########################################
 ## fbOauth
