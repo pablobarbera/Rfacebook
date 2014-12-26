@@ -1,2 +1,5 @@
 _test
 .DS_Store
+.Rapp.history
+credentials.dta
+creating-credentials.r
