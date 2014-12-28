@@ -231,18 +231,18 @@ searchPageDataToDF <- function(json){
 }
 
 callAPI <- function(url, token){
-	if (class(token)=="config"){
+	if (class(token)[1]=="config"){
 		url.data <- GET(url, config=token)
 	}
-	if (class(token)=="Token2.0"){
+	if (class(token)[1]=="Token2.0"){
 		url.data <- GET(url, config(token=token))
 	}	
-	if (class(token)=="character"){
+	if (class(token)[1]=="character"){
 		url <- paste0(url, "&access_token=", token)
 		url <- gsub(" ", "%20", url)
 		url.data <- GET(url)
 	}
-	if (class(token)!="character" & class(token)!="config" & class(token)!="Token2.0"){
+	if (class(token)[1]!="character" & class(token)[1]!="config" & class(token)[1]!="Token2.0"){
 		stop("Error in access token. See help for details.")
 	}
 	content <- fromJSON(rawToChar(url.data$content))
@@ -252,6 +252,35 @@ callAPI <- function(url, token){
 	return(content)
 }
 
+getTokenVersion <- function(token){
+
+	if (!is.na(class(token)[4])){
+		tkversion <- class(token)[4]
+	}
+	if (is.na(class(token)[4])){
+		error <- tryCatch(callAPI('https://graph.facebook.com/pablobarbera', token),
+			error = function(e) e)
+		if (inherits(error, 'error')){
+			tkversion <- 'v2'
+		}
+		if (!inherits(error, 'error')){
+			tkversion <- 'v1'
+		}
+	}
+	return(tkversion)
+
+}
+
+
+formatFbDate <- function(datestring, format="datetime") {
+    if (format=="datetime"){
+        date <- as.POSIXct(datestring, format = "%Y-%m-%dT%H:%M:%S+0000", tz = "GMT")    
+    }
+    if (format=="date"){
+        date <- as.Date(datestring, format = "%Y-%m-%dT%H:%M:%S+0000", tz = "GMT")   
+    }
+    return(date)
+}
 
 
 
