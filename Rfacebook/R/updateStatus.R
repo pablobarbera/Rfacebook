@@ -42,17 +42,17 @@ updateStatus <- function(text, token, link=NULL) {
     query <- paste(query, "&link=", link, sep="")
   }
   ## making query
-  if (class(token)=="config"){
+  if (class(token)[1]=="config"){
     url.data <- POST(query, config=token)
   }
-  if (class(token)=="Token2.0"){
+  if (class(token)[1]=="Token2.0"){
     url.data <- POST(query, config(token=token))
   }  
-  if (class(token)=="character"){
+  if (class(token)[1]=="character"){
     url <- paste0(query, "&access_token=", token)
     url.data <- POST(url)
   }
-  if (class(token)!="character" & class(token)!="config" & class(token)!="Token2.0") {
+  if (class(token)[1]!="character" & class(token)[1]!="config" & class(token)[1]!="Token2.0") {
     stop("Error in access token. See help for details.")
   }
   ## output
