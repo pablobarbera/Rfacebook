@@ -53,9 +53,13 @@ getFriends <- function(token, simplify=FALSE){
 		query <- paste0(base_url, '/me/friends?limit=5000')
 		content <- callAPI(query, token)
 		if (length(content$data)==0){
-			stop("No friend information is available.")
+			stop("No friend information is available. See ?getFriends for more details.")
 		}
-		friends <- matrix(unlist(content$data), ncol=2, byrow=TRUE)
+		error <- tryCatch(friends <- matrix(unlist(content$data), ncol=2, byrow=TRUE),
+			error=function(e) e)
+		if (inherits(error, 'error')){
+			stop("No friend information is available. See ?getFriends for more details.")
+		}
 		while (length(content$data)>0){
 			query <- content$paging$`next`
 			content <- callAPI(query, token)
