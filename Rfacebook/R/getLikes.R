@@ -35,9 +35,14 @@ getLikes <- function(user, n=500, token){
 		'?fields=likes.limit(', n, ').fields(id,name,website)')
 	content <- callAPI(query, token)
     df <- userLikesToDF(content$likes$data)
+    next_url <- content$likes$paging$`next`
+    while (!is.null(next_url)){
+    	content <- callAPI(next_url, token)
+    	df <- rbind(df, userLikesToDF(content$data))
+    	next_url <- content$paging$`next`
+    }
 	return(df)
 }
-
 
 
 
