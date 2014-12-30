@@ -1,8 +1,12 @@
 library(devtools)
+install_github("pablobarbera/Rfacebook", subdir="Rfacebook")
+
+library(devtools)
 setwd("~/Dropbox/git/Rfacebook")
 document("Rfacebook")
 build("Rfacebook")
 install.packages("Rfacebook_0.5.tar.gz", repo=NULL, type="source")
+
 
 library(Rfacebook)
 load('test/credentials.dta')
@@ -173,41 +177,132 @@ page <- getPage(page="humansofnewyork", token=token, n=1000,
 ## searchFacebook
 ##########################################
 
-# deprecated?
+## test of Facebook app, v1.0
+load("~/Dropbox/credentials/facebook/tokenv1")
+posts <- searchFacebook( string="facebook", token=fb_oauth, n=300)
+str(posts)
+
+posts <- searchFacebook( string="pablobarbera", token=fb_oauth, n=100)
+
+## test of Facebook app, v2.0
+load("~/Dropbox/credentials/facebook/tokenv2")
+posts <- searchFacebook( string="facebook", token=fb_oauth, n=100)
+
 
 ##########################################
 ## getLikes
 ##########################################
 
-# updated this, need to add to public repo
+## test of Facebook app, v1.0
+load("~/Dropbox/credentials/facebook/tokenv1")
+likes <- getLikes(user="me", token=fb_oauth)
+str(likes)
+
+## test of Facebook app, v2.0
+load("~/Dropbox/credentials/facebook/tokenv2")
+likes <- getLikes(user="me", token=fb_oauth)
+str(likes)
+
+## test of Facebook token, Unversioned
+token <- tokenv1
+likes <- getLikes(user="me", token=token)
+str(likes)
+
+## test of Facebook token, v2.x
+token <- tokenv2
+likes <- getLikes(user="me", token=token)
+str(likes)
+
 
 ##########################################
 ## getPost
 ##########################################
 
-# check that it works with 2.0 API
-# does it also support pagination?
+## test of Facebook app, v1.0
+load("~/Dropbox/credentials/facebook/tokenv1")
+fb_page <- getPage(page="barackobama", token=fb_oauth)
+post <- getPost(post=fb_page$id[1], n=2000, token=fb_oauth)
+str(post)
+
+## test of Facebook app, v2.0
+load("~/Dropbox/credentials/facebook/tokenv2")
+fb_page <- getPage(page="barackobama", token=fb_oauth)
+post <- getPost(post=fb_page$id[1], n=2000, token=fb_oauth)
+str(post)
+
+
+# TODO
 # nested comments?
+
+##########################################
+## getNetwork
+##########################################
+
+## test of Facebook app, v1.0
+load("~/Dropbox/credentials/facebook/tokenv1")
+mat <- getNetwork(token=fb_oauth, format="adj.matrix")
+str(mat)
+
+## test of Facebook app, v2.0
+load("~/Dropbox/credentials/facebook/tokenv2")
+mat <- getNetwork(token=fb_oauth, format="adj.matrix")
+str(mat)
+
 
 ##########################################
 ## getNewsfeed
 ##########################################
 
-# does it work with 2.0 API?
+## test of Facebook app, v1.0
+load("~/Dropbox/credentials/facebook/tokenv1")
+my_newsfeed <- getNewsfeed(token=fb_oauth, n=100)
+str(my_newsfeed)
+
+## test of Facebook app, v2.0
+load("~/Dropbox/credentials/facebook/tokenv2")
+my_newsfeed <- getNewsfeed(token=fb_oauth, n=100)
+str(my_newsfeed)
+
 
 ##########################################
 ## searchPage
 ##########################################
 
-# does it work with 2.0 API?
+## test of Facebook app, v1.0
+load("~/Dropbox/credentials/facebook/tokenv1")
+pages <- searchPages( string="facebook", token=fb_oauth, n=100 )
+str(pages)
+
+## test of Facebook app, v2.0
+load("~/Dropbox/credentials/facebook/tokenv2")
+pages <- searchPages( string="facebook", token=fb_oauth, n=100 )
+str(pages)
+
 
 ##########################################
 ## updateStatus
 ##########################################
 
-# does it work with 2.0 API?
+## test of Facebook app, v1.0
+load("~/Dropbox/credentials/facebook/tokenv1")
+updateStatus("test", token=fb_oauth)
+
+## test of Facebook app, v2.0
+load("~/Dropbox/credentials/facebook/tokenv2")
+updateStatus("test", token=fb_oauth)
 
 
 
+##########################################
+## getCheckins
+##########################################
+
+## test of Facebook app, v1.0
+load("~/Dropbox/credentials/facebook/tokenv1")
+getCheckins(user="me", token=fb_oauth)
+
+## test of Facebook app, v2.0
+load("~/Dropbox/credentials/facebook/tokenv2")
+getCheckins(user="me", token=fb_oauth)
 
 
