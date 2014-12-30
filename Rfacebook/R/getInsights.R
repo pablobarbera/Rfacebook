@@ -9,10 +9,10 @@
 #' that you must specify wich metric from insights you need. 
 #'
 #' @author
-#' Danilo Silva \email{silvadaniloc@gmail.com}
-#' Eduardo Carvalho \email {eduardooc.86@gmail.com}
+#' Danilo Silva \email{silvadaniloc@@gmail.com}
+#' Eduardo Carvalho \email{eduardooc.86@@gmail.com}
 #'
-#' @param objetct_id An object (page, post, domain) ID.
+#' @param object_id An object (page, post, domain) ID.
 #'
 #' @param token Either a temporary access token created at
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
