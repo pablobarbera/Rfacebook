@@ -5,13 +5,16 @@
 #' Extract network of friends of authenticated user
 #'
 #' @description
-#' \code{getNetwork} retrieves list of mutual friendships and returns the
+#' \code{getNetwork} retrieves the list of mutual friendships and returns the
 #' adjacency matrix or edge list for the network representing the neighborhood
 #' of the authenticated user.
 #'
 #' @details
 #' 
 #' This function requires the use of an OAuth token with extended permissions.
+#'
+#' After the introduction of version 2.0 of the Graph API,
+#' only friends who are using the application will be returned.
 #'
 #' @author
 #' Pablo Barbera \email{pablo.barbera@@nyu.edu}
@@ -29,11 +32,12 @@
 #' @param verbose logical, default is \code{TRUE}, which will print additional
 #' information on the console.
 #'
+#'
 #' @examples \dontrun{
 #' ## See examples for fbOAuth to know how token was created.
-#' ## Getting my network of friends
-#'  load("fb_oauth")
-#'  mat <- getNetwork(token=fb_oauth, format="adj.matrix")
+#' ## Copy and paste token created at FB Graph API Explorer
+#'  token <- "XXXXXX"
+#'  mat <- getNetwork(token=token, format="adj.matrix")
 #'  library(igraph)
 #'  network <- graph.adjacency(mat, mode="undirected")
 #'  pdf("network_plot.pdf")
@@ -46,12 +50,23 @@ getNetwork <- function(token, format='edgelist', verbose=TRUE){
 	if (format %in% c("edgelist", "adj.matrix") == FALSE){
 		stop("format not recognized. Choose either 'edgelist' or 'adj.matrix'.")
 	}
+
+	tkversion <- getTokenVersion(token)
+
+	if (tkversion=="v2"){
+		base_url <- 'https://graph.facebook.com/v2.0'
+	}
+
+	if (tkversion=="v1"){
+		base_url <- 'https://graph.facebook.com/'
+	}
+
 	friends <- getFriends(token=token, simplify=TRUE)
 	edge.list <- NULL
 	n <- length(friends$id)
 	if (verbose==TRUE){ pb <- txtProgressBar(min=1,max=n, style=3) }
 	for (i in 1:n){
-		query <- paste0("https://graph.facebook.com/me/mutualfriends/", friends$id[i], "?")
+		query <- paste0("https://graph.facebook.com/v1.0/me/mutualfriends/", friends$id[i], "?")
 		content <- callAPI(query, token)
 		mutual.friends <- unlist(lapply(content[[1]], '[[', 'name'))
 		for (friend in mutual.friends){
