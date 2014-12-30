@@ -96,6 +96,10 @@ getPage <- function(page, token, n=100, since=NULL, until=NULL, feed=FALSE){
 		mindate <- min(dates)
 		sincedate <- as.Date(since)
 	}
+	if (is.null(since)){
+		sincedate <- as.Date('1970/01/01')
+		mindate <- as.Date(Sys.time())
+	}
 
 	## paging if n>100
 	if (n>100){
