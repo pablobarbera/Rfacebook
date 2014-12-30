@@ -11,7 +11,7 @@
 #'
 #' Note: Public post search was deprecated with version 2.0 of the Facebook Graph API,
 #' and therefore this function will no longer work. For more information about these
-#' changes, go to: \urlhttps://developers.facebook.com/docs/apps/changelog}
+#' changes, go to: \url{https://developers.facebook.com/docs/apps/changelog}
 #'
 #' The function will only work for OAuth tokens generated with version 1.0 of the API
 
@@ -99,7 +99,8 @@ searchFacebook <- function(string, token, n=200, since=NULL, until=NULL)
 		if (error==3){ stop(content$error_msg) }
 	}
 	if (length(content$data)==0){ 
-		stop("No public posts mentioning the string were found")
+		message("No public posts mentioning the string were found")
+		return(data.frame())
 	}
 	df <- searchDataToDF(content$data)
 
