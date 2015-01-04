@@ -66,9 +66,16 @@ getNetwork <- function(token, format='edgelist', verbose=TRUE){
 	n <- length(friends$id)
 	if (verbose==TRUE){ pb <- txtProgressBar(min=1,max=n, style=3) }
 	for (i in 1:n){
-		query <- paste0("https://graph.facebook.com/v1.0/me/mutualfriends/", friends$id[i], "?")
-		content <- callAPI(query, token)
-		mutual.friends <- unlist(lapply(content[[1]], '[[', 'name'))
+		if (tkversion=="v1"){
+			query <- paste0("https://graph.facebook.com/v1.0/me/mutualfriends/", friends$id[i], "?")
+			content <- callAPI(query, token)
+			mutual.friends <- unlist(lapply(content[[1]], '[[', 'name'))
+		}
+		if (tkversion=="v2"){
+			query <- paste0("https://graph.facebook.com/", friends$id[i],"?fields=context.fields(mutual_friends)")	
+			content <- callAPI(query, token)
+			mutual.friends <- unlist(lapply(content[[1]][[1]]$data, '[[', 'name'))
+		}
 		for (friend in mutual.friends){
 			edge.list <- rbind(edge.list, c(friends$name[i], friend))
 		}

@@ -248,6 +248,15 @@ load("~/Dropbox/credentials/facebook/tokenv2")
 mat <- getNetwork(token=fb_oauth, format="adj.matrix")
 str(mat)
 
+## test of Facebook token, Unversioned
+token <- tokenv1
+mat <- getNetwork(token=token, format="adj.matrix")
+str(mat)
+
+## test of Facebook token, v2.x
+token <- tokenv2
+mat <- getNetwork(token=token, format="adj.matrix")
+str(mat)
 
 ##########################################
 ## getNewsfeed
