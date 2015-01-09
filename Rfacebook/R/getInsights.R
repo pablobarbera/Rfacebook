@@ -37,7 +37,8 @@
 #'	insights <- getInsights(object_id="20531316728", token=fb_oauth, metric='page_impressions')
 #' ## Getting post impressions for a random Facebook`s page post
 #' ## (only owner or admin of page)
-#'  insights <- getInsights(object_id='221568044327801_754789777921289', token=fb_oauth, metric='post_impressions', period='days_28')
+#'  insights <- getInsights(object_id='221568044327801_754789777921289', 
+#'      token=fb_oauth, metric='post_impressions', period='days_28')
 #' }
 #'
 

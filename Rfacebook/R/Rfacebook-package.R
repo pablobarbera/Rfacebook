@@ -12,6 +12,6 @@
 #' @aliases Rfacebook
 #' @docType package
 #' @author Pablo Barbera \email{pablo.barbera@@nyu.edu}
-#' @import httr rjson
+#' @import httr rjson httpuv
 NULL
 

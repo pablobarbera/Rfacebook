@@ -9,5 +9,6 @@ Maintainer: Pablo Barbera <pablo.barbera@nyu.edu>
 Depends:
     R (>= 2.12.0),
     httr,
-    rjson
+    rjson,
+    httpuv
 License: GPL-2
