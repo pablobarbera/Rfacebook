@@ -1,6 +1,6 @@
 Package: Rfacebook
 Title: Access to Facebook API via R
-Description: Provides an interface to the Facebook API
+Description: Provides an interface to the Facebook API.
 Version: 0.5
 Date: 2014/04/02
 Author: Pablo Barbera <pablo.barbera@nyu.edu>, Michael Piccirilli
