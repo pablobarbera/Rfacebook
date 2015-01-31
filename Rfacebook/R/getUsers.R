@@ -71,14 +71,14 @@ getUsers <- function(users, token, private_info=FALSE)
 		query <- paste('https://graph.facebook.com/',
 			ifelse(tkversion=='v2', 'v2.0/', ''), '?ids=', 
 			paste(names(actual.users), collapse=","), 
-			"&fields=id,name,first_name,last_name,gender,locale,birthday,",
+			"&fields=id,name,first_name,middle_name,last_name,gender,locale,birthday,",
 			"location,hometown,relationship_status,picture.type(large)", sep="")
 		}
 		if (private_info==FALSE){
 		query <- paste('https://graph.facebook.com/',
 			ifelse(tkversion=='v2', 'v2.0/', ''), '?ids=', 
 			paste(names(actual.users), collapse=","),
-			"&fields=id,name,first_name,last_name,gender,locale,",
+			"&fields=id,name,first_name,middle_name,last_name,gender,locale,",
 			"picture.type(large)", sep="")
 		}		
 		## making query
@@ -128,14 +128,14 @@ getUsers <- function(users, token, private_info=FALSE)
 				query <- paste('https://graph.facebook.com/', 
 					ifelse(tkversion=='v2', 'v2.0/', ''), '?ids=', 
 					paste(names(actual.users), collapse=","), 
-					"&fields=id,name,first_name,last_name,gender,locale,birthday,",
+					"&fields=id,name,first_name,middle_name,last_name,gender,locale,birthday,",
 					"location,hometown,relationship_status,picture.type(large)", sep="")
 				}
 				if (private_info==FALSE){
 				query <- paste('https://graph.facebook.com/', 
 					ifelse(tkversion=='v2', 'v2.0/', ''), '?ids=', 
 					paste(names(actual.users), collapse=","),
-					"&fields=id,name,first_name,last_name,gender,locale,",
+					"&fields=id,name,first_name,middle_name,last_name,gender,locale,",
 					"picture.type(large)", sep="")
 				}		
 				## making query
