@@ -17,7 +17,7 @@ created with \code{fbOAuth}.}
 \item{n}{Maximum number of pages to return.}
 }
 \description{
-\code{searchPages} retrieves public status updates that mention a given keyword
+\code{searchPages} retrieves public pages that mention a given keyword
 }
 \examples{
 \dontrun{

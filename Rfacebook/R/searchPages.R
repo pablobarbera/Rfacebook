@@ -5,7 +5,7 @@
 #' Search pages that mention a string
 #'
 #' @description
-#' \code{searchPages} retrieves public status updates that mention a given keyword
+#' \code{searchPages} retrieves public pages that mention a given keyword
 #'
 #' @author
 #' Pablo Barbera \email{pablo.barbera@@nyu.edu}, Joel Gombin \email{joel.gombin@@gmail.com}
