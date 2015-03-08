@@ -55,7 +55,7 @@ insightsDataToDF <- function(json, values, metric){
         from_id = json$id,
         metric_name = json$name,
         period = json$period,
-        link_clicks = ifelse(!is.null(json$values$value$link clicks), json$values$value$link clicks, 0),
+        link_clicks = ifelse(!is.null(json$values$value$'link clicks'), json$values$value$'link clicks', 0),
         stringsAsFactors=F)
   	}
   if (metric=="page_fans_country"){
