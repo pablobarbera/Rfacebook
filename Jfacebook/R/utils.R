@@ -44,7 +44,6 @@ pageDataToDF <- function(json){
 		likes_count = unlistWithNA(json, c('likes', 'summary', 'total_count')),
 		comments_count = unlistWithNA(json, c('comments', 'summary', 'total_count')),
 		shares_count = unlistWithNA(json, c('shares', 'count')),
-		impressions = getInsights(object_id=id, metric='post_impressions', period='lifetime')
 		stringsAsFactors=F)
 	return(df)
 }
