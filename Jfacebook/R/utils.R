@@ -52,11 +52,11 @@ insightsDataToDF <- function(json, values, metric){
   if (metric!="page_fans_country"){
     values <- lapply(json[[1]]$values, function(x) x$value)
     df <- data.frame(
-        id = json$id,
-        metric_name = json$name,
-        period = json$period,
+        id = unlistWithNA(json, 'id'),
+        metric_name = unlistWithNA(json, 'name'),
+        period = unlistWithNA(json, 'period'),
         values = unlist(values),
-        end_time = json$end_time,
+        end_time = unlist(end_times),
         stringsAsFactors=F)
   }
   if (metric=="page_fans_country"){
