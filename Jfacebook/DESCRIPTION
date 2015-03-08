@@ -1,4 +1,4 @@
-Package: Rfacebook
+Package: Jfacebook
 Title: Access to Facebook API via R
 Description: Provides an interface to the Facebook API. Fork of Rfacebook 0.5 by Pablo Barbera
 Version: 0.6
