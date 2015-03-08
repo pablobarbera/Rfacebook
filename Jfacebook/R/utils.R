@@ -49,26 +49,24 @@ pageDataToDF <- function(json){
 }
 
 insightsDataToDF <- function(json, values, metric){
-   	
-  	if (metric=="post_consumptions_by_type"){
-	    values <- lapply(json[[1]]$values, function(x) x$value)
-	    df <- data.frame(
-	        id = unlistWithNA(json, 'id'),
-	        metric_name = unlistWithNA(json, 'name'),
-	        period = unlistWithNA(json, 'period'),
-	        values = unlist(values),
-	        stringsAsFactors=F)
+   if (metric!="post_consumptions_by_type"){
+    df <- data.frame(
+        id = unlistWithNA(json, 'id'),
+        metric_name = unlistWithNA(json, 'name'),
+        period = unlistWithNA(json, 'period'),
+        values = unlistWithNA(values, 'value'),
+        end_time = unlistWithNA(values, 'end_time'),
+        stringsAsFactors=F)
+	}		
+  if (metric=="post_consumptions_by_type"){
+    values <- lapply(json[[1]]$values, function(x) x$value)
+    df <- data.frame(
+        id = unlistWithNA(json, 'id'),
+        metric_name = unlistWithNA(json, 'name'),
+        period = unlistWithNA(json, 'period'),
+        values = unlist(values),
+        stringsAsFactors=F)
 	}
-	else{
-	    df <- data.frame(
-	        id = unlistWithNA(json, 'id'),
-	        metric_name = unlistWithNA(json, 'name'),
-	        period = unlistWithNA(json, 'period'),
-	        values = unlistWithNA(values, 'value'),
-	        end_time = unlistWithNA(values, 'end_time'),
-	        stringsAsFactors=F)
-	}	
-
   return(df)
 }
 
