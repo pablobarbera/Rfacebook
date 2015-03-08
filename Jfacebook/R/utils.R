@@ -50,9 +50,9 @@ pageDataToDF <- function(json){
 
 insightsDataToDF <- function(json, values, metric){
  
-  if (metric=="text"){
+  if (metric=="post_consumptions_by_type"){
     values <- lapply(json[[1]]$values, function(x) x$value)
-    end_times <- unlist(lapply(json[[1]]$values, function(x) x$end_time))
+    end_times <- lapply(json[[1]]$values, function(x) x$end_time)
     df <- data.frame(
         id = unlistWithNA(json, 'id'),
         metric_name = unlistWithNA(json, 'name'),
