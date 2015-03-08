@@ -56,7 +56,7 @@ insightsDataToDF <- function(json, values, metric){
         metric_name = unlistWithNA(json, 'name'),
         period = unlistWithNA(json, 'period'),
         values = unlist(values),
-        end_time = unlist(end_times),
+        end_time = unlistWithNA(values, 'end_time'),
         stringsAsFactors=F)
   }
   if (metric=="page_fans_country"){
