@@ -53,7 +53,7 @@ insightsDataToDF <- function(json, values, metric){
   if (metric=="post_consumptions_by_type"){
     values <- lapply(json[[1]]$values, function(x) x$value)
     end_times <- unlist(lapply(json[[1]]$values, function(x) x$end_time))
-    end_times <- unlist(lapply(1:length(countries), function(x) rep(end_times[[x]], length(countries[[x]]))))
+    end_times <- unlist(lapply(1:length(values), function(x) rep(end_times[[x]], length(values[[x]]))))
 
     df <- data.frame(
        	id = unlistWithNA(json, 'id'),
