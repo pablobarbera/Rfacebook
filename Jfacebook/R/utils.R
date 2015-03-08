@@ -50,12 +50,13 @@ pageDataToDF <- function(json){
 
 insightsDataToDF <- function(json, values, metric){
   if (metric!="page_fans_country"){
+    values <- lapply(json[[1]]$values, function(x) x$value)
     df <- data.frame(
-        id = unlistWithNA(json, 'id'),
-        metric_name = unlistWithNA(json, 'name'),
-        period = unlistWithNA(json, 'period'),
-        values = unlistWithNA(values, 'value'),
-        end_time = unlistWithNA(values, 'end_time'),
+        id = json$id,
+        metric_name = json$name,
+        period = json$period,
+        values = unlist(values),
+        end_time = json$end_time,
         stringsAsFactors=F)
   }
   if (metric=="page_fans_country"){
@@ -196,6 +197,7 @@ unlistWithNA <- function(lst, field){
 	if (length(field)==1){
 		notnulls <- unlist(lapply(lst, function(x) !is.null(x[[field]])))
 		vect <- rep(NA, length(lst))
+		vect[notnulls] <- unlist(lapply(lst, function(x) x[[field]]))
 	}
 	if (length(field)==2){
 		notnulls <- unlist(lapply(lst, function(x) !is.null(x[[field[1]]][[field[2]]])))
