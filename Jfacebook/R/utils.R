@@ -52,9 +52,9 @@ insightsDataToDF <- function(json, values, metric){
  
   if (metric=="post_consumptions_by_type"){
     df <- data.frame(
-        id = unlistWithNA(json, 'id'),
-        metric_name = unlistWithNA(json, 'name'),
-        period = unlistWithNA(json, 'period'),
+        from_id = json$id,
+        metric_name = json$name,
+        period = json$period,
         link_clicks = ifelse(!is.null(json$values$value$link clicks), json$values$value$link clicks, 0),
         stringsAsFactors=F)
   	}
