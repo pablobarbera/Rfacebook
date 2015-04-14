@@ -32,3 +32,5 @@
     - All functions now compatible with API v2.x
     - GetPage now has date search options
     - Fixed minor bugs in multiple functions (see github commits)
+2015-04-15 - version 0.5.1:
+    - Fixed bugs in getInsights

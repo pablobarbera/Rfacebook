@@ -1,0 +1,14 @@
+Package: Rfacebook
+Title: Access to Facebook API via R
+Description: Provides an interface to the Facebook API.
+Version: 0.5.1
+Date: 2015/04/15
+Author: Pablo Barbera <pablo.barbera@nyu.edu>, Michael Piccirilli
+    <mrp2181@columbia.edu>
+Maintainer: Pablo Barbera <pablo.barbera@nyu.edu>
+Depends:
+    R (>= 2.12.0),
+    httr,
+    rjson,
+    httpuv
+License: GPL-2
