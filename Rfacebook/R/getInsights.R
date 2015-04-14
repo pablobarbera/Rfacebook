@@ -6,7 +6,13 @@
 #'
 #' @description
 #' \code{getInsights} retrieves information from an owned Facebook page. Note 
-#' that you must specify wich metric from insights you need. 
+#' that you must specify wich metric from insights you need and the period.
+#'
+#' @details
+#' The current list of supported metrics and periods is: page_fan_adds, page_fan_removes, 
+#' page_views_login, page_views_login, page_views_logout, page_views, page_story_adds, 
+#' page_impressions, page_posts_impressions, page_consumptions, post_consumptions_by_type, 
+#' page_consumptions, page_fans_country, 
 #'
 #' @author
 #' Danilo Silva \email{silvadaniloc@@gmail.com}
@@ -18,10 +24,9 @@
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
 #' created with \code{fbOAuth}.
 #'
+#' @param metric The metric which you want to get values for.
+#'
 #' @param period Time intervals to return
-#' 
-#' @param metric The metric wich you want to get values (All metrics are listed
-#' in https://developers.facebook.com/docs/graph-api/reference/v2.1/insights)
 #' 
 #' @param n Number of time intervals of metric values to return. Note that all
 #' metrics returned will be multiple of 3, except for lifetime period. Default
@@ -35,10 +40,13 @@
 #' ## (only owner or admin of page)
 #'  load("fb_oauth")
 #'	insights <- getInsights(object_id="20531316728", token=fb_oauth, metric='page_impressions')
-#' ## Getting post impressions for a random Facebook`s page post
+#' ## Getting post impressions for a random Facebook's page post
 #' ## (only owner or admin of page)
 #'  insights <- getInsights(object_id='221568044327801_754789777921289', 
 #'      token=fb_oauth, metric='post_impressions', period='days_28')
+#' ## Count of fans by country
+#'   insights <- getInsights(object_id='221568044327801_754789777921289', 
+#'      token=fb_oauth, metric='page_fans_country', period='lifetime')
 #' }
 #'
 
@@ -48,11 +56,11 @@ getInsights <- function(object_id, token, metric, period='day', n=5){
   
   # making query
   content <- callAPI(url=url, token=token)
-  l <- length(content$data[[1]]$values)
-  if (l==0){ 
-    stop("No public posts mentioning the string were found")
+  if (length(content$data)==0){ 
+    stop("No data available. Are you the owner of this page? See ?getInsights.")
   }
-  
+
+  l <- length(content$data[[1]]$values)
   ## retrying 3 times if error was found
   error <- 0
   while (length(content$error_code)>0){
@@ -63,9 +71,7 @@ getInsights <- function(object_id, token, metric, period='day', n=5){
     content <- callAPI(url=url, token=token)		
     if (error==3){ stop(content$error_msg) }
   }
-  if (length(content$data)==0){ 
-    stop("No public posts mentioning the string were found")
-  }
+
   df <- insightsDataToDF(content$data, content$data[[1]]$values, metric)
   
   if (n>nrow(df)){
@@ -93,6 +99,5 @@ getInsights <- function(object_id, token, metric, period='day', n=5){
     }
     df <- do.call(rbind, df.list)
   }
-  cat(l, "objects found ")
   return(df)
 }

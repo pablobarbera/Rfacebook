@@ -13,8 +13,7 @@ getInsights(object_id, token, metric, period = "day", n = 5)
 \url{https://developers.facebook.com/tools/explorer} or the OAuth token
 created with \code{fbOAuth}.}
 
-\item{metric}{The metric wich you want to get values (All metrics are listed
-in https://developers.facebook.com/docs/graph-api/reference/v2.1/insights)}
+\item{metric}{The metric which you want to get values for.}
 
 \item{period}{Time intervals to return}
 
@@ -24,7 +23,13 @@ n is 5}
 }
 \description{
 \code{getInsights} retrieves information from an owned Facebook page. Note
-that you must specify wich metric from insights you need.
+that you must specify wich metric from insights you need and the period.
+}
+\details{
+The current list of supported metrics and periods is: page_fan_adds, page_fan_removes,
+page_views_login, page_views_login, page_views_logout, page_views, page_story_adds,
+page_impressions, page_posts_impressions, page_consumptions, post_consumptions_by_type,
+page_consumptions, page_fans_country,
 }
 \examples{
 \dontrun{
@@ -33,10 +38,13 @@ that you must specify wich metric from insights you need.
 ## (only owner or admin of page)
  load("fb_oauth")
 	insights <- getInsights(object_id="20531316728", token=fb_oauth, metric='page_impressions')
-## Getting post impressions for a random Facebook`s page post
+## Getting post impressions for a random Facebook's page post
 ## (only owner or admin of page)
  insights <- getInsights(object_id='221568044327801_754789777921289',
      token=fb_oauth, metric='post_impressions', period='days_28')
+## Count of fans by country
+  insights <- getInsights(object_id='221568044327801_754789777921289',
+     token=fb_oauth, metric='page_fans_country', period='lifetime')
 }
 }
 \author{

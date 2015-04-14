@@ -49,7 +49,7 @@ pageDataToDF <- function(json){
 }
 
 insightsDataToDF <- function(json, values, metric){
-   	if (metric!="post_consumptions_by_type"){
+   	if (metric!="post_consumptions_by_type" & metric!="page_fans_country"){
 	    df <- data.frame(
 	        id = unlistWithNA(json, 'id'),
 	        metric_name = unlistWithNA(json, 'name'),
@@ -66,6 +66,23 @@ insightsDataToDF <- function(json, values, metric){
 	        period = unlistWithNA(json, 'period'),
 	        values = unlist(values),
 	        stringsAsFactors=F)
+	if (metric=="page_fans_country"){
+	  # values for country-level variables
+	  countries <- lapply(json[[1]]$values, function(x) names(x$value))
+	  values <- lapply(json[[1]]$values, function(x) x$value)
+	  end_times <- unlist(lapply(json[[1]]$values, function(x) x$end_time))
+	  end_times <- unlist(lapply(1:length(countries), function(x) 
+	  	rep(end_times[[x]], length(countries[[x]]))))
+	  df <- data.frame(
+	      id = unlistWithNA(json, 'id'),
+	      metric_name = unlistWithNA(json, 'name'),
+	      period = unlistWithNA(json, 'period'),
+	      country = unlist(countries),
+	      values = unlist(values),
+	      end_time = unlist(end_times),
+	      stringsAsFactors=F)
+	  }
+
 	}
   return(df)
 }
