@@ -1,0 +1,13 @@
+Package: Jfacebook
+Title: Access to Facebook API via R
+Description: Provides an interface to the Facebook API. Fork of Rfacebook 0.5 by Pablo Barbera
+Version: 0.6
+Date: 2015/03/08
+Author: Jonas Wegener <jonas@steps.fm>
+Maintainer: Jonas Wegener <jonas@steps.fm>
+Depends:
+    R (>= 2.12.0),
+    httr,
+    rjson,
+    httpuv
+License: GPL-2

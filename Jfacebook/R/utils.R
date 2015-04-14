@@ -49,31 +49,24 @@ pageDataToDF <- function(json){
 }
 
 insightsDataToDF <- function(json, values, metric){
-  if (metric!="page_fans_country"){
-    df <- data.frame(
-        id = unlistWithNA(json, 'id'),
-        metric_name = unlistWithNA(json, 'name'),
-        period = unlistWithNA(json, 'period'),
-        values = unlistWithNA(values, 'value'),
-        end_time = unlistWithNA(values, 'end_time'),
-        stringsAsFactors=F)
-  }
-  if (metric=="page_fans_country"){
-    # values for country-level variables
-    countries <- lapply(json[[1]]$values, function(x) names(x$value))
-    values <- lapply(json[[1]]$values, function(x) x$value)
-    end_times <- unlist(lapply(json[[1]]$values, function(x) x$end_time))
-    end_times <- unlist(lapply(1:length(countries), function(x) rep(end_times[[x]], length(countries[[x]]))))
-
-    df <- data.frame(
-        id = unlistWithNA(json, 'id'),
-        metric_name = unlistWithNA(json, 'name'),
-        period = unlistWithNA(json, 'period'),
-        country = unlist(countries),
-        values = unlist(values),
-        end_time = unlist(end_times),
-        stringsAsFactors=F)
-    }
+   	if (metric!="post_consumptions_by_type"){
+	    df <- data.frame(
+	        id = unlistWithNA(json, 'id'),
+	        metric_name = unlistWithNA(json, 'name'),
+	        period = unlistWithNA(json, 'period'),
+	        values = unlistWithNA(values, 'value'),
+	        end_time = unlistWithNA(values, 'end_time'),
+	        stringsAsFactors=F)
+	}		
+  	if (metric=="post_consumptions_by_type"){
+	    values <- lapply(json[[1]]$values, function(x) x$value)
+	    df <- data.frame(
+	        id = unlistWithNA(json, 'id'),
+	        metric_name = unlistWithNA(json, 'name'),
+	        period = unlistWithNA(json, 'period'),
+	        values = unlist(values),
+	        stringsAsFactors=F)
+	}
   return(df)
 }
 
@@ -196,7 +189,7 @@ unlistWithNA <- function(lst, field){
 	if (length(field)==1){
 		notnulls <- unlist(lapply(lst, function(x) !is.null(x[[field]])))
 		vect <- rep(NA, length(lst))
-		vect[notnulls] <- unlist(lapply(lst, '[[', field))
+		vect[notnulls] <- unlist(lapply(lst, function(x) x[[field]]))
 	}
 	if (length(field)==2){
 		notnulls <- unlist(lapply(lst, function(x) !is.null(x[[field[1]]][[field[2]]])))

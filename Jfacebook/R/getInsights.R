@@ -66,7 +66,7 @@ getInsights <- function(object_id, token, metric, period='day', n=5){
   if (length(content$data)==0){ 
     stop("No public posts mentioning the string were found")
   }
-  df <- insightsDataToDF(content$data, content$data[[1]]$values)
+  df <- insightsDataToDF(content$data, content$data[[1]]$values, metric)
   
   if (n>nrow(df)){
     df.list <- list(df)
@@ -89,7 +89,7 @@ getInsights <- function(object_id, token, metric, period='day', n=5){
         if (error==3){ stop(content$error_msg) }
       }
       
-      df.list <- c(df.list, list(insightsDataToDF(content$data, content$data[[1]]$values)))
+      df.list <- c(df.list, list(insightsDataToDF(content$data, content$data[[1]]$values, metric)))
     }
     df <- do.call(rbind, df.list)
   }
