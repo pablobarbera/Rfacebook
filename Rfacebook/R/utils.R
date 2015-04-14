@@ -142,6 +142,7 @@ userDataToDF <- function(user_data, private_info){
 		name = unlistWithNA(user_data, 'name'),
 		username = unlistWithNA(user_data, 'username'),
 		first_name = unlistWithNA(user_data, 'first_name'),
+		middle_name = unlistWithNA(user_data, 'middle_name'),
 		last_name = unlistWithNA(user_data, 'last_name'),
 		gender = unlistWithNA(user_data, 'gender'),
 		locale = unlistWithNA(user_data, 'locale'),
