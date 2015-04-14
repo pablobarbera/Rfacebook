@@ -29,7 +29,9 @@ that you must specify wich metric from insights you need and the period.
 The current list of supported metrics and periods is: page_fan_adds, page_fan_removes,
 page_views_login, page_views_login, page_views_logout, page_views, page_story_adds,
 page_impressions, page_posts_impressions, page_consumptions, post_consumptions_by_type,
-page_consumptions, page_fans_country,
+page_consumptions, and page_fans_country.
+
+For more information, see: \url{https://developers.facebook.com/docs/graph-api/reference/v2.1/insights}
 }
 \examples{
 \dontrun{
