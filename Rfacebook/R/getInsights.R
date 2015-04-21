@@ -101,5 +101,6 @@ getInsights <- function(object_id, token, metric, period='day', n=5){
     }
     df <- do.call(rbind, df.list)
   }
+  if ('end_time' %in% names(df)){ df <- df[order(df$end_time),] }
   return(df)
 }
