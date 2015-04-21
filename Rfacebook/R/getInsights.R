@@ -79,11 +79,11 @@ getInsights <- function(object_id, token, metric, period='day', n=5){
   if (n>nrow(df)){
     df.list <- list(df)
     while (l<n & l>0 & 
-             !is.null(content$paging$`next`)&
+             !is.null(content$paging$`previous`)&
              period != 'lifetime'){
       # waiting one second before making next API call...
       Sys.sleep(0.5)
-      url <- content$paging$`next`
+      url <- content$paging$`previous`
       content <- callAPI(url=url, token=token)
       l <- l + nrow(df)
       
