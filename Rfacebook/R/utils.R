@@ -50,18 +50,33 @@ pageDataToDF <- function(json){
 
 insightsDataToDF <- function(x){
   
+  values <- list()
+  for (i in 1:length(x$data[[1]]$values)){
+    tmp <- data.frame(unlist(x$data[[1]]$values[[i]]$value), end_time=x$data[[1]]$values[[i]]$end_time)
+    tmp$variable <- row.names(tmp)
+    row.names(tmp) <- NULL
+    names(tmp) <- c('value', 'end_time', 'variable')
+    values[[i]] <- tmp
+  }
+  
+  values <- do.call('rbind',values)
+  
   df <- data.frame(
-    id=x$data$id,
-    name=x$data$name,
-    period=x$data$period,
-    title=x$data$title,
-    description=x$data$description,
-    data.frame(end_time=x$data$values[[1]]$end_time, stringsAsFactors=FALSE),
-    data.frame(dummyLabel=x$data$values[[1]]$value, stringsAsFactors=FALSE),
+    id=x$data[[1]]$id,
+    name=x$data[[1]]$name,
+    period=x$data[[1]]$period,
+    title=x$data[[1]]$title,
+    description=x$data[[1]]$description,
+    values,
     stringsAsFactors=FALSE
   )
-  
-  names(df) <- gsub('dummyLabel.','',names(df))
+
+  if(df$variable[1]==1){
+    df$variable <- NULL
+  } else {
+    df <- df
+  }
+
   return(df)
 }
 
