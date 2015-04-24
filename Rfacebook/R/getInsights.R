@@ -52,9 +52,16 @@
 #' }
 #'
 
-getInsights <- function(object_id, token, metric, period='day', n=5){
-  url <- paste0('https://graph.facebook.com/', object_id,
-                '/insights/', metric, '?period=', period)
+getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){ ##ADDED PARMS ARGUMENT
+  
+  ##IF PARMS ARGUMENT IS PRESENT, CONCAT TO END OF URL, OTHERWISE OMIT.
+  if(parms=='NA'){
+    url <- paste0('https://graph.facebook.com/', object_id,
+                  '/insights/', metric, '?period=', period)
+  }else{
+    url <- paste0('https://graph.facebook.com/', object_id,
+                  '/insights/', metric, '?period=', period, parms)  
+  }
   
   # making query
   content <- callAPI(url=url, token=token)
@@ -74,7 +81,7 @@ getInsights <- function(object_id, token, metric, period='day', n=5){
     if (error==3){ stop(content$error_msg) }
   }
 
-  df <- insightsDataToDF(content$data, content$data[[1]]$values, metric)
+  df <- insightsDataToDF(content)
   
   if (n>nrow(df)){
     df.list <- list(df)
@@ -97,7 +104,7 @@ getInsights <- function(object_id, token, metric, period='day', n=5){
         if (error==3){ stop(content$error_msg) }
       }
       
-      df.list <- c(df.list, list(insightsDataToDF(content$data, content$data[[1]]$values, metric)))
+      df.list <- c(df.list, list(insightsDataToDF(content)))
     }
     df <- do.call(rbind, df.list)
   }
