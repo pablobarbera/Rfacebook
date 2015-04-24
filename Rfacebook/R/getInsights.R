@@ -55,7 +55,7 @@
 getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){ ##ADDED PARMS ARGUMENT
   
   ##IF PARMS ARGUMENT IS PRESENT, CONCAT TO END OF URL, OTHERWISE OMIT.
-  if(parms=='NA'){
+  if(is.na(parms)){
     url <- paste0('https://graph.facebook.com/', object_id,
                   '/insights/', metric, '?period=', period)
   }else{
