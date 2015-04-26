@@ -51,12 +51,25 @@ pageDataToDF <- function(json){
 insightsDataToDF <- function(x){
   
   values <- list()
+  
+  if(grepl('^post',x$data[[1]]$name)){
+  
+  for (i in 1:length(x$data[[1]]$values)){
+    tmp <- data.frame(unlist(x$data[[1]]$values[[i]]$value))
+    tmp$variable <- row.names(tmp)
+    row.names(tmp) <- NULL
+    names(tmp) <- c('value', 'variable')
+    values[[i]] <- tmp
+  }  
+  } else { 
+    
   for (i in 1:length(x$data[[1]]$values)){
     tmp <- data.frame(unlist(x$data[[1]]$values[[i]]$value), end_time=x$data[[1]]$values[[i]]$end_time)
     tmp$variable <- row.names(tmp)
     row.names(tmp) <- NULL
     names(tmp) <- c('value', 'end_time', 'variable')
     values[[i]] <- tmp
+  }
   }
   
   values <- do.call('rbind',values)
@@ -71,7 +84,7 @@ insightsDataToDF <- function(x){
     stringsAsFactors=FALSE
   )
 
-  if(df$variable[1]==1 & df$variable[2]==1){
+  if(length(unique(df$variable))==1 & df$variable[1]==1){
     df$variable <- NULL
   } else {
     df <- df
