@@ -71,7 +71,7 @@ insightsDataToDF <- function(x){
     stringsAsFactors=FALSE
   )
 
-  if(df$variable[1]==1){
+  if(df$variable[1]==1 & df$variable[2]==1){
     df$variable <- NULL
   } else {
     df <- df
