@@ -53,7 +53,7 @@ getPage <- function(page, token, n=100, since=NULL, until=NULL, feed=FALSE){
 
 	url <- paste0('https://graph.facebook.com/', page,
 		'/posts?fields=from,message,created_time,type,link,comments.summary(true)',
-		',likes.summary(true),shares&limit=')
+		',likes.summary(true),shares')
 	if (feed){
 		url <- paste0('https://graph.facebook.com/', page,
 		'/feed?fields=from,message,created_time,type,link,comments.summary(true)',
