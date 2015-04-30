@@ -48,41 +48,48 @@ pageDataToDF <- function(json){
 	return(df)
 }
 
-insightsDataToDF <- function(json, values, metric){
-   	if (metric!="post_consumptions_by_type" & metric!="page_fans_country"){
-	    df <- data.frame(
-	        id = unlistWithNA(json, 'id'),
-	        metric_name = unlistWithNA(json, 'name'),
-	        period = unlistWithNA(json, 'period'),
-	        values = unlistWithNA(values, 'value'),
-	        end_time = unlistWithNA(values, 'end_time'),
-	        stringsAsFactors=F)
-	}		
-  	if (metric=="post_consumptions_by_type"){
-	    values <- lapply(json[[1]]$values, function(x) x$value)
-	    df <- data.frame(
-	        id = unlistWithNA(json, 'id'),
-	        metric_name = unlistWithNA(json, 'name'),
-	        period = unlistWithNA(json, 'period'),
-	        values = unlist(values),
-	        stringsAsFactors=F)
-	}
-	if (metric=="page_fans_country"){
-	  # values for country-level variables
-	  countries <- lapply(json[[1]]$values, function(x) names(x$value))
-	  values <- lapply(json[[1]]$values, function(x) x$value)
-	  end_times <- unlist(lapply(json[[1]]$values, function(x) x$end_time))
-	  end_times <- unlist(lapply(1:length(countries), function(x) 
-	  	rep(end_times[[x]], length(countries[[x]]))))
-	  df <- data.frame(
-	      id = unlistWithNA(json, 'id'),
-	      metric_name = unlistWithNA(json, 'name'),
-	      period = unlistWithNA(json, 'period'),
-	      country = unlist(countries),
-	      values = unlist(values),
-	      end_time = unlist(end_times),
-	      stringsAsFactors=F)
-	  }
+insightsDataToDF <- function(x){
+  
+  values <- list()
+  
+  if(grepl('^post',x$data[[1]]$name)){
+  
+  for (i in 1:length(x$data[[1]]$values)){
+    tmp <- data.frame(unlist(x$data[[1]]$values[[i]]$value))
+    tmp$variable <- row.names(tmp)
+    row.names(tmp) <- NULL
+    names(tmp) <- c('value', 'variable')
+    values[[i]] <- tmp
+  }  
+  } else { 
+    
+  for (i in 1:length(x$data[[1]]$values)){
+    tmp <- data.frame(unlist(x$data[[1]]$values[[i]]$value), end_time=x$data[[1]]$values[[i]]$end_time)
+    tmp$variable <- row.names(tmp)
+    row.names(tmp) <- NULL
+    names(tmp) <- c('value', 'end_time', 'variable')
+    values[[i]] <- tmp
+  }
+  }
+  
+  values <- do.call('rbind',values)
+  
+  df <- data.frame(
+    id=x$data[[1]]$id,
+    name=x$data[[1]]$name,
+    period=x$data[[1]]$period,
+    title=x$data[[1]]$title,
+    description=x$data[[1]]$description,
+    values,
+    stringsAsFactors=FALSE
+  )
+
+  if(length(unique(df$variable))==1 & df$variable[1]==1){
+    df$variable <- NULL
+  } else {
+    df <- df
+  }
+
   return(df)
 }
 
