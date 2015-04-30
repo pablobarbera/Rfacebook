@@ -19,6 +19,7 @@
 #' @author
 #' Danilo Silva \email{silvadaniloc@@gmail.com}
 #' Eduardo Carvalho \email{eduardooc.86@@gmail.com}
+#' Andrew Geisler \url{https://github.com/andrewgeisler}
 #'
 #' @param object_id An object (page, post, domain) ID.
 #'
