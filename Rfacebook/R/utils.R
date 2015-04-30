@@ -55,7 +55,7 @@ insightsDataToDF <- function(x){
   if(grepl('^post',x$data[[1]]$name)){
   
   for (i in 1:length(x$data[[1]]$values)){
-    tmp <- data.frame(unlist(x$data[[1]]$values[[i]]$value))
+    tmp <- data.frame(unlist(x$data[[1]]$values[[i]]$value), stringsAsFactors=F)
     tmp$variable <- row.names(tmp)
     row.names(tmp) <- NULL
     names(tmp) <- c('value', 'variable')
@@ -64,7 +64,7 @@ insightsDataToDF <- function(x){
   } else { 
     
   for (i in 1:length(x$data[[1]]$values)){
-    tmp <- data.frame(unlist(x$data[[1]]$values[[i]]$value), end_time=x$data[[1]]$values[[i]]$end_time)
+    tmp <- data.frame(unlist(x$data[[1]]$values[[i]]$value), end_time=x$data[[1]]$values[[i]]$end_time, stringsAsFactors=F)
     tmp$variable <- row.names(tmp)
     row.names(tmp) <- NULL
     names(tmp) <- c('value', 'end_time', 'variable')
