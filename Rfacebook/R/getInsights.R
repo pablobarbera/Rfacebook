@@ -30,6 +30,9 @@
 #'
 #' @param period Time intervals to return
 #' 
+#' @param parms Optional argument that can be used to append additional
+#' parameters. For example, \code{&since=DATE&until=DATE}.
+#' 
 #' @param n Number of time intervals of metric values to return. Note that all
 #' metrics returned will be multiple of 3, except for lifetime period. Default
 #' n is 5
@@ -52,7 +55,7 @@
 #' }
 #'
 
-getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){ ##ADDED PARMS ARGUMENT
+getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){ 
   
   ##IF PARMS ARGUMENT IS PRESENT, CONCAT TO END OF URL, OTHERWISE OMIT.
   if(is.na(parms)){

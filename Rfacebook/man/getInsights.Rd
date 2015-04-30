@@ -4,7 +4,7 @@
 \alias{getInsights}
 \title{Extract Insights metric from a Facebook page (admin role required)}
 \usage{
-getInsights(object_id, token, metric, period = "day", n = 5)
+getInsights(object_id, token, metric, period = "day", parms = NA, n = 5)
 }
 \arguments{
 \item{object_id}{An object (page, post, domain) ID.}
@@ -16,6 +16,9 @@ created with \code{fbOAuth}.}
 \item{metric}{The metric which you want to get values for.}
 
 \item{period}{Time intervals to return}
+
+\item{parms}{Optional argument that can be used to append additional
+parameters. For example, \code{&since=DATE&until=DATE}.}
 
 \item{n}{Number of time intervals of metric values to return. Note that all
 metrics returned will be multiple of 3, except for lifetime period. Default
