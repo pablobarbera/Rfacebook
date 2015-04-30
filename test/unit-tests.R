@@ -315,3 +315,17 @@ load("~/Dropbox/credentials/facebook/tokenv2")
 getCheckins(user="me", token=fb_oauth)
 
 
+##########################################
+## getInsights
+##########################################
+
+df <- getInsights("testpageforresearch", token, metric="page_fans_country", period='lifetime')
+
+df <- getInsights("testpageforresearch", token, metric="page_fan_adds")
+
+
+
+
+
+
+
