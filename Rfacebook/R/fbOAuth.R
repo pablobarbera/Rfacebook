@@ -85,9 +85,7 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
 	myapp <- oauth_app("facebook", app_id, app_secret)
 	if (extended_permissions==TRUE){
 		scope <- paste("user_friends,user_birthday,user_hometown,user_location,user_relationships,",
-			"friends_birthday,friends_hometown,friends_location,friends_relationships,publish_actions,",
-			"user_status,user_checkins,friends_status,friends_checkins,user_likes,friends_likes,read_stream,export_stream", 
-			collapse="")
+			"publish_actions,user_status,user_likes,read_stream", collapse="")
 	}
 	else { scope <- NULL}
 
