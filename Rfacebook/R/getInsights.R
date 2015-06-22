@@ -50,6 +50,10 @@
 #' ## (only owner or admin of page)
 #'  insights <- getInsights(object_id='221568044327801_754789777921289', 
 #'      token=fb_oauth, metric='post_impressions', period='days_28')
+#' ## Getting page fans for date range
+#' ## (only owner or admin of page)
+#' insights <- getInsights(object_id='221568044327801',
+#'     token=fb_oauth, metric='page_fans', period='lifetime', parms='&since=2015-01-01&until=2015-01-31')     
 #' ## Count of fans by country
 #'   insights <- getInsights(object_id='221568044327801_754789777921289', 
 #'      token=fb_oauth, metric='page_fans_country', period='lifetime')
