@@ -64,7 +64,7 @@ getNetwork <- function(token, format='edgelist', verbose=TRUE){
 	friends <- getFriends(token=token, simplify=TRUE)
 	edge.list <- NULL
 	n <- length(friends$id)
-	if (verbose==TRUE){ pb <- txtProgressBar(min=1,max=n, style=3) }
+	if (verbose==TRUE){ pb <- utils::txtProgressBar(min=1,max=n, style=3) }
 	for (i in 1:n){
 		if (tkversion=="v1"){
 			query <- paste0("https://graph.facebook.com/v1.0/me/mutualfriends/", friends$id[i], "?")
@@ -79,7 +79,7 @@ getNetwork <- function(token, format='edgelist', verbose=TRUE){
 		for (friend in mutual.friends){
 			edge.list <- rbind(edge.list, c(friends$name[i], friend))
 		}
-		if (verbose==TRUE){ setTxtProgressBar(pb, i) }
+		if (verbose==TRUE){ utils::setTxtProgressBar(pb, i) }
 	}
 	if (format=="adj.matrix"){
 		adj.matrix <- matrix(

@@ -284,7 +284,7 @@ callAPI <- function(url, token){
 	if (class(token)[1]!="character" & class(token)[1]!="config" & class(token)[1]!="Token2.0"){
 		stop("Error in access token. See help for details.")
 	}
-	content <- fromJSON(rawToChar(url.data$content))
+	content <- rjson::fromJSON(rawToChar(url.data$content))
 	if (length(content$error)>0){
 		stop(content$error$message)
 	}	

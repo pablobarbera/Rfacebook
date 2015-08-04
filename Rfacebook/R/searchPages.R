@@ -45,7 +45,7 @@ searchPages <- function(string, token, n=200)
                "&fields=id,about,category,category_list,description,general_info,likes,link,location,name,talking_about_count,username,website",
                sep="")
   
-  url <- URLencode(url)
+  url <- utils::URLencode(url)
   
   ## making query
   content <- callAPI(url=url, token=token)

@@ -90,7 +90,7 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
 	else { scope <- NULL}
 
 	## before httr 0.3
-	if (packageVersion('httr')$minor < 3){
+	if (utils::packageVersion('httr')$minor < 3){
 		facebook_token <- oauth2.0_token(facebook, myapp,
 		  scope=scope, type = "application/x-www-form-urlencoded")
 		fb_oauth <- sign_oauth2.0(facebook_token$access_token) 
@@ -100,7 +100,7 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
 	}
 
 	## with httr 0.3
-	if (packageVersion('httr')$minor >= 3){
+	if (utils::packageVersion('httr')$minor >= 3){
 		fb_oauth <- oauth2.0_token(facebook, myapp,
 		  scope=scope, type = "application/x-www-form-urlencoded", cache=FALSE)	
 		if (GET("https://graph.facebook.com/me", config(token=fb_oauth))$status==200){

@@ -43,7 +43,7 @@
 #' ## (not only owner of page)
 #'  page <- getPage(page="humansofnewyork", token=fb_oauth, feed=TRUE)
 #' ## Getting posts on Humans of New York page in January 2013
-#'  page <- getPage(page="humansofnewyork", token=fb_oauth, n=1000
+#'  page <- getPage(page="humansofnewyork", token=fb_oauth, n=1000,
 #'		since='2013/01/01', until='2013/01/31')
 #' }
 #'

@@ -83,7 +83,7 @@ searchFacebook <- function(string, token, n=200, since=NULL, until=NULL)
 		url <- paste(url, "&until=", until, sep="")
 	}
 	
-	url <- URLencode(url)
+	url <- utils::URLencode(url)
 	
 	## making query
 	content <- callAPI(url=url, token=token)

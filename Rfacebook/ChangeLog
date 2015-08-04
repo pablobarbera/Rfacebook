@@ -34,3 +34,6 @@
     - Fixed minor bugs in multiple functions (see github commits)
 2015-04-15 - version 0.5.1:
     - Fixed bugs in getInsights
+2015-08-04 - version 0.5.2:
+    - Added searchGroup and getGroup functions
+    - minor fixes to comply with new CRAN rules

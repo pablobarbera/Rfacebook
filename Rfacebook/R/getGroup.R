@@ -137,6 +137,13 @@ getGroup <- function(group_id, token, n=100, since=NULL, until=NULL){
 #' @description
 #' Use \code{searchGroup} in combination with \code{getGroup} to scrape
 #' public posts on Facebook groups.
+#'
+#' @param name Name of Facebook group (in URL)
+#'
+#' @param token Either a temporary access token created at
+#' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
+#' created with \code{fbOAuth}.
+
 #' @examples \dontrun{
 #' ## Find Facebook ID for R-Users Facebook group
 #'	load("fb_oauth")

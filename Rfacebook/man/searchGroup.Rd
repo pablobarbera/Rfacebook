@@ -6,6 +6,13 @@
 \usage{
 searchGroup(name, token)
 }
+\arguments{
+\item{name}{Name of Facebook group (in URL)}
+
+\item{token}{Either a temporary access token created at
+\url{https://developers.facebook.com/tools/explorer} or the OAuth token
+created with \code{fbOAuth}.}
+}
 \description{
 Use \code{searchGroup} in combination with \code{getGroup} to scrape
 public posts on Facebook groups.
