@@ -37,3 +37,4 @@
 2015-08-04 - version 0.5.2:
     - Added searchGroup and getGroup functions
     - minor fixes to comply with new CRAN rules
+    - fixes bug in fbOAuth

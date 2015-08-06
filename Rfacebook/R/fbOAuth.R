@@ -89,8 +89,8 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
 	}
 	else { scope <- NULL}
 
-	## before httr 0.3
-	if (utils::packageVersion('httr')$minor < 3){
+	## with early httr versions
+	if (packageVersion('httr') <= "0.2"){
 		facebook_token <- oauth2.0_token(facebook, myapp,
 		  scope=scope, type = "application/x-www-form-urlencoded")
 		fb_oauth <- sign_oauth2.0(facebook_token$access_token) 
@@ -99,8 +99,8 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
 		}
 	}
 
-	## with httr 0.3
-	if (utils::packageVersion('httr')$minor >= 3){
+	## less early httr versions
+	if (packageVersion('httr') > "0.2" & packageVersion('httr') <= "0.6.1"){
 		fb_oauth <- oauth2.0_token(facebook, myapp,
 		  scope=scope, type = "application/x-www-form-urlencoded", cache=FALSE)	
 		if (GET("https://graph.facebook.com/me", config(token=fb_oauth))$status==200){
@@ -108,6 +108,15 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
 	  	}	
 	}
 
+	## current httr version
+	if (packageVersion('httr') > "0.6.1"){
+		Sys.setenv("HTTR_SERVER_PORT" = "1410/")
+		fb_oauth <- oauth2.0_token(facebook, myapp,
+		  scope=scope, type = "application/x-www-form-urlencoded", cache=FALSE)		
+		if (GET("https://graph.facebook.com/me", config(token=fb_oauth))$status==200){
+	      	message("Authentication successful.")
+	  	}	
+	}
 	## identifying API version of token
 	error <- tryCatch(callAPI('https://graph.facebook.com/pablobarbera', fb_oauth),
 		error = function(e) e)
@@ -120,6 +129,4 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
 
 	return(fb_oauth)
 }
-
-
 
