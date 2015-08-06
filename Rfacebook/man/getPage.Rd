@@ -36,14 +36,14 @@ profile can also be retrieved with this function.
 \dontrun{
 ## See examples for fbOAuth to know how token was created.
 ## Getting information about Facebook's Facebook Page
-	load("fb_oauth")
-	fb_page <- getPage(page="facebook", token=fb_oauth)
+ load("fb_oauth")
+ fb_page <- getPage(page="facebook", token=fb_oauth)
 ## Getting posts on Humans of New York page, including posts by others users
 ## (not only owner of page)
  page <- getPage(page="humansofnewyork", token=fb_oauth, feed=TRUE)
 ## Getting posts on Humans of New York page in January 2013
  page <- getPage(page="humansofnewyork", token=fb_oauth, n=1000,
-		since='2013/01/01', until='2013/01/31')
+   since='2013/01/01', until='2013/01/31')
 }
 }
 \author{

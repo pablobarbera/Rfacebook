@@ -5,7 +5,9 @@
 #' Extract list of likes of a Facebook friend
 #'
 #' @description
-#' \code{getLikes} retrieves information about a friend's likes
+#' \code{getLikes} retrieves information about a friend's likes.
+#' To retrieve the number of likes for a page, use \code{getUsers}
+#' with the page IDs.
 #'
 #' @details
 #' 
@@ -34,6 +36,9 @@ getLikes <- function(user, n=500, token){
 	query <- paste0('https://graph.facebook.com/', user, 
 		'?fields=likes.limit(', n, ').fields(id,name,website)')
 	content <- callAPI(query, token)
+    if ('data' %in% names(content$likes) == FALSE){
+        stop("User not found, or token is not authorized.")
+    }
     df <- userLikesToDF(content$likes$data)
     next_url <- content$likes$paging$`next`
     while (!is.null(next_url)){

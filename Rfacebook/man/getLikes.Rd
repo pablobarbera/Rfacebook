@@ -16,7 +16,9 @@ getLikes(user, n = 500, token)
 created with \code{fbOAuth}.}
 }
 \description{
-\code{getLikes} retrieves information about a friend's likes
+\code{getLikes} retrieves information about a friend's likes.
+To retrieve the number of likes for a page, use \code{getUsers}
+with the page IDs.
 }
 \details{
 This function requires the use of an OAuth token with the following
