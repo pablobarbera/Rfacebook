@@ -125,7 +125,7 @@ getPage <- function(page, token, n=100, since=NULL, until=NULL, feed=FALSE){
 			new.df <- pageDataToDF(content$data)
 			df.list <- c(df.list, list(new.df))
 
-			if (!is.null(since)){
+			if (!is.null(since) & nrow(new.df)>0){
 				dates <- formatFbDate(new.df$created_time, 'date')
 				mindate <- min(dates)
 			}

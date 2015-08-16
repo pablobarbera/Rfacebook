@@ -40,3 +40,5 @@
     - fixes bug in fbOAuth
 2015-08-04 - version 0.6
     - new CRAN release
+2015-08-15 - version 0.6.1
+    - fixes bug in getPage when n < available posts
