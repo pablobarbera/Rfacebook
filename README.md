@@ -9,6 +9,8 @@ Rfacebook: Access to Facebook API via R
 
 This package provides a series of functions that allow R users to access Facebook's API to get information about users and posts, and collect public status updates that mention specific keywords.
 
+_NOTE_ : the following documentation is outdated, since many functions stopped working when Facebook deprecated version 0.1 of the Graph API. I am working on an updated version that will be up soon. In the meantime, check the documentation of the package for more information about what functions are available.
+
 Current CRAN release is 0.3. To install the most updated version (0.4) from GitHub, type:
 
 ```
