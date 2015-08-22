@@ -4,7 +4,8 @@
 \alias{fbOAuth}
 \title{Create OAuth token to Facebook R session}
 \usage{
-fbOAuth(app_id, app_secret, extended_permissions = TRUE)
+fbOAuth(app_id, app_secret, extended_permissions = TRUE,
+  additional_permissions = NULL)
 }
 \arguments{
 \item{app_id}{numeric, App ID of application to be used to create OAUth token. Available
@@ -16,9 +17,13 @@ Available at \url{https://developers.facebook.com/apps}, in Basic Settings panel
 \item{extended_permissions}{If \code{TRUE}, the token will give access to some of
 the authenticated user's private information (birthday, hometown, location,
 relationships) and that of his/her friends, and permissions to post
-status updates as well as to access checkins, likes, and the user's newsfeed.
+status updates as well as to access checkins, and likes.
 If \code{FALSE}, token will give access only to public information. Note
 that \code{updateStatus} will only work for tokens with extended permissions.}
+
+\item{additional_permissions}{character vector with additional permissions to add
+to the token (e.g. read_stream to access the user's newsfeed), which require
+review by Facebook.}
 }
 \description{
 \code{fbOAuth} creates a long-lived OAuth access token that enables R to make

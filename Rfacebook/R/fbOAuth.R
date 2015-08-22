@@ -48,9 +48,13 @@
 #' @param extended_permissions If \code{TRUE}, the token will give access to some of
 #' the authenticated user's private information (birthday, hometown, location,
 #' relationships) and that of his/her friends, and permissions to post
-#' status updates as well as to access checkins, likes, and the user's newsfeed. 
+#' status updates as well as to access checkins, and likes.
 #' If \code{FALSE}, token will give access only to public information. Note 
 #' that \code{updateStatus} will only work for tokens with extended permissions.
+#'
+#' @param additional_permissions character vector with additional permissions to add
+#' to the token (e.g. read_stream to access the user's newsfeed), which require
+#' review by Facebook.
 #'
 #' @examples \dontrun{
 #' ## an example of an authenticated request after creating the OAuth token
@@ -69,7 +73,7 @@
 #'
 
 
-fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
+fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE, additional_permissions=NULL)
 {
 	## getting callback URL
 	full_url <- oauth_callback()
@@ -85,7 +89,10 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=TRUE)
 	myapp <- oauth_app("facebook", app_id, app_secret)
 	if (extended_permissions==TRUE){
 		scope <- paste("user_friends,user_birthday,user_hometown,user_location,user_relationships,",
-			"publish_actions,user_status,user_likes,read_stream", collapse="")
+			"publish_actions,user_status,user_likes", collapse="")
+		if (!is.null(additional_permissions)){
+			scope <- paste0(scope, ',', additional_permissions)
+		}
 	}
 	else { scope <- NULL}
 
