@@ -269,6 +269,24 @@ searchPageDataToDF <- function(json){
   return(df)
 }
 
+#' @rdname callAPI
+#' @export
+#'
+#' @title 
+#' Make an API request
+#'
+#' @description
+#' \code{callAPI} is an internal function to run an API request.
+#'
+#' @param url URL of API request
+#'
+#' @param token Either a temporary access token created at
+#' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
+#' created with \code{fbOAuth}. It needs to have extended permissions in order 
+#' to successfully post to the Facebook profile.
+#'
+#'
+
 callAPI <- function(url, token){
 	if (class(token)[1]=="config"){
 		url.data <- GET(url, config=token)
