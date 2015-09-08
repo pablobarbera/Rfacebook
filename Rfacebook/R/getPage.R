@@ -84,9 +84,7 @@ getPage <- function(page, token, n=100, since=NULL, until=NULL, feed=FALSE){
 		content <- callAPI(url=url, token=token)		
 		if (error==3){ stop(content$error_msg) }
 	}
-	if (length(content$data)==0){ 
-		stop("No public posts were found")
-	}
+	
 	df <- pageDataToDF(content$data)
 
 	# sometimes posts older than 'until' are returned, so here
