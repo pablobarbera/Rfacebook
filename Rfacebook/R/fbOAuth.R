@@ -34,6 +34,21 @@
 #' Third, after pressing Enter, R will try to open a browser window to sign the token. If 
 #' everything works well, you will get a message that says you can return to R. If not,
 #' try again in a few minutes to make sure your app had its settings updated properly.
+#' 
+#' To ensure proper functioning of the "getInsights" function-family you will need to 
+#' specify the exact permissions granted to your app. As this is (to our knowledge) currently not
+#' possible through the R based authentication process, please follow these steps:
+#' 
+#' -> Create App as mentioned above.
+#' 1. Open the "Graph API Explorer": \url{https://developers.facebook.com/tools/explorer/}
+#' 2. Select your app in the upper right corner
+#' 3. Click "Get Token" -> "Get Access Token"
+#' 4. In the popup navigate to "Extended Permissions" and select "Insights"
+#' 5. Confirm
+#' 6. Ignore the following warning message ("Submit for Login Review...") and confirm again.
+#' 6. Go back to R and run fbOAuth with extended_permissions (still) set to FALSE. 
+#' -> See third step for possible messages concerning token creation.
+#'
 #'
 #' @author
 #' Pablo Barbera \email{pablo.barbera@@nyu.edu}
