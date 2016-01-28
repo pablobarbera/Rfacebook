@@ -4,7 +4,8 @@
 \alias{fbOAuth}
 \title{Create OAuth token to Facebook R session}
 \usage{
-fbOAuth(app_id, app_secret, extended_permissions = FALSE)
+fbOAuth(app_id, app_secret, extended_permissions = FALSE,
+  legacy_permissions = FALSE)
 }
 \arguments{
 \item{app_id}{numeric, App ID of application to be used to create OAUth token. Available

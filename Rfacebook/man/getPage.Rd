@@ -32,6 +32,14 @@ that were made by others (not only the admin of the page).}
 information about users that have turned on the "follow" option on their
 profile can also be retrieved with this function.
 }
+\details{
+This function will only return information from public pages, not users
+with public profiles.
+
+The \code{since} and \code{until} parameters are applied to the \code{updated_time}
+field in the post objects, and not the \code{created_time}. As a result, this function
+might return old posts that have been updated recently.
+}
 \examples{
 \dontrun{
 ## See examples for fbOAuth to know how token was created.
