@@ -63,17 +63,39 @@
 
 getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){ 
   
-  ##IF PARMS ARGUMENT IS PRESENT, CONCAT TO END OF URL, OTHERWISE OMIT.
-  if(is.na(parms)){
-    url <- paste0('https://graph.facebook.com/', object_id,
-                  '/insights/', metric, '?period=', period)
-  }else{
-    url <- paste0('https://graph.facebook.com/', object_id,
-                  '/insights/', metric, '?period=', period, parms)  
-  }
+## HANDLE PERIOD AND METRIC LENGTH MISMATCHING
+if (length(metric)!=length(period) & length(period)!=1) {
+          stop("Number of periods must either match the number of metrics or be one.")
+}
+
+if(length(metric)!=length(period) & length(period)==1) { 
+          period <- rep(period,length(metric))
+} else {
+          period <- period
+}
+
+
+### CREATE LIST OF REQUEST URLS
+url <- list()
+for (i in 1:length(metric)) {
+
+          url[i] <- paste0(
+                              'https://graph.facebook.com/', 
+                              object_id, 
+                              '/insights/', 
+                              metric[i], 
+                              '?period=',
+                              period[i], 
+                              ifelse(is.na(parms),'', parms) 
+)
+}
+
+  ## LOOP THROUGH REQUEST URLS
   
-  # making query
-  content <- callAPI(url=url, token=token)
+  results <- lapply(url, function(x) {
+  
+  content <- callAPI(url=x, token=token)
+  
   if (length(content$data)==0){ 
     stop("No data available. Are you the owner of this page? See ?getInsights.")
   }
@@ -86,7 +108,7 @@ getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){
     Sys.sleep(0.5)
     error <- error + 1
     print(url)
-    content <- callAPI(url=url, token=token)		
+    content <- callAPI(url=x, token=token)		
     if (error==3){ stop(content$error_msg) }
   }
 
@@ -100,7 +122,7 @@ getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){
       # waiting one second before making next API call...
       Sys.sleep(0.5)
       url <- content$paging$`previous`
-      content <- callAPI(url=url, token=token)
+      content <- callAPI(url=x, token=token)
       l <- l + nrow(df)
       
       ## retrying 3 times if error was found
@@ -109,7 +131,7 @@ getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){
         cat("Error!\n")
         Sys.sleep(0.5)
         error <- error + 1
-        content <- callAPI(url=url, token=token)		
+        content <- callAPI(url=x, token=token)		
         if (error==3){ stop(content$error_msg) }
       }
       
@@ -118,5 +140,20 @@ getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){
     df <- do.call(rbind, df.list)
   }
   if ('end_time' %in% names(df)){ df <- df[order(df$end_time),] }
-  return(df)
+  
+  }
+  ) #END OF REQUEST LOOP
+  
+  #### BUILD OUTPUT
+  #### FOR MULTIPLE METRIC REQUESTS:  EACH WILL BE STORED AS DATAFRAMES IN A NAMED LIST.
+  #### FOR ONE METRIC REQUEST: THE RESULT WILL BE A DATAFRAME. 
+  
+  if(length(results)>1) {
+            names(results) <- metric
+            return(results)
+  } else {
+            results <- results[[1]]
+            return(results)
+  }
+  
 }
