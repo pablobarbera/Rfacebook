@@ -63,32 +63,31 @@
 
 getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){ 
   
-## HANDLE PERIOD AND METRIC LENGTH MISMATCHING
-if (length(metric)!=length(period) & length(period)!=1) {
-          stop("Number of periods must either match the number of metrics or be one.")
-}
+  ## HANDLE PERIOD AND METRIC LENGTH MISMATCHING
+  if (length(metric)!=length(period) & length(period)!=1) {
+        stop("Number of periods must either match the number of metrics or be one.")
+  }
+  
+  if(length(metric)!=length(period) & length(period)==1) { 
+        period <- rep(period,length(metric))
+  } else {
+        period <- period
+  }
 
-if(length(metric)!=length(period) & length(period)==1) { 
-          period <- rep(period,length(metric))
-} else {
-          period <- period
-}
 
-
-### CREATE LIST OF REQUEST URLS
-url <- list()
-for (i in 1:length(metric)) {
-
-          url[i] <- paste0(
-                              'https://graph.facebook.com/', 
-                              object_id, 
-                              '/insights/', 
-                              metric[i], 
-                              '?period=',
-                              period[i], 
-                              ifelse(is.na(parms),'', parms) 
-)
-}
+  ### CREATE LIST OF REQUEST URLS
+  url <- list()
+  for (i in 1:length(metric)) {
+    url[i] <- paste0(
+      'https://graph.facebook.com/v2.5/', 
+      object_id, 
+      '/insights/', 
+      metric[i], 
+      '?period=',
+      period[i], 
+      ifelse(is.na(parms),'', parms) 
+  )
+  }
 
   ## LOOP THROUGH REQUEST URLS
   
