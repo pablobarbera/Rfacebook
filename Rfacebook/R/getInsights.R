@@ -7,6 +7,9 @@
 #' @description
 #' \code{getInsights} retrieves information from an owned Facebook page. Note 
 #' that you must specify wich metric from insights you need and the period.
+#' To request multiple metrics at one time, pass a vector of metric names with a vector
+#' of periods of the same length. If only one period is supplied, it will apply to each metric.
+#' Please refer to Facebook's documentation for valid combinations of objects, metrics and periods.
 #'
 #' @details
 #' The current list of supported metrics and periods is: page_fan_adds, page_fan_removes, 
@@ -14,7 +17,7 @@
 #' page_impressions, page_posts_impressions, page_consumptions, post_consumptions_by_type, 
 #' page_consumptions, and page_fans_country.
 #'
-#' For more information, see: \url{https://developers.facebook.com/docs/graph-api/reference/v2.1/insights}
+#' For more information, see: \url{https://developers.facebook.com/docs/graph-api/reference/v2.5/insights}
 #'
 #' @author
 #' Danilo Silva \email{silvadaniloc@@gmail.com}
@@ -27,7 +30,7 @@
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
 #' created with \code{fbOAuth}.
 #'
-#' @param metric The metric which you want to get values for.
+#' @param metric The metric(s) which you want to get values for.
 #'
 #' @param period Time intervals to return
 #' 
@@ -53,8 +56,13 @@
 #' ## Getting page fans for date range
 #' ## (only owner or admin of page)
 #' insights <- getInsights(object_id='221568044327801',
-#'     token=fb_oauth, metric='page_fans', period='lifetime', 
-#'     parms='&since=2015-01-01&until=2015-01-31')     
+#'     token=fb_oauth, metric=c'page_fans', period='lifetime', 
+#'     parms='&since=2015-01-01&until=2015-01-31')
+#' #' ## Getting page fans AND page impressions for date range
+#' ## (only owner or admin of page)
+#' insights <- getInsights(object_id='221568044327801',
+#'     token=fb_oauth, metric=c('page_fans','page_impressions'), period=c('lifetime','day'), 
+#'     parms='&since=2015-01-01&until=2015-01-31')        
 #' ## Count of fans by country
 #'   insights <- getInsights(object_id='221568044327801_754789777921289', 
 #'      token=fb_oauth, metric='page_fans_country', period='lifetime')
