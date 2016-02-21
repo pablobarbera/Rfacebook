@@ -42,3 +42,6 @@
     - new CRAN release
 2015-08-15 - version 0.6.1
     - fixes bug in getPage when n < available posts
+2016-02-21 - version 0.6.2
+    - getInsights now works with multiple metrics
+    - added legacy scope to authentication
