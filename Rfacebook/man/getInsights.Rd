@@ -13,9 +13,9 @@ getInsights(object_id, token, metric, period = "day", parms = NA, n = 5)
 \url{https://developers.facebook.com/tools/explorer} or the OAuth token
 created with \code{fbOAuth}.}
 
-\item{metric}{The metric which you want to get values for.}
+\item{metric}{The metrics (or vector of metrics) which you want to get values for.}
 
-\item{period}{Time intervals to return}
+\item{period}{Time interval (or vector of time intervals) to return}
 
 \item{parms}{Optional argument that can be used to append additional
 parameters. For example, \code{&since=DATE&until=DATE}.}
@@ -26,7 +26,10 @@ n is 5}
 }
 \description{
 \code{getInsights} retrieves information from an owned Facebook page. Note
-that you must specify wich metric from insights you need and the period.
+that you must specify wich metric from insights you need and the period. 
+To request multiple metrics at one time, pass a vector of metric names with a vector
+of periods of the same length. If only one period is supplied, it will apply to each metric.
+Please refer to Facebook's documentation for valid combinations of objects, metrics, and periods.
 }
 \details{
 The current list of supported metrics and periods is: page_fan_adds, page_fan_removes,
@@ -34,7 +37,7 @@ page_views_login, page_views_login, page_views_logout, page_views, page_story_ad
 page_impressions, page_posts_impressions, page_consumptions, post_consumptions_by_type,
 page_consumptions, and page_fans_country.
 
-For more information, see: \url{https://developers.facebook.com/docs/graph-api/reference/v2.1/insights}
+For more information, see: \url{https://developers.facebook.com/docs/graph-api/reference/v2.5/insights}
 }
 \examples{
 \dontrun{
@@ -51,6 +54,11 @@ For more information, see: \url{https://developers.facebook.com/docs/graph-api/r
 ## (only owner or admin of page)
 insights <- getInsights(object_id='221568044327801',
     token=fb_oauth, metric='page_fans', period='lifetime',
+    parms='&since=2015-01-01&until=2015-01-31')
+## Getting page fans AND page impresions for date range
+## (only owner or admin of page)
+insights <- getInsights(object_id='221568044327801',
+    token=fb_oauth, metric=c('page_fans','page_impressions'), period=c('lifetime','day'), 
     parms='&since=2015-01-01&until=2015-01-31')
 ## Count of fans by country
   insights <- getInsights(object_id='221568044327801_754789777921289',

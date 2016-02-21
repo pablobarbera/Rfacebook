@@ -7,6 +7,9 @@
 #' @description
 #' \code{getInsights} retrieves information from an owned Facebook page. Note 
 #' that you must specify wich metric from insights you need and the period.
+#' To request multiple metrics at one time, pass a vector of metric names with a vector
+#' of periods of the same length. If only one period is supplied, it will apply to each metric.
+#' Please refer to Facebook's documentation for valid combinations of objects, metrics and periods.
 #'
 #' @details
 #' The current list of supported metrics and periods is: page_fan_adds, page_fan_removes, 
@@ -14,7 +17,7 @@
 #' page_impressions, page_posts_impressions, page_consumptions, post_consumptions_by_type, 
 #' page_consumptions, and page_fans_country.
 #'
-#' For more information, see: \url{https://developers.facebook.com/docs/graph-api/reference/v2.1/insights}
+#' For more information, see: \url{https://developers.facebook.com/docs/graph-api/reference/v2.5/insights}
 #'
 #' @author
 #' Danilo Silva \email{silvadaniloc@@gmail.com}
@@ -27,7 +30,7 @@
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
 #' created with \code{fbOAuth}.
 #'
-#' @param metric The metric which you want to get values for.
+#' @param metric The metric(s) which you want to get values for.
 #'
 #' @param period Time intervals to return
 #' 
@@ -53,8 +56,13 @@
 #' ## Getting page fans for date range
 #' ## (only owner or admin of page)
 #' insights <- getInsights(object_id='221568044327801',
-#'     token=fb_oauth, metric='page_fans', period='lifetime', 
-#'     parms='&since=2015-01-01&until=2015-01-31')     
+#'     token=fb_oauth, metric=c'page_fans', period='lifetime', 
+#'     parms='&since=2015-01-01&until=2015-01-31')
+#' #' ## Getting page fans AND page impressions for date range
+#' ## (only owner or admin of page)
+#' insights <- getInsights(object_id='221568044327801',
+#'     token=fb_oauth, metric=c('page_fans','page_impressions'), period=c('lifetime','day'), 
+#'     parms='&since=2015-01-01&until=2015-01-31')        
 #' ## Count of fans by country
 #'   insights <- getInsights(object_id='221568044327801_754789777921289', 
 #'      token=fb_oauth, metric='page_fans_country', period='lifetime')
@@ -63,17 +71,38 @@
 
 getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){ 
   
-  ##IF PARMS ARGUMENT IS PRESENT, CONCAT TO END OF URL, OTHERWISE OMIT.
-  if(is.na(parms)){
-    url <- paste0('https://graph.facebook.com/', object_id,
-                  '/insights/', metric, '?period=', period)
-  }else{
-    url <- paste0('https://graph.facebook.com/', object_id,
-                  '/insights/', metric, '?period=', period, parms)  
+  ## HANDLE PERIOD AND METRIC LENGTH MISMATCHING
+  if (length(metric)!=length(period) & length(period)!=1) {
+        stop("Number of periods must either match the number of metrics or be one.")
   }
   
-  # making query
-  content <- callAPI(url=url, token=token)
+  if(length(metric)!=length(period) & length(period)==1) { 
+        period <- rep(period,length(metric))
+  } else {
+        period <- period
+  }
+
+
+  ### CREATE LIST OF REQUEST URLS
+  url <- list()
+  for (i in 1:length(metric)) {
+    url[i] <- paste0(
+      'https://graph.facebook.com/v2.5/', 
+      object_id, 
+      '/insights/', 
+      metric[i], 
+      '?period=',
+      period[i], 
+      ifelse(is.na(parms),'', parms) 
+  )
+  }
+
+  ## LOOP THROUGH REQUEST URLS
+  
+  results <- lapply(url, function(x) {
+  
+  content <- callAPI(url=x, token=token)
+  
   if (length(content$data)==0){ 
     stop("No data available. Are you the owner of this page? See ?getInsights.")
   }
@@ -86,7 +115,7 @@ getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){
     Sys.sleep(0.5)
     error <- error + 1
     print(url)
-    content <- callAPI(url=url, token=token)		
+    content <- callAPI(url=x, token=token)		
     if (error==3){ stop(content$error_msg) }
   }
 
@@ -100,7 +129,7 @@ getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){
       # waiting one second before making next API call...
       Sys.sleep(0.5)
       url <- content$paging$`previous`
-      content <- callAPI(url=url, token=token)
+      content <- callAPI(url=x, token=token)
       l <- l + nrow(df)
       
       ## retrying 3 times if error was found
@@ -109,7 +138,7 @@ getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){
         cat("Error!\n")
         Sys.sleep(0.5)
         error <- error + 1
-        content <- callAPI(url=url, token=token)		
+        content <- callAPI(url=x, token=token)		
         if (error==3){ stop(content$error_msg) }
       }
       
@@ -118,5 +147,20 @@ getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){
     df <- do.call(rbind, df.list)
   }
   if ('end_time' %in% names(df)){ df <- df[order(df$end_time),] }
-  return(df)
+  
+  }
+  ) #END OF REQUEST LOOP
+  
+  #### BUILD OUTPUT
+  #### FOR MULTIPLE METRIC REQUESTS:  EACH WILL BE STORED AS DATAFRAMES IN A NAMED LIST.
+  #### FOR ONE METRIC REQUEST: THE RESULT WILL BE A DATAFRAME. 
+  
+  if(length(results)>1) {
+            names(results) <- metric
+            return(results)
+  } else {
+            results <- results[[1]]
+            return(results)
+  }
+  
 }
