@@ -37,6 +37,8 @@
 #' @param parms Optional argument that can be used to append additional
 #' parameters. For example, \code{&since=DATE&until=DATE}.
 #' 
+#' @param version specifies what API version to use in the request. Version 2.5 is default.
+#' 
 #' @param n Number of time intervals of metric values to return. Note that all
 #' metrics returned will be multiple of 3, except for lifetime period. Default
 #' n is 5
@@ -57,7 +59,7 @@
 #' ## (only owner or admin of page)
 #' insights <- getInsights(object_id='221568044327801',
 #'     token=fb_oauth, metric=c'page_fans', period='lifetime', 
-#'     parms='&since=2015-01-01&until=2015-01-31')
+#'     parms='&since=2015-01-01&until=2015-01-31', version=2.5)
 #' #' ## Getting page fans AND page impressions for date range
 #' ## (only owner or admin of page)
 #' insights <- getInsights(object_id='221568044327801',
@@ -69,7 +71,7 @@
 #' }
 #'
 
-getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){ 
+getInsights <- function(object_id, token, metric, period='day', parms=NA, version=2.3, n=5){ 
   
   ## HANDLE PERIOD AND METRIC LENGTH MISMATCHING
   if (length(metric)!=length(period) & length(period)!=1) {
@@ -87,7 +89,7 @@ getInsights <- function(object_id, token, metric, period='day', parms=NA, n=5){
   url <- list()
   for (i in 1:length(metric)) {
     url[i] <- paste0(
-      'https://graph.facebook.com/v2.5/', 
+      'https://graph.facebook.com/v',version,'/', 
       object_id, 
       '/insights/', 
       metric[i], 
