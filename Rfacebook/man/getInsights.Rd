@@ -20,6 +20,8 @@ created with \code{fbOAuth}.}
 \item{parms}{Optional argument that can be used to append additional
 parameters. For example, \code{&since=DATE&until=DATE}.}
 
+\item{version}{Specifies what API version to use in the request. Version 2.5 is default.}
+
 \item{n}{Number of time intervals of metric values to return. Note that all
 metrics returned will be multiple of 3, except for lifetime period. Default
 n is 5}
@@ -54,7 +56,7 @@ For more information, see: \url{https://developers.facebook.com/docs/graph-api/r
 ## (only owner or admin of page)
 insights <- getInsights(object_id='221568044327801',
     token=fb_oauth, metric='page_fans', period='lifetime',
-    parms='&since=2015-01-01&until=2015-01-31')
+    parms='&since=2015-01-01&until=2015-01-31', version=2.5)
 ## Getting page fans AND page impresions for date range
 ## (only owner or admin of page)
 insights <- getInsights(object_id='221568044327801',
