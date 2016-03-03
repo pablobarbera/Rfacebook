@@ -45,3 +45,5 @@
 2016-02-21 - version 0.6.2
     - getInsights now works with multiple metrics
     - added legacy scope to authentication
+2016-03-03 - version 0.6.3
+    - fixes amount of data issue in getPage
