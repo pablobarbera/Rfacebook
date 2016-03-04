@@ -69,6 +69,9 @@
 #' After version 2.0 of the Graph API, creating an application with these permissions
 #' requires passing App Review (\url{https://developers.facebook.com/docs/facebook-login/review})
 #'
+#' @param legacy_permissions For tokens created with old versions of the API, this option
+#' adds the "read_stream" permission
+#'
 #'
 #' @examples \dontrun{
 #' ## an example of an authenticated request after creating the OAuth token

@@ -22,6 +22,9 @@ If \code{FALSE}, token will give access only to public information. Note
 that \code{updateStatus} will only work for tokens with extended permissions.
 After version 2.0 of the Graph API, creating an application with these permissions
 requires passing App Review (\url{https://developers.facebook.com/docs/facebook-login/review})}
+
+\item{legacy_permissions}{For tokens created with old versions of the API, this option
+adds the "read_stream" permission}
 }
 \description{
 \code{fbOAuth} creates a long-lived OAuth access token that enables R to make
