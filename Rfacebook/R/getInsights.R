@@ -148,7 +148,11 @@ getInsights <- function(object_id, token, metric, period='day', parms=NA, versio
     }
     df <- do.call(rbind, df.list)
   }
-  if ('end_time' %in% names(df)){ df <- df[order(df$end_time),] }
+  if ('end_time' %in% names(df)) { 
+    df <- df[order(df$end_time),]
+  } else {
+      df <- df
+    }
   
   }
   ) #END OF REQUEST LOOP
