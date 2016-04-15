@@ -47,3 +47,5 @@
     - added legacy scope to authentication
 2016-03-03 - version 0.6.3
     - fixes amount of data issue in getPage
+2016-04-15 - version 0.6.4
+    - new fix for amount of data issue in getPage

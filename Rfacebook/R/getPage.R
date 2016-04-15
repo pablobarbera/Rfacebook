@@ -58,7 +58,7 @@
 #'
 
 
-getPage <- function(page, token, n=80, since=NULL, until=NULL, feed=FALSE){
+getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE){
 
 	url <- paste0('https://graph.facebook.com/', page,
 		'/posts?fields=from,message,created_time,type,link,comments.summary(true)',
@@ -74,11 +74,11 @@ getPage <- function(page, token, n=80, since=NULL, until=NULL, feed=FALSE){
 	if (!is.null(since)){
 		url <- paste0(url, '&since=', since)
 	}
-	if (n<=80){
+	if (n<=25){
 		url <- paste0(url, "&limit=", n)
 	}
-	if (n>80){
-		url <- paste0(url, "&limit=80")
+	if (n>25){
+		url <- paste0(url, "&limit=25")
 	}
 	# making query
 	content <- callAPI(url=url, token=token)
@@ -110,8 +110,8 @@ getPage <- function(page, token, n=80, since=NULL, until=NULL, feed=FALSE){
 		mindate <- as.Date(Sys.time())
 	}
 
-	## paging if n>80
-	if (n>80){
+	## paging if n>25
+	if (n>25){
 		df.list <- list(df)
 		while (l<n & length(content$data)>0 & 
 			!is.null(content$paging$`next`) & sincedate <= mindate){
