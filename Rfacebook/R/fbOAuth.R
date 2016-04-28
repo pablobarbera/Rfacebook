@@ -90,8 +90,14 @@
 #'
 
 
-fbOAuth <- function(app_id, app_secret, extended_permissions=FALSE, legacy_permissions=FALSE)
+fbOAuth <- function(app_id, app_secret, scope_permissions=NULL)
 {
+  ## Initialize to previously so-called "extended permissions" if none is given
+  if(is.null(scope_permissions)) {
+    scope <- paste("user_birthday,user_hometown,user_location,user_relationships,",
+                   "publish_actions,user_status,user_likes", collapse="")
+  }
+
 	## getting callback URL
 	full_url <- oauth_callback()
 	full_url <- gsub("(.*localhost:[0-9]{1,5}/).*", x=full_url, replacement="\\1")
@@ -104,15 +110,6 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=FALSE, legacy_permi
 	  authorize = "https://www.facebook.com/dialog/oauth",
 	  access = "https://graph.facebook.com/oauth/access_token")	
 	myapp <- oauth_app("facebook", app_id, app_secret)
-	if (extended_permissions==TRUE){
-		scope <- paste("user_birthday,user_hometown,user_location,user_relationships,",
-			"publish_actions,user_status,user_likes", collapse="")
-	}
-	else { scope <- "public_profile,user_friends"}
-	
-	if (legacy_permissions==TRUE) {
-	  scope <- paste(scope, "read_stream", sep = ",")
-	}
 
 	## with early httr versions
 	if (packageVersion('httr') <= "0.2"){
