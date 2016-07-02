@@ -49,3 +49,6 @@
     - fixes amount of data issue in getPage
 2016-04-15 - version 0.6.4
     - new fix for amount of data issue in getPage
+2016-07-02 - version 0.6.5
+    - now works with httr 1.2
+
