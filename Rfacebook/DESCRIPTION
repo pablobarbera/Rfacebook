@@ -1,10 +1,10 @@
 Package: Rfacebook
 Title: Access to Facebook API via R
 Description: Provides an interface to the Facebook API.
-Version: 0.6.5
-Date: 2016-07-02
+Version: 0.6.6
+Date: 2016-07-11
 Author: Pablo Barbera <pablo.barbera@nyu.edu>, Michael Piccirilli
-    <mrp2181@columbia.edu>, Andrew Geisler 
+    <mrp2181@columbia.edu>, Andrew Geisler
 Maintainer: Pablo Barbera <pablo.barbera@nyu.edu>
 URL: https://github.com/pablobarbera/Rfacebook
 BugReports: https://github.com/pablobarbera/Rfacebook/issues
@@ -14,3 +14,4 @@ Depends:
     rjson,
     httpuv
 License: GPL-2
+RoxygenNote: 5.0.1

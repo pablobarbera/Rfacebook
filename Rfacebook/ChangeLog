@@ -51,4 +51,8 @@
     - new fix for amount of data issue in getPage
 2016-07-02 - version 0.6.5
     - now works with httr 1.2
-
+2016-07-11 - version 0.6.6
+    - added getReactions to scrape reaction data for posts
+    - getPage has reactions option to scrape reaction data
+    - getShares returns list of shared posts for a given post
+    - other minor fixes
