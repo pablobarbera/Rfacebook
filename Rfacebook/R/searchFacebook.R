@@ -13,8 +13,9 @@
 #' and therefore this function will no longer work. For more information about these
 #' changes, go to: \url{https://developers.facebook.com/docs/apps/changelog}
 #'
-#' The function will only work for OAuth tokens generated with version 1.0 of the API
-
+#' The function will only work for OAuth tokens generated with version 1.0 of the API,
+#' which can no longer be created.
+#'
 #' The search is performed also on the text of the comments too, which explains
 #' why some of the returned messages do not mention the string that is being
 #' searched.
