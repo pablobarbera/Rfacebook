@@ -42,6 +42,9 @@
 #' @param feed If \code{TRUE}, the function will also return posts on the page
 #' that were made by others (not only the admin of the page).
 #'
+#' @param reactions If \code{TRUE}, will add variables to the data frame with
+#' the total count of reactions: love, haha, wow, sad, angry.
+#'
 #'
 #' @examples \dontrun{
 #' ## See examples for fbOAuth to know how token was created.
@@ -157,6 +160,8 @@ getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, react
 	if (reactions==TRUE){
 		re = getReactions(df$id, token=token, verbose=FALSE)
 		df <- merge(df, re, all.x=TRUE)
+		# sorting
+		df <- df[order(df$created_time),]
 	}
 
 	return(df)

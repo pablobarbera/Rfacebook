@@ -27,6 +27,9 @@ accepted values, see: \url{http://php.net/manual/en/function.strtotime.php}}
 
 \item{feed}{If \code{TRUE}, the function will also return posts on the page
 that were made by others (not only the admin of the page).}
+
+\item{reactions}{If \code{TRUE}, will add variables to the data frame with
+the total count of reactions: love, haha, wow, sad, angry.}
 }
 \description{
 \code{getPage} retrieves information from a public Facebook page. Note that
