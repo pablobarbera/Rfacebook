@@ -74,6 +74,7 @@ getGroup <- function(group_id, token, n=100, since=NULL, until=NULL){
 	}
 	if (length(content$data)==0){ 
 		stop("No public posts were found")
+		return(data.frame())
 	}
 	df <- pageDataToDF(content$data)
 
@@ -165,6 +166,7 @@ searchGroup <- function(name, token){
 	# if no data, return error message
 	if (length(content$data)==0){ 
 		stop("No groups with this name were found.")
+		return(data.frame())
 	}
 
 	# if data, return a data frame
