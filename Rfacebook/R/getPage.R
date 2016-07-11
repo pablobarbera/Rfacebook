@@ -58,7 +58,7 @@
 #'
 
 
-getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE){
+getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, reactions=FALSE){
 
 	url <- paste0('https://graph.facebook.com/', page,
 		'/posts?fields=from,message,created_time,type,link,comments.summary(true)',
@@ -151,6 +151,13 @@ getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE){
 		dates <- formatFbDate(df$created_time, 'date')
 		df <- df[dates>=sincedate,]
 	}
+
+	# adding reactions data
+	if (reactions==TRUE){
+		re = getReactions(df$id, token=token, verbose=FALSE)
+		df <- merge(df, re, all.x=TRUE)
+	}
+
 	return(df)
 }
 

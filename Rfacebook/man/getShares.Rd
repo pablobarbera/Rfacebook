@@ -21,7 +21,7 @@ of a post on a public Facebook page. Only public posts by users who have
 granted authorization to the app used to authenticate.
 }
 \details{
-\code{getPost} returns a data frame with four variables: \code{from_name}
+\code{getShares} returns a data frame with four variables: \code{from_name}
 (the name of the user who shared the post), \code{from_id} (the ID of the
 user who shared the post), \code{shared_time} (the time at which the post
 was shared), and \code{id} (the ID of the new post).
