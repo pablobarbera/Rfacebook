@@ -60,7 +60,7 @@ getFriends <- function(token, simplify=FALSE){
 		if (inherits(error, 'error')){
 			stop("No friend information is available. See ?getFriends for more details.")
 		}
-		while (length(content$data)>0){
+		while (!is.null(content$paging$`next`)){
 			query <- content$paging$`next`
 			content <- callAPI(query, token)
 			if (length(content$data)>0){
@@ -80,7 +80,7 @@ getFriends <- function(token, simplify=FALSE){
 			stop("No friend information is available.")
 		}
 		friends <- userDataToDF(content$data, private_info=TRUE)
-		while (length(content$data)>0){
+		while (!is.null(content$paging$`next`)){
 			query <- content$paging$`next`
 			content <- callAPI(query, token)
 			if (length(content$data)>0){
