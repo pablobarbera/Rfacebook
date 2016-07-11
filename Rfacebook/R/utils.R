@@ -189,6 +189,16 @@ userLikesToDF <- function(user_likes){
 	return(df)
 }
 
+sharesToDF <- function(shares){
+	df <- data.frame(
+		from_id = unlistWithNA(shares, c('from', 'id')),
+		from_name = unlistWithNA(shares, c('from', 'name')),
+		shared_time = unlistWithNA(shares, 'created_time'),
+		id = unlistWithNA(shares, 'id'),
+		stringsAsFactors=F)
+	return(df)
+}
+
 
 tagsDataToDF <- function(tags){
     tags <- lapply(tags, '[[', "tags")
