@@ -56,3 +56,5 @@
     - getPage has reactions option to scrape reaction data
     - getShares returns list of shared posts for a given post
     - other minor fixes
+2016-07-12 - version 0.6.7
+    - added getCommentReplies function to scrape nested comments
