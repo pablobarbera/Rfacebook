@@ -134,6 +134,7 @@ commentsDataToDF <- function(json){
 			message = unlistWithNA(json, 'message'),
 			created_time = unlistWithNA(json, 'created_time'),
 			likes_count = unlistWithNA(json, 'like_count'),
+			comments_count = unlistWithNA(json, 'comment_count'),
 			id = unlistWithNA(json, 'id'),
 		stringsAsFactors=F)
 	}
@@ -217,7 +218,6 @@ tagsDataToDF <- function(tags){
     tags <- lapply(tags, tagsListToDF)
     return(tags)
 }
-
 
 unlistWithNA <- function(lst, field){
 	if (length(field)==1){
