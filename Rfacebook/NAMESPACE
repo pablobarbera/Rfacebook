@@ -3,6 +3,7 @@
 export(callAPI)
 export(fbOAuth)
 export(getCheckins)
+export(getCommentReplies)
 export(getFQL)
 export(getFriends)
 export(getGroup)

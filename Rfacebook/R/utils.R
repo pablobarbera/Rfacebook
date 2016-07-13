@@ -144,6 +144,23 @@ commentsDataToDF <- function(json){
 	return(df)
 }
 
+repliesDataToDF <- function(json){
+	if (!is.null(json)){
+		df <- data.frame(
+			from_id = unlistWithNA(json, c('from', 'id')),
+			from_name = unlistWithNA(json, c('from', 'name')),
+			message = unlistWithNA(json, 'message'),
+			created_time = unlistWithNA(json, 'created_time'),
+			likes_count = unlistWithNA(json, 'like_count'),
+			id = unlistWithNA(json, 'id'),
+		stringsAsFactors=F)
+	}
+	if (is.null(json)){
+		df <- NULL
+	}
+	return(df)
+}
+
 userDataToDF <- function(user_data, private_info){
 	df <- data.frame(
 		id = unlistWithNA(user_data, 'id'),
@@ -218,6 +235,20 @@ tagsDataToDF <- function(tags){
     tags <- lapply(tags, tagsListToDF)
     return(tags)
 }
+
+replyDataToDF <- function(json){
+  df <- data.frame(
+    from_id = json$from$id,
+    from_name = json$from$name,
+    message = ifelse(!is.null(json$message),json$message, NA),
+    created_time = json$created_time,
+    likes_count = json$like_count,
+	comments_count = json$comment_count,
+    id = json$id,
+	stringsAsFactors=F)
+  return(df)
+}
+
 
 unlistWithNA <- function(lst, field){
 	if (length(field)==1){
