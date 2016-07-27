@@ -29,6 +29,10 @@
 #' the end of the time range to be searched. For more information on the
 #' accepted values, see: \url{http://php.net/manual/en/function.strtotime.php}
 #'
+#' @param feed If \code{TRUE}, the function will also return posts on the group
+#' that were made by others (not only the admin of the group). Note that, unlike
+#' in \code{getPage}, here \code{TRUE} is the default option.
+#'
 #'
 #' @examples \dontrun{
 #' ## Find Facebook ID for R-Users Facebook group
@@ -42,22 +46,27 @@
 #'		since='2013/01/01', until='2013/01/31')
 #' }
 
-getGroup <- function(group_id, token, n=100, since=NULL, until=NULL){
+getGroup <- function(group_id, token, n=25, since=NULL, until=NULL, feed=TRUE){
 
 	url <- paste0('https://graph.facebook.com/', group_id,
+		'/posts?fields=from,message,created_time,type,link,comments.summary(true)',
+		',likes.summary(true),shares')
+	if (feed){
+		url <- paste0('https://graph.facebook.com/', group_id,
 		'/feed?fields=from,message,created_time,type,link,comments.summary(true)',
 		',likes.summary(true),shares')
+	}
 	if (!is.null(until)){
 		url <- paste0(url, '&until=', until)
 	}
 	if (!is.null(since)){
 		url <- paste0(url, '&since=', since)
 	}
-	if (n<=100){
+	if (n<=25){
 		url <- paste0(url, "&limit=", n)
 	}
-	if (n>100){
-		url <- paste0(url, "&limit=100")
+	if (n>25){
+		url <- paste0(url, "&limit=25")
 	}
 	# making query
 	content <- callAPI(url=url, token=token)
@@ -90,8 +99,8 @@ getGroup <- function(group_id, token, n=100, since=NULL, until=NULL){
 		mindate <- as.Date(Sys.time())
 	}
 
-	## paging if n>100
-	if (n>100){
+	## paging if n>25
+	if (n>25){
 		df.list <- list(df)
 		while (l<n & length(content$data)>0 & 
 			!is.null(content$paging$`next`) & sincedate <= mindate){

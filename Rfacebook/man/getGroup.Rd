@@ -4,7 +4,8 @@
 \alias{getGroup}
 \title{Extract list of posts from a public Facebook group}
 \usage{
-getGroup(group_id, token, n = 100, since = NULL, until = NULL)
+getGroup(group_id, token, n = 25, since = NULL, until = NULL,
+  feed = TRUE)
 }
 \arguments{
 \item{group_id}{Facebook ID for the group. Note that this is different from
@@ -24,6 +25,10 @@ accepted values, see: \url{http://php.net/manual/en/function.strtotime.php}}
 \item{until}{A UNIX timestamp or strtotime data value that points to
 the end of the time range to be searched. For more information on the
 accepted values, see: \url{http://php.net/manual/en/function.strtotime.php}}
+
+\item{feed}{If \code{TRUE}, the function will also return posts on the group
+that were made by others (not only the admin of the group). Note that, unlike
+in \code{getPage}, here \code{TRUE} is the default option.}
 }
 \description{
 \code{getGroup} retrieves information from a public Facebook group.
