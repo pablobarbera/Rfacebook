@@ -58,3 +58,5 @@
     - other minor fixes
 2016-07-12 - version 0.6.7
     - added getCommentReplies function to scrape nested comments
+2016-07-26 - version 0.6.8
+    - getGroup function now has feed option to return only admin posts
