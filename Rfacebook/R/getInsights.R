@@ -86,10 +86,11 @@ getInsights <- function(object_id, token, metric, period='day', parms=NA, versio
 
   ## CHECK IF DATE IS MORE THAN TWO YEARS OLD
   since_date <- as.Date(gsub('.*since=([0-9]{4}-[0-9]{2}-[0-9]{2}).*', parms, repl="\\1"))
-  if (Sys.Date() - since_date > 365 * 2){
-    message("Note: metrics older than 2 years may not be available through the API.")
+  if (!is.na(since_date)){
+    if (Sys.Date() - since_date > 365 * 2){
+      message("Note: metrics older than 2 years may not be available through the API.")
+    }
   }
-
   ### CREATE LIST OF REQUEST URLS
   url <- list()
   for (i in 1:length(metric)) {
