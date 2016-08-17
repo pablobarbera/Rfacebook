@@ -64,11 +64,11 @@
 getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, reactions=FALSE){
 
 	url <- paste0('https://graph.facebook.com/', page,
-		'/posts?fields=from,message,created_time,type,link,comments.summary(true)',
+		'/posts?fields=from,message,created_time,type,link,story,comments.summary(true)',
 		',likes.summary(true),shares')
 	if (feed){
 		url <- paste0('https://graph.facebook.com/', page,
-		'/feed?fields=from,message,created_time,type,link,comments.summary(true)',
+		'/feed?fields=from,message,created_time,type,link,story,comments.summary(true)',
 		',likes.summary(true),shares')
 	}
 	if (!is.null(until)){
