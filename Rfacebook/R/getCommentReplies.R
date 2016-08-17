@@ -47,7 +47,7 @@
 #' ## Getting information and likes/comments about most recent post
 #'  post <- getPost(post=fb_page$id[1], n=2000, token=fb_oauth)
 #' ## Downloading list of replies to first comment
-#'  replies <- getCommentReplies(comment_id=post$id[1], token=fb_oauth)
+#'  replies <- getCommentReplies(comment_id=post$comments$id[1], token=fb_oauth)
 #' }
 #'
 
