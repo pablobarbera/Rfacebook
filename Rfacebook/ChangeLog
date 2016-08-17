@@ -60,3 +60,5 @@
     - added getCommentReplies function to scrape nested comments
 2016-07-26 - version 0.6.8
     - getGroup function now has feed option to return only admin posts
+2016-08-16 - version 0.6.9
+    - added story field to getPage
