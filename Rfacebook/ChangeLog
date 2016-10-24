@@ -62,3 +62,5 @@
     - getGroup function now has feed option to return only admin posts
 2016-08-16 - version 0.6.9
     - added story field to getPage
+2016-10-23 - version 0.6.10
+    - fixed bug in getPage with reactions=T in posts with no reactions
