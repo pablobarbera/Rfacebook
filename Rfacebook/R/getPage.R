@@ -45,6 +45,7 @@
 #' @param reactions If \code{TRUE}, will add variables to the data frame with
 #' the total count of reactions: love, haha, wow, sad, angry.
 #'
+#' @param verbose If \code{TRUE}, will report a number of the posts retrieved.
 #'
 #' @examples \dontrun{
 #' ## See examples for fbOAuth to know how token was created.
@@ -61,7 +62,7 @@
 #'
 
 
-getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, reactions=FALSE){
+getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, reactions=FALSE, verbose=TRUE){
 
 	url <- paste0('https://graph.facebook.com/', page,
 		'/posts?fields=from,message,created_time,type,link,story,comments.summary(true)',
@@ -85,7 +86,7 @@ getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, react
 	}
 	# making query
 	content <- callAPI(url=url, token=token)
-	l <- length(content$data); cat(l, "posts ")
+	l <- length(content$data); if (verbose) cat(l, "posts ")
 	
 	## retrying 3 times if error was found
 	error <- 0
@@ -124,7 +125,7 @@ getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, react
 			url <- content$paging$`next`
 			content <- callAPI(url=url, token=token)
 			l <- l + length(content$data)
-			if (length(content$data)>0){ cat(l, "posts ") }
+			if (length(content$data)>0){ if (verbose) cat(l, "posts ") }
 
 			## retrying 3 times if error was found
 			error <- 0
