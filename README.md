@@ -128,7 +128,7 @@ df <- do.call(rbind, df.list)
 library(ggplot2)
 library(scales)
 ggplot(df, aes(x = month, y = x, group = metric)) + geom_line(aes(color = metric)) + 
-    scale_x_date(breaks = "years", labels = date_format("%Y")) + scale_y_log10("Average count per post", 
+    scale_x_date(date_breaks = "years", labels = date_format("%Y")) + scale_y_log10("Average count per post", 
     breaks = c(10, 100, 1000, 10000, 50000)) + theme_bw() + theme(axis.title.x = element_blank())
 ```
 
