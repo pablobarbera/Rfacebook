@@ -64,3 +64,5 @@
     - added story field to getPage
 2016-10-23 - version 0.6.10
     - fixed bug in getPage with reactions=T in posts with no reactions
+2016-12-28 - version 0.6.11
+    - added verbose option to getPage
