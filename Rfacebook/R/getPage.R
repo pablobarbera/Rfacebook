@@ -98,7 +98,7 @@ getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, react
 		if (error==3){ stop(content$error_msg) }
 	}
 	if (length(content$data)==0){ 
-		message("No public posts were found")
+		message("No public posts were found : ", page)
 		return(data.frame())
 	}
 	df <- pageDataToDF(content$data)
