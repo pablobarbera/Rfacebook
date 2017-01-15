@@ -32,13 +32,19 @@
 #' @param comments logical, default is \code{TRUE}, which will return data frame
 #' with comments to the post.
 #'
-#' @param likes logical, default is \code{TRUE}, which will return data frame
+#' @param likes logical, default is \code{TRUE} unless reactions is true, which will return data frame
 #' with likes for the post.
+#' 
+#' @param reactions logical, default is \code{FALSE}, which will return data frame with reactions (like, love, etc) for the post
 #'
 #' @param n.likes numeric, maximum number of likes to return. Default is \code{n}.
 #'
-#' @param n.comments numeric, maximum number of likes to return. Default is 
+#' @param n.comments numeric, maximum number of comments to return. Default is 
 #' \code{n}.
+#' 
+#' @param n.reactions numeric, maximum number of reactions to return. Default is 
+#' \code{n}.
+#' 
 #'
 #' @examples \dontrun{
 #' ## See examples for fbOAuth to know how token was created.
@@ -50,8 +56,8 @@
 #' }
 #'
 
-getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
-	n.comments=n){
+getPost <- function(post, token, n=500, comments=TRUE, likes=(!reactions), reactions=FALSE, n.likes=n,
+	n.comments=n, n.reactions=n){
 
 	url <- paste0("https://graph.facebook.com/", post,
 				"?fields=from,message,created_time,type,link,name,shares")
@@ -82,10 +88,20 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
 	if (likes==FALSE){
 		url <- paste0(url, ",likes.summary(true)")
 	}
-
+	if (reactions==TRUE){
+	  url <- paste0(url, ",reactions.summary(true).",
+	                "fields(id,type,name)")
+	  if (n.reactions>=2000){
+	    url <- paste0(url, ".limit(2000)")
+	  }
+	  if (n.reactions<2000){
+	    url <- paste0(url, ".limit(", n.likes, ")")
+	  }
+	}
+	
 	# making query
 	content <- callAPI(url=url, token=token)
-
+  
 	# error traps: retry 3 times if error
 	error <- 0
 	while (length(content$error_code)>0){
@@ -110,14 +126,21 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
 	if (comments && n.likes > 0) n.c <- ifelse(!is.null(out$comments), dim(out$comments)[1], 0)
 	if (n.comments == 0) n.c <- 0
 	if (!comments) n.c <- Inf
+	if (reactions && n.reactions > 0) out[["reactions"]] <- reactionsDataToDF(content$reactions$data)
+	if (reactions && n.reactions > 0)  n.r <- ifelse(!is.null(out$reactions), dim(out$reactions)[1], 0)
+	if (n.reactions == 0) n.r <- 0
+	if (!reactions) n.r <- Inf
+	
 	
 	# paging if we n.comments OR n.likes haven't been downloaded
-	if (n.likes > n.l || n.comments > n.c){
+	if (n.likes > n.l || n.comments > n.c || n.reactions > n.r){
 		# saving URLs for next batch of likes and comments
 		if (likes) url.likes <- content$likes$paging$`next`
 		if (!likes) url.likes <- NULL
 		if (comments) url.comments <- content$comments$paging$`next`
 		if (!comments) url.comments <- NULL
+		if (reactions) url.reactions <- content$reactions$paging$`next`
+		if (!reactions) url.reactions <- NULL
 
 		if (!is.null(url.likes) && likes && n.likes > n.l){
 			# retrieving next batch of likes
@@ -136,6 +159,25 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
 				n.l <- dim(out$likes)[1]
 			}
 		}
+		
+		if (!is.null(url.reactions) && reactions && n.reactions > n.r){
+		  # retrieving next batch of reactions
+		  url <- content$reactions$paging$`next`
+		  content <- callAPI(url=url.reactions, token=token)
+		  out[["reactions"]] <- rbind(out[["reactions"]],
+		                          reactionsDataToDF(content$data))
+		  n.r <- dim(out$reactions)[1]
+		  # next reactions, in batches of 500
+		  while (n.r < n.reactions & length(content$data)>0 &
+		         !is.null(url <- content$paging$`next`)){
+		    url <- content$paging$`next`
+		    content <- callAPI(url=url, token=token)
+		    out[["reactions"]] <- rbind(out[["reactions"]],
+		                            reactionsDataToDF(content$data))
+		    n.r <- dim(out$reactions)[1]
+		  }
+		}
+		
 		if (!is.null(url.comments) && comments && n.comments > n.c){
 			# retriving next batch of comments
 			content <- callAPI(url=url.comments, token=token)
