@@ -5,7 +5,7 @@
 \title{Extract replies to comments on page post}
 \usage{
 getCommentReplies(comment_id, token, n = 500, replies = TRUE,
-  likes = FALSE, n.likes = n, n.replies = n)
+  likes = FALSE, n.likes = n, n.replies = n, api = NULL)
 }
 \arguments{
 \item{comment_id}{A comment ID}
@@ -26,6 +26,8 @@ with likes for the post.}
 
 \item{n.replies}{numeric, maximum number of replies to return. Default is 
 \code{n}.}
+
+\item{api}{API version. e.g. "v2.8". \code{NULL} is the default.}
 }
 \description{
 \code{getCommentReplies} retrieves the list of comments replying to 

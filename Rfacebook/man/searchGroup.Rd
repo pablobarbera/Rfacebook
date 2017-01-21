@@ -4,7 +4,7 @@
 \alias{searchGroup}
 \title{Find Facebook ID of a group}
 \usage{
-searchGroup(name, token)
+searchGroup(name, token, api = NULL)
 }
 \arguments{
 \item{name}{Name of Facebook group (in URL)}
@@ -12,6 +12,8 @@ searchGroup(name, token)
 \item{token}{Either a temporary access token created at
 \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
 created with \code{fbOAuth}.}
+
+\item{api}{API version. e.g. "v2.8". \code{NULL} is the default.}
 }
 \description{
 Use \code{searchGroup} in combination with \code{getGroup} to scrape

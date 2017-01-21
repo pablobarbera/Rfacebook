@@ -30,25 +30,27 @@
 #' elements: a data frame with user's checkins and a list of data frames,
 #' where each element contains information about users tagged in each checkin.
 #'
+#' @param api API version. e.g. "v2.8". \code{NULL} is the default.
+#' 
 #' @examples \dontrun{
 #'  token <- 'XXXXX'
 #'  my_checkins <- getCheckins(user="me", token=token)
 #' }
 #'
 
-getCheckins <- function(user, n=10, token, tags=FALSE){
+getCheckins <- function(user, n=10, token, tags=FALSE, api=NULL){
     
     tkversion <- getTokenVersion(token)
 
     if (tkversion=="v2"){
-        stop("Searching for posts was deprecated with version 2.0 of",
+        stop("Searching for check-ins was deprecated with version 2.0 of",
         " the Facebook Graph API.\nFor more details see ?getCheckins")
     }
 
     query <- paste0('https://graph.facebook.com/', user, 
 		'?fields=checkins.limit(', n, ').fields(tags,created_time,',
 			'place.fields(id,name,location))')
-	content <- callAPI(query, token)
+	content <- callAPI(query, token, api=api)
     if (length(content$checkins)>0){
 	    df <- checkinDataToDF(content$checkins$data)
         if (tags) {tags.df <- tagsDataToDF(content$checkins$data)}

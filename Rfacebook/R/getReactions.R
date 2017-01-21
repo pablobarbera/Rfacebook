@@ -26,6 +26,8 @@
 #' @param verbose logical, default is \code{TRUE}, which will print additional
 #' information on the console.
 #'
+#' @param api API version. e.g. "v2.8". \code{NULL} is the default.
+#' 
 #' @examples \dontrun{
 #' ## See examples for fbOAuth to know how token was created.
 #' ## Getting information about Facebook's Facebook Page
@@ -37,7 +39,7 @@
 #'
 
 
-getReactions <- function(post, token, verbose=TRUE){
+getReactions <- function(post, token, verbose=TRUE, api=NULL){
 
 	add_to_url <- paste0("?fields=reactions.type(LIKE).limit(0).summary(true).as(like),",
 		"reactions.type(LOVE).limit(0).summary(true).as(love),",
@@ -50,9 +52,9 @@ getReactions <- function(post, token, verbose=TRUE){
 	if (verbose==TRUE){ pb <- utils::txtProgressBar(min=0,max=length(post), style=3) }
 	i = 0
 	for (p in as.character(post)){
-		url <- paste0('https://graph.facebook.com/v2.6/', p, add_to_url)
+		url <- paste0('https://graph.facebook.com/', p, add_to_url)
 		# making query
-		content <- callAPI(url=url, token=token)
+		content <- callAPI(url=url, token=token, api=api)
 		# DF with results
 		new.df <- data.frame(
 			id = p,

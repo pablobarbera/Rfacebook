@@ -343,9 +343,13 @@ searchPageDataToDF <- function(json){
 #' created with \code{fbOAuth}. It needs to have extended permissions in order 
 #' to successfully post to the Facebook profile.
 #'
+#' @param api API version. e.g. "v2.8". \code{NULL} is the default.
 #'
 
-callAPI <- function(url, token){
+callAPI <- function(url, token, api=NULL){
+	if (!is.null(api)){
+		url <- gsub("facebook.com/", paste0("facebook.com/", api, "/"), url)
+	}
 	if (class(token)[1]=="config"){
 		url.data <- GET(url, config=token)
 	}

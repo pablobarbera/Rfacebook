@@ -33,6 +33,8 @@
 #' that were made by others (not only the admin of the group). Note that, unlike
 #' in \code{getPage}, here \code{TRUE} is the default option.
 #'
+#' @param api API version. e.g. "v2.8". \code{NULL} is the default.
+#' 
 #'
 #' @examples \dontrun{
 #' ## Find Facebook ID for R-Users Facebook group
@@ -46,7 +48,7 @@
 #'		since='2013/01/01', until='2013/01/31')
 #' }
 
-getGroup <- function(group_id, token, n=25, since=NULL, until=NULL, feed=TRUE){
+getGroup <- function(group_id, token, n=25, since=NULL, until=NULL, feed=TRUE, api=NULL){
 
 	url <- paste0('https://graph.facebook.com/', group_id,
 		'/posts?fields=from,message,created_time,type,link,comments.summary(true)',
@@ -69,7 +71,7 @@ getGroup <- function(group_id, token, n=25, since=NULL, until=NULL, feed=TRUE){
 		url <- paste0(url, "&limit=25")
 	}
 	# making query
-	content <- callAPI(url=url, token=token)
+	content <- callAPI(url=url, token=token, api=api)
 	l <- length(content$data); cat(l, "posts ")
 	
 	## retrying 3 times if error was found
@@ -78,7 +80,7 @@ getGroup <- function(group_id, token, n=25, since=NULL, until=NULL, feed=TRUE){
 		cat("Error!\n")
 		Sys.sleep(0.5)
 		error <- error + 1
-		content <- callAPI(url=url, token=token)		
+		content <- callAPI(url=url, token=token, api=api)		
 		if (error==3){ stop(content$error_msg) }
 	}
 	if (length(content$data)==0){ 
@@ -107,7 +109,7 @@ getGroup <- function(group_id, token, n=25, since=NULL, until=NULL, feed=TRUE){
 			# waiting one second before making next API call...
 			Sys.sleep(0.5)
 			url <- content$paging$`next`
-			content <- callAPI(url=url, token=token)
+			content <- callAPI(url=url, token=token, api=api)
 			l <- l + length(content$data)
 			if (length(content$data)>0){ cat(l, "posts ") }
 
@@ -117,7 +119,7 @@ getGroup <- function(group_id, token, n=25, since=NULL, until=NULL, feed=TRUE){
 				cat("Error!\n")
 				Sys.sleep(0.5)
 				error <- error + 1
-				content <- callAPI(url=url, token=token)		
+				content <- callAPI(url=url, token=token, api=api)		
 				if (error==3){ stop(content$error_msg) }
 			}
 			new.df <- pageDataToDF(content$data)
@@ -153,7 +155,9 @@ getGroup <- function(group_id, token, n=25, since=NULL, until=NULL, feed=TRUE){
 #' @param token Either a temporary access token created at
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
 #' created with \code{fbOAuth}.
-
+#'
+#' @param api API version. e.g. "v2.8". \code{NULL} is the default.
+#' 
 #' @examples \dontrun{
 #' ## Find Facebook ID for R-Users Facebook group
 #'	load("fb_oauth")
@@ -166,11 +170,11 @@ getGroup <- function(group_id, token, n=25, since=NULL, until=NULL, feed=TRUE){
 #'		since='2013/01/01', until='2013/01/31')
 #' }
 
-searchGroup <- function(name, token){
+searchGroup <- function(name, token, api=NULL){
 	url <- paste0('https://graph.facebook.com/search?q=',
 		name, '&type=group')
 	# making query
-	content <- callAPI(url=url, token=token)
+	content <- callAPI(url=url, token=token, api=api)
 
 	# if no data, return error message
 	if (length(content$data)==0){ 

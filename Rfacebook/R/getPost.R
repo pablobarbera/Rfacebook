@@ -44,6 +44,8 @@
 #' 
 #' @param n.reactions numeric, maximum number of reactions to return. Default is 
 #' \code{n}.
+#'
+#' @param api API version. e.g. "v2.8". \code{NULL} is the default.
 #' 
 #'
 #' @examples \dontrun{
@@ -57,7 +59,7 @@
 #'
 
 getPost <- function(post, token, n=500, comments=TRUE, likes=(!reactions), reactions=FALSE, n.likes=n,
-	n.comments=n, n.reactions=n){
+	n.comments=n, n.reactions=n, api=NULL){
 
 	url <- paste0("https://graph.facebook.com/", post,
 				"?fields=from,message,created_time,type,link,name,shares")
@@ -100,7 +102,7 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=(!reactions), react
 	}
 	
 	# making query
-	content <- callAPI(url=url, token=token)
+	content <- callAPI(url=url, token=token, api=api)
   
 	# error traps: retry 3 times if error
 	error <- 0
@@ -145,7 +147,7 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=(!reactions), react
 		if (!is.null(url.likes) && likes && n.likes > n.l){
 			# retrieving next batch of likes
 			url <- content$likes$paging$`next`
-			content <- callAPI(url=url.likes, token=token)
+			content <- callAPI(url=url.likes, token=token, api=api)
 			out[["likes"]] <- rbind(out[["likes"]],
 					likesDataToDF(content$data))
 			n.l <- dim(out$likes)[1]
@@ -171,7 +173,7 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=(!reactions), react
 		  while (n.r < n.reactions & length(content$data)>0 &
 		         !is.null(url <- content$paging$`next`)){
 		    url <- content$paging$`next`
-		    content <- callAPI(url=url, token=token)
+		    content <- callAPI(url=url, token=token, api=api)
 		    out[["reactions"]] <- rbind(out[["reactions"]],
 		                            reactionsDataToDF(content$data))
 		    n.r <- dim(out$reactions)[1]
@@ -180,7 +182,7 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=(!reactions), react
 		
 		if (!is.null(url.comments) && comments && n.comments > n.c){
 			# retriving next batch of comments
-			content <- callAPI(url=url.comments, token=token)
+			content <- callAPI(url=url.comments, token=token, api=api)
 			out[["comments"]] <- rbind(out[["comments"]],
 					commentsDataToDF(content$data))
 			n.c <- dim(out$comments)[1]

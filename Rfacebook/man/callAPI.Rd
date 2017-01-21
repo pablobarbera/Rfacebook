@@ -4,7 +4,7 @@
 \alias{callAPI}
 \title{Make an API request}
 \usage{
-callAPI(url, token)
+callAPI(url, token, api = NULL)
 }
 \arguments{
 \item{url}{URL of API request}
@@ -13,6 +13,8 @@ callAPI(url, token)
 \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
 created with \code{fbOAuth}. It needs to have extended permissions in order 
 to successfully post to the Facebook profile.}
+
+\item{api}{API version. e.g. "v2.8". \code{NULL} is the default.}
 }
 \description{
 \code{callAPI} is an internal function to run an API request.

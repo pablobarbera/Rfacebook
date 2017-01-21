@@ -39,6 +39,8 @@
 #' @param n.replies numeric, maximum number of replies to return. Default is 
 #' \code{n}.
 #'
+#' @param api API version. e.g. "v2.8". \code{NULL} is the default.
+#' 
 #' @examples \dontrun{
 #' ## See examples for fbOAuth to know how token was created.
 #' ## Getting information about Facebook's Facebook Page
@@ -52,7 +54,7 @@
 #'
 
 getCommentReplies <- function(comment_id, token, n=500, replies=TRUE, likes=FALSE, n.likes=n,
-                     n.replies=n){
+                     n.replies=n, api=NULL){
   
   url <- paste0("https://graph.facebook.com/", comment_id,
                 "?fields=from,message,created_time,like_count,comment_count") #return initial comments
@@ -93,7 +95,7 @@ getCommentReplies <- function(comment_id, token, n=500, replies=TRUE, likes=FALS
     cat("Error!\n")
     Sys.sleep(0.5)
     error <- error + 1
-    content <- callAPI(url=url, token=token)		
+    content <- callAPI(url=url, token=token, api=api)
     if (error==3){ stop(content$error_msg) }
   }
   if (length(content)==0){ 
@@ -124,7 +126,7 @@ getCommentReplies <- function(comment_id, token, n=500, replies=TRUE, likes=FALS
     if (!is.null(url.likes) && likes && n.likes > n.l){
       # retrieving next batch of likes
       url <- content$likes$paging$`next`
-      content <- callAPI(url=url.likes, token=token)
+      content <- callAPI(url=url.likes, token=token, api=api)
       out[["likes"]] <- rbind(out[["likes"]],
                               likesDataToDF(content$data))
       n.l <- dim(out$likes)[1]
@@ -132,7 +134,7 @@ getCommentReplies <- function(comment_id, token, n=500, replies=TRUE, likes=FALS
       while (n.l < n.likes & length(content$data)>0 &
              !is.null(url <- content$paging$`next`)){
         url <- content$paging$`next`
-        content <- callAPI(url=url, token=token)
+        content <- callAPI(url=url, token=token, api=api)
         out[["likes"]] <- rbind(out[["likes"]],
                                 likesDataToDF(content$data))
         n.l <- dim(out$likes)[1]
@@ -140,7 +142,7 @@ getCommentReplies <- function(comment_id, token, n=500, replies=TRUE, likes=FALS
     }
     if (!is.null(url.comments) && replies && n.replies > n.c){
       # retriving next batch of comments
-      content <- callAPI(url=url.comments, token=token)
+      content <- callAPI(url=url.comments, token=token, api=api)
       out[["replies"]] <- rbind(out[["replies"]],
                                  repliesDataToDF(content$data))
       n.c <- dim(out$replies)[1]
@@ -148,7 +150,7 @@ getCommentReplies <- function(comment_id, token, n=500, replies=TRUE, likes=FALS
       while (n.c < n.replies & length(content$data)>0 &
              !is.null(content$paging$`next`)){
         url <- content$paging$`next`
-        content <- callAPI(url=url, token=token)
+        content <- callAPI(url=url, token=token, api=api)
         out[["replies"]] <- rbind(out[["replies"]],
                                    repliesDataToDF(content$data))
         n.c <- dim(out$replies)[1]

@@ -4,8 +4,9 @@
 \alias{getPost}
 \title{Extract information about a public Facebook post}
 \usage{
-getPost(post, token, n = 500, comments = TRUE, likes = TRUE,
-  n.likes = n, n.comments = n)
+getPost(post, token, n = 500, comments = TRUE, likes = (!reactions),
+  reactions = FALSE, n.likes = n, n.comments = n, n.reactions = n,
+  api = NULL)
 }
 \arguments{
 \item{post}{A post ID}
@@ -19,13 +20,20 @@ created with \code{fbOAuth}.}
 \item{comments}{logical, default is \code{TRUE}, which will return data frame
 with comments to the post.}
 
-\item{likes}{logical, default is \code{TRUE}, which will return data frame
+\item{likes}{logical, default is \code{TRUE} unless reactions is true, which will return data frame
 with likes for the post.}
+
+\item{reactions}{logical, default is \code{FALSE}, which will return data frame with reactions (like, love, etc) for the post}
 
 \item{n.likes}{numeric, maximum number of likes to return. Default is \code{n}.}
 
-\item{n.comments}{numeric, maximum number of likes to return. Default is 
+\item{n.comments}{numeric, maximum number of comments to return. Default is 
 \code{n}.}
+
+\item{n.reactions}{numeric, maximum number of reactions to return. Default is 
+\code{n}.}
+
+\item{api}{API version. e.g. "v2.8". \code{NULL} is the default.}
 }
 \description{
 \code{getPost} retrieves information about a public Facebook post, including

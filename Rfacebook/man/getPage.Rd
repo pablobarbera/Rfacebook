@@ -5,7 +5,7 @@
 \title{Extract list of posts from a public Facebook page}
 \usage{
 getPage(page, token, n = 25, since = NULL, until = NULL, feed = FALSE,
-  reactions = FALSE, verbose=TRUE)
+  reactions = FALSE, verbose = TRUE, api = NULL)
 }
 \arguments{
 \item{page}{A page ID or page name.}
@@ -31,8 +31,9 @@ that were made by others (not only the admin of the page).}
 \item{reactions}{If \code{TRUE}, will add variables to the data frame with
 the total count of reactions: love, haha, wow, sad, angry.}
 
-\item{verbose}{logical, default is \code{TRUE}, which will print additional
-information on the console.}
+\item{verbose}{If \code{TRUE}, will report a number of the posts retrieved.}
+
+\item{api}{API version. e.g. "v2.8". \code{NULL} is the default.}
 }
 \description{
 \code{getPage} retrieves information from a public Facebook page. Note that
