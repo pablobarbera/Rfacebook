@@ -66,3 +66,6 @@
     - fixed bug in getPage with reactions=T in posts with no reactions
 2016-12-28 - version 0.6.11
     - added verbose option to getPage
+2017-01-21 - version 0.6.12
+    - added support for reactions in getPost
+    - added support for multiple API versions in callAPI
