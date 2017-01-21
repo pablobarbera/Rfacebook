@@ -113,6 +113,22 @@ postDataToDF <- function(json){
 	return(df)
 }
 
+reactionsDataToDF <- function(json){
+  if (!is.null(json)){
+    df <- data.frame(
+      from_name = unlistWithNA(json, "name"),
+      from_type = unlistWithNA(json, "type"),
+      from_id = unlistWithNA(json, "id"),
+      stringsAsFactors=F
+    )
+  }
+  if (length(json)==0){
+    df <- NULL
+  }
+  return(df)
+}
+
+
 likesDataToDF <- function(json){
 	if (!is.null(json)){
 		df <- data.frame(
