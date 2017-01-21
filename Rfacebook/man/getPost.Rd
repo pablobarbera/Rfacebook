@@ -40,13 +40,17 @@ with likes for the post.}
 list of comments and likes.
 }
 \details{
-\code{getPost} returns a list with three components: \code{post}, 
-\code{likes}, and \code{comments}. First, \code{post} contains information
-about the post: author, creation date, id, counts of likes, comments, and 
-shares, etc. Second, \code{likes} is a data frame that contains names and
-Facebook IDs of all the users that liked the post. Finally, \code{comments}
-is a data frame with information about the comments to the post (author, 
-message, creation time, id).
+\code{getPost} returns a list with up to four components: \code{post}, 
+\code{likes}, \code{comments}, and \code{reactions}. 
+\code{post} contains information about the post: author, creation date, id, 
+counts of likes, comments, and shares, etc.
+\code{likes} is a data frame that contains names and Facebook IDs of all
+the users that liked the post. 
+\code{comments} is a data frame with information about the comments to 
+the post (author, message, creation time, id). To download also the replies
+to specific comments, see \code{\link{getCommentReplies}}. Note that the total
+number of comments may be different from the number report in \code{comments_count}
+if some comments have been deleted.
 }
 \examples{
 \dontrun{

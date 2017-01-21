@@ -18,6 +18,10 @@
 #' field in the post objects, and not the \code{created_time}. As a result, this function
 #' might return old posts that have been updated recently. 
 #'
+#' \code{comments_count} refers to the total of comments, including nested comments (replies).
+#' It might be different from the total number of comments available through the API if
+#' some comments have been deleted.
+#'
 #' @author
 #' Pablo Barbera \email{pablo.barbera@@nyu.edu}
 #' @seealso \code{\link{getUsers}}, \code{\link{getPost}}, \code{\link{fbOAuth}}
