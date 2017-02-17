@@ -72,6 +72,7 @@
 #' @param legacy_permissions For tokens created with old versions of the API, this option
 #' adds the "read_stream" permission
 #'
+#' @param scope Specify an explicit lists of permissions to ask (overrides extended_permissions)
 #'
 #' @examples \dontrun{
 #' ## an example of an authenticated request after creating the OAuth token
@@ -90,7 +91,7 @@
 #'
 
 
-fbOAuth <- function(app_id, app_secret, extended_permissions=FALSE, legacy_permissions=FALSE)
+fbOAuth <- function(app_id, app_secret, extended_permissions=FALSE, legacy_permissions=FALSE, scope=NULL)
 {
 	## getting callback URL
 	full_url <- oauth_callback()
@@ -104,16 +105,18 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=FALSE, legacy_permi
 	  authorize = "https://www.facebook.com/dialog/oauth",
 	  access = "https://graph.facebook.com/oauth/access_token")	
 	myapp <- oauth_app("facebook", app_id, app_secret)
-	if (extended_permissions==TRUE){
-		scope <- c("user_birthday", "user_hometown", "user_location", "user_relationships",
-			"publish_actions","user_status","user_likes")
+	if (is.null(scope)) {
+  	if (extended_permissions==TRUE){
+  		scope <- c("user_birthday", "user_hometown", "user_location", "user_relationships",
+  			"publish_actions","user_status","user_likes")
+  	}
+  	else { scope <- c("public_profile", "user_friends")}
+  	
+  	if (legacy_permissions==TRUE) {
+  	  scope <- c(scope, "read_stream")
+  	}
 	}
-	else { scope <- c("public_profile", "user_friends")}
 	
-	if (legacy_permissions==TRUE) {
-	  scope <- c(scope, "read_stream")
-	}
-
 	if (packageVersion('httr') < "1.2"){
 		stop("Rfacebook requires httr version 1.2.0 or greater")
 	}
