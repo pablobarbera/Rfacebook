@@ -30,7 +30,7 @@ getNewsfeed <- function(token, n=200)
 {
 	
 
-	url <- "https://graph.facebook.com/me/home?limit="
+	url <- "https://graph.facebook.com/me/feed?limit="
 	if (n<=200){
 		url <- paste(url, n, sep="")
 	}
