@@ -93,6 +93,9 @@
 
 fbOAuth <- function(app_id, app_secret, extended_permissions=FALSE, legacy_permissions=FALSE, scope=NULL)
 {
+	## for windows bug not happening
+	options("browser" = NULL)
+
 	## getting callback URL
 	full_url <- oauth_callback()
 	full_url <- gsub("(.*localhost:[0-9]{1,5}/).*", x=full_url, replacement="\\1")
