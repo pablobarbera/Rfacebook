@@ -188,7 +188,7 @@ userDataToDF <- function(user_data, private_info){
 		last_name = unlistWithNA(user_data, 'last_name'),
 		gender = unlistWithNA(user_data, 'gender'),
 		locale = unlistWithNA(user_data, 'locale'),
-		category = unlistWithNA(user_data, 'category'),
+		#category = unlistWithNA(user_data, 'category'),
 		likes = unlistWithNA(user_data, 'likes'),
 		picture = unlistWithNA(user_data, c('picture', 'data', 'url')),
 		stringsAsFactors=F)
