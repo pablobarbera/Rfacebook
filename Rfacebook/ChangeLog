@@ -73,3 +73,7 @@
     - fixes in getInsights
 2017-04-21 - version 0.6.14
     - fixes in fbOAuth
+2017-05-24 - version 0.6.15
+    - adds getEvents
+    - updates in searchPages
+    - minor fixes

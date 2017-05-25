@@ -7,6 +7,7 @@
 #' @description
 #' Gets a page access token that can be used to e.g. get insights for a page.
 #' 
+#' @param page A page ID or page name.
 #' 
 #' @param token the token (with scope 'manage_pages') of a user that has admin access to the page
 #'

@@ -11,7 +11,7 @@
 #' Pablo Barbera \email{pablo.barbera@@nyu.edu}
 #' @seealso \code{\link{getPage}}, \code{\link{fbOAuth}}
 #'
-#' @param group_id Facebook ID for the group or page.
+#' @param page Facebook ID for the group or page.
 #'
 #' @param token Either a temporary access token created at
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 

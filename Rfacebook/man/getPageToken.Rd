@@ -7,6 +7,8 @@
 getPageToken(page, token)
 }
 \arguments{
+\item{page}{A page ID or page name.}
+
 \item{token}{the token (with scope 'manage_pages') of a user that has admin access to the page}
 }
 \value{

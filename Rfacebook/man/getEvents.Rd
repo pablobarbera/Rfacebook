@@ -7,13 +7,13 @@
 getEvents(page, token, api = "v2.9")
 }
 \arguments{
+\item{page}{Facebook ID for the group or page.}
+
 \item{token}{Either a temporary access token created at
 \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
 created with \code{fbOAuth}.}
 
 \item{api}{API version. e.g. "v2.8". \code{NULL} is the default.}
-
-\item{group_id}{Facebook ID for the group or page.}
 }
 \description{
 \code{getEvents} retrieves event information from a public Facebook group or page.
