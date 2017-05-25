@@ -166,7 +166,7 @@ getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, react
 
 	# adding reactions data
 	if (reactions==TRUE){
-		re = getReactions(df$id, token=token, verbose=FALSE)
+		re = getReactions(df$id, token=token, verbose=FALSE, api=api)
 		df <- merge(df, re, all.x=TRUE)
 		# sorting
 		df <- df[order(df$created_time),]
