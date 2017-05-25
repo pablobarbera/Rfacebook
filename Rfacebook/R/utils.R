@@ -327,6 +327,24 @@ searchPageDataToDF <- function(json){
   return(df)
 }
 
+eventDataToDF <- function(json){
+  df <- data.frame(
+    id = unlistWithNA(json, 'id'),
+    name = unlistWithNA(json, 'name'),
+    description = unlistWithNA(json, 'description'),
+    start_time = unlistWithNA(json, 'start_time'),
+    end_time = unlistWithNA(json, 'end_time'),
+    place_name = unlistWithNA(json, c("place", "name")),
+    attending_count = unlistWithNA(json, 'attending_count'),
+    declined_count = unlistWithNA(json, 'declined_count'),
+    maybe_count = unlistWithNA(json, 'maybe_count'),
+    noreply_count = unlistWithNA(json, 'noreply_count'),
+    stringsAsFactors=F)
+  return(df)
+}
+
+
+
 #' @rdname callAPI
 #' @export
 #'

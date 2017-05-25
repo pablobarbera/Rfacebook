@@ -8,7 +8,7 @@ searchPages(string, token, n = 200)
 }
 \arguments{
 \item{string}{string or string vector containing keywords to search.
-When searching using multiple keywords, the returned results will be 
+When searching using multiple keywords, the returned results will be
 pages whose name contains all the keywords.}
 
 \item{token}{Either a temporary access token created at
