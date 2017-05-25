@@ -347,7 +347,8 @@ searchPageDataToDF <- function(json){
 #'
 
 callAPI <- function(url, token, api=NULL){
-	if (!is.null(api)){
+	if (!is.null(api) & !grepl("v2\\..", url)){
+		# if api version not in URL already
 		url <- gsub("facebook.com/", paste0("facebook.com/", api, "/"), url)
 	}
 	if (class(token)[1]=="config"){
