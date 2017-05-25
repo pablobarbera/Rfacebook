@@ -8,7 +8,8 @@ searchPages(string, token, n = 200)
 }
 \arguments{
 \item{string}{string or string vector containing keywords to search.
-Note that the returned results will contain any of the keywords.}
+When searching using multiple keywords, the returned results will be 
+pages whose name contains all the keywords.}
 
 \item{token}{Either a temporary access token created at
 \url{https://developers.facebook.com/tools/explorer} or the OAuth token 

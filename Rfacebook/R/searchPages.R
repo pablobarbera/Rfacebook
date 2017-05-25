@@ -12,7 +12,8 @@
 #' @seealso \code{\link{fbOAuth}}, \code{\link{searchFacebook}}
 #'
 #' @param string string or string vector containing keywords to search.
-#' Note that the returned results will contain any of the keywords. 
+#' When searching using multiple keywords, the returned results will be
+#' pages whose name contains all the keywords.
 #' 
 #' @param token Either a temporary access token created at
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
