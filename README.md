@@ -161,7 +161,7 @@ group <- getGroup("150048245063649", token, n=50)
 Rfacebook also allows to read personal information about the authenticated user, such as the list of likes and the content from the Newsfeed. Private information about the user's friends is no longer available through the API.
 
 ```r
-getLikes('me', token)[1,]
+getLikes('me', token = token)[1,]
 ## id           names
 ## 1 687958677914631 FiveThirtyEight
 ## website
