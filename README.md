@@ -3,7 +3,7 @@ Rfacebook: Access to Facebook API via R
 
 This package provides a series of functions that allow R users to access Facebook's API to get information about public pages, groups, and posts, as well as some of the authenticated user's private data.
 
-Current CRAN release is 0.6.3. To install the most updated version (0.6.6) from GitHub using devtools, type:
+Current CRAN release is 0.6.15. To install the most updated version (0.6.15) from GitHub using devtools, type:
 
 ```r
 library(devtools)
@@ -215,18 +215,4 @@ This is related to the previous question. It is no longer possible to query user
 
 - For any other questions, feature requests, or bugs, please open an issue in this repository.
 
-
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-1191254-10']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
 
