@@ -48,10 +48,9 @@ ids <- searchGroup(name="rusers", token=fb_oauth)
 	since='2013/01/01', until='2013/01/31')
 }
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
-}
 \seealso{
 \code{\link{getUsers}}, \code{\link{getPost}}, \code{\link{fbOAuth}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}
+}

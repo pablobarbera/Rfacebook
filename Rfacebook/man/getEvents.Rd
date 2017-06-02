@@ -25,10 +25,9 @@ load("fb_oauth")
  events <- getEvents(page="playavistaFM", token=fb_oauth)
 }
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
-}
 \seealso{
 \code{\link{getPage}}, \code{\link{fbOAuth}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}
+}

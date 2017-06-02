@@ -11,7 +11,7 @@
 #' through the API. All the remaining fields will be missing.
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{getFriends}}, \code{\link{getPost}}, \code{\link{searchFacebook}}
 #'
 #' @param users A vector of user IDs.

@@ -26,10 +26,9 @@ my_newsfeed <- getNewsfeed(token=fb_oauth, n=100)
 }
 
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
-}
 \seealso{
 \code{\link{fbOAuth}}, \code{\link{getPost}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}
+}

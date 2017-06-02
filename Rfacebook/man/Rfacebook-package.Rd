@@ -2,16 +2,13 @@
 % Please edit documentation in R/Rfacebook-package.R
 \docType{package}
 \name{Rfacebook-package}
-\alias{Rfacebook}
 \alias{Rfacebook-package}
+\alias{Rfacebook}
 \title{Access to Facebook API via R}
 \description{
 This package provides a series of functions that allow R users
 to access Facebook's API to get information about users and posts,
 and collect public status updates that mention specific keywords.
-}
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
 }
 \seealso{
 \code{\link{fbOAuth}}, \code{\link{getUsers}}, 
@@ -19,4 +16,6 @@ Pablo Barbera \email{pablo.barbera@nyu.edu}
 \code{\link{updateStatus}}, \code{\link{getFriends}}, 
 \code{\link{getNetwork}}, \code{\link{getPage}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}
+}

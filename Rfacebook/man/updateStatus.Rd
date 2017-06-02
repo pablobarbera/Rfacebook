@@ -28,11 +28,10 @@ on the Facebook profile of the authenticated user.
 }
 
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}, Zakharov Kyrylo 
-(\url{https://github.com/Amice13})
-}
 \seealso{
 \code{\link{getUsers}}, \code{\link{getPost}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}, Zakharov Kyrylo 
+(\url{https://github.com/Amice13})
+}

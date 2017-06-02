@@ -19,4 +19,3 @@ to successfully post to the Facebook profile.}
 \description{
 \code{callAPI} is an internal function to run an API request.
 }
-

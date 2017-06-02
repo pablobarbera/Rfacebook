@@ -8,7 +8,7 @@
 #' \code{getGroup} retrieves information from a public Facebook group.
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{getUsers}}, \code{\link{getPost}}, \code{\link{fbOAuth}}
 #'
 #' @param group_id Facebook ID for the group. Note that this is different from

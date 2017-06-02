@@ -77,3 +77,6 @@
     - adds getEvents
     - updates in searchPages
     - minor fixes
+2017-06-01 - version 0.6.16
+    - documentation updates
+    - searchGroups now returns 25+ results

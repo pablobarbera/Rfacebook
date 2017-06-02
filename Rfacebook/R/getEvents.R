@@ -8,7 +8,7 @@
 #' \code{getEvents} retrieves event information from a public Facebook group or page.
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{getPage}}, \code{\link{fbOAuth}}
 #'
 #' @param page Facebook ID for the group or page.

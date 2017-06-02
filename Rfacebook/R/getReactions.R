@@ -14,7 +14,7 @@
 #' \url{http://stackoverflow.com/questions/36930414/how-can-i-get-facebook-graph-api-reaction-summary-count-separately}
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{getPage}}, \code{\link{getPost}}
 #'
 #' @param post A post ID, or a vector of post IDs

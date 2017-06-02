@@ -22,7 +22,7 @@
 #' if some comments have been deleted.
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{getUsers}}, \code{\link{getPage}}, \code{\link{fbOAuth}}
 #'
 #' @param post A post ID

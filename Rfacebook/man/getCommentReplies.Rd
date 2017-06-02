@@ -54,10 +54,9 @@ data frame that contains names and Facebook IDs of all the users that liked the 
 }
 
 }
-\author{
-Yan Turgeon
-}
 \seealso{
 \code{\link{getPage}}, \code{\link{getPost}}
 }
-
+\author{
+Yan Turgeon
+}

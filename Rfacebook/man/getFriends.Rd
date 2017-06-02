@@ -34,10 +34,9 @@ head(my_friends, n=10)
 }
 
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
-}
 \seealso{
 \code{\link{getUsers}}, \code{\link{fbOAuth}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}
+}

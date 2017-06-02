@@ -44,10 +44,9 @@ only friends who are using the application will be returned.
 }
 
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
-}
 \seealso{
 \code{\link{getFriends}}, \code{\link{fbOAuth}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}
+}

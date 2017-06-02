@@ -51,7 +51,7 @@
 #'
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{getUsers}}, \code{\link{getPost}}, \code{\link{searchFacebook}}
 #'
 #' @param app_id numeric, App ID of application to be used to create OAUth token. Available
@@ -93,6 +93,7 @@
 
 fbOAuth <- function(app_id, app_secret, extended_permissions=FALSE, legacy_permissions=FALSE, scope=NULL)
 {
+
 	## getting callback URL
 	full_url <- oauth_callback()
 	full_url <- gsub("(.*localhost:[0-9]{1,5}/).*", x=full_url, replacement="\\1")

@@ -38,10 +38,9 @@ post <- getReactions(post=fb_page$id[1], token=fb_oauth)
 }
 
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
-}
 \seealso{
 \code{\link{getPage}}, \code{\link{getPost}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}
+}

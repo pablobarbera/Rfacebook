@@ -63,10 +63,9 @@ post <- getPost(post=fb_page$id[1], n=2000, token=fb_oauth)
 }
 
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
-}
 \seealso{
 \code{\link{getUsers}}, \code{\link{getPage}}, \code{\link{fbOAuth}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}
+}

@@ -27,4 +27,3 @@ page_token = getPageToken(page, token)
 getInsights(page, token=page_token, metric = "page_impressions")
 }
 }
-

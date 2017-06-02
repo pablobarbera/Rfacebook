@@ -15,7 +15,7 @@
 #' Check-in search was deprecated with version 2.0 of the Facebook Graph API.
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{getFriends}}
 #'
 #' @param token Either a temporary access token created at

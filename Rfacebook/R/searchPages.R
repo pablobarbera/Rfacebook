@@ -8,7 +8,7 @@
 #' \code{searchPages} retrieves public pages that mention a given keyword
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}, Joel Gombin \email{joel.gombin@@gmail.com}
+#' Pablo Barbera \email{pbarbera@@usc.edu}, Joel Gombin \email{joel.gombin@@gmail.com}
 #' @seealso \code{\link{fbOAuth}}, \code{\link{searchFacebook}}
 #'
 #' @param string string or string vector containing keywords to search.

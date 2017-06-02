@@ -19,7 +19,7 @@
 #' \url{https://developers.facebook.com/bugs/1404733043148335/}
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{getPage}}, \code{\link{getPost}}
 #'
 #' @param post A post ID

@@ -29,10 +29,9 @@ pages <- searchPages( string="facebook", token=fb_oauth, n=100 )
 }
 
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}, Joel Gombin \email{joel.gombin@gmail.com}
-}
 \seealso{
 \code{\link{fbOAuth}}, \code{\link{searchFacebook}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}, Joel Gombin \email{joel.gombin@gmail.com}
+}

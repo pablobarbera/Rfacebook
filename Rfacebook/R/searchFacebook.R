@@ -24,7 +24,7 @@
 #'
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{fbOAuth}}
 #'
 #' @param string string or string vector containing keywords to search.

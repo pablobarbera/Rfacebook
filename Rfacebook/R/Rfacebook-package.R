@@ -11,7 +11,8 @@
 #' @name Rfacebook-package
 #' @aliases Rfacebook
 #' @docType package
-#' @author Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' @author Pablo Barbera \email{pbarbera@@usc.edu}
 #' @import httr rjson httpuv
+#' @importFrom utils URLencode packageVersion setTxtProgressBar txtProgressBar
 NULL
 
