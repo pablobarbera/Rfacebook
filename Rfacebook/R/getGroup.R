@@ -156,6 +156,8 @@ getGroup <- function(group_id, token, n=25, since=NULL, until=NULL, feed=TRUE, a
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
 #' created with \code{fbOAuth}.
 #'
+#' @param n Number of groups to return. Default is up to 25.
+#'
 #' @param api API version. e.g. "v2.8". \code{NULL} is the default.
 #' 
 #' @examples \dontrun{
@@ -170,9 +172,9 @@ getGroup <- function(group_id, token, n=25, since=NULL, until=NULL, feed=TRUE, a
 #'		since='2013/01/01', until='2013/01/31')
 #' }
 
-searchGroup <- function(name, token, api=NULL){
+searchGroup <- function(name, token, n=25, api=NULL){
 	url <- paste0('https://graph.facebook.com/search?q=',
-		name, '&type=group')
+		name, '&type=group&limit=', n)
 	# making query
 	content <- callAPI(url=url, token=token, api=api)
 

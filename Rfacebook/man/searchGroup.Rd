@@ -4,7 +4,7 @@
 \alias{searchGroup}
 \title{Find Facebook ID of a group}
 \usage{
-searchGroup(name, token, api = NULL)
+searchGroup(name, token, n = 25, api = NULL)
 }
 \arguments{
 \item{name}{Name of Facebook group (in URL)}
@@ -12,6 +12,8 @@ searchGroup(name, token, api = NULL)
 \item{token}{Either a temporary access token created at
 \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
 created with \code{fbOAuth}.}
+
+\item{n}{Number of groups to return. Default is up to 25.}
 
 \item{api}{API version. e.g. "v2.8". \code{NULL} is the default.}
 }
@@ -32,4 +34,3 @@ ids <- searchGroup(name="rusers", token=fb_oauth)
 	since='2013/01/01', until='2013/01/31')
 }
 }
-
