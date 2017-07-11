@@ -4,7 +4,7 @@
 \alias{getUsers}
 \title{Extract information about one or more Facebook users}
 \usage{
-getUsers(users, token, private_info = FALSE)
+getUsers(users, token, private_info = FALSE, api = "v2.9")
 }
 \arguments{
 \item{users}{A vector of user IDs.}
