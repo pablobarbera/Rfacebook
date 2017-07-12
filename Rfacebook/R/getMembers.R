@@ -41,6 +41,8 @@ getMembers <- function(group_id, token, n=5000, api=NULL){
   # if data, return a data frame
   df <- data.frame(
     name = unlist(lapply(content$data, '[[', 'name')),
+    first_name = unlist(lapply(content$data, '[[', 'first_name')),
+    last_name = unlist(lapply(content$data, '[[', 'last_name')),
     id = unlist(lapply(content$data, '[[', 'id')),
     administrator = unlist(lapply(content$data, '[[', 'administrator')),
     stringsAsFactors=F)
