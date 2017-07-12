@@ -4,7 +4,7 @@ Description: Provides an interface to the Facebook API.
 Version: 0.6.17
 Date: 2017-07-11
 Author: Pablo Barbera <pbarbera@usc.edu>, Michael Piccirilli
-    <mrp2181@columbia.edu>, Andrew Geisler, Wouter van Atteveldt
+    <mrp2181@columbia.edu>, Andrew Geisler, Wouter van Atteveldt, Yan Turgeon
 Maintainer: Pablo Barbera <pbarbera@usc.edu>
 URL: https://github.com/pablobarbera/Rfacebook
 BugReports: https://github.com/pablobarbera/Rfacebook/issues

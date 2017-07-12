@@ -82,3 +82,4 @@
     - searchGroups now returns 25+ results
 2017-07-11 - version 0.6.17
     - getUsers now works with recent versions of API
+    - getMembers function added (thanks Yan Turgeon)
