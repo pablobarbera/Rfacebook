@@ -343,7 +343,16 @@ eventDataToDF <- function(json){
   return(df)
 }
 
-
+memberDataToDF <- function(user_data, private_info){
+  df <- data.frame(
+    name = unlistWithNA(user_data, 'name'),
+    first_name = unlistWithNA(user_data, 'first_name'),
+    last_name = unlistWithNA(user_data, 'last_name'),
+    id = unlistWithNA(user_data, 'id'),
+    administrator = unlistWithNA(user_data, 'administrator'),
+    stringsAsFactors=F)
+  return(df)
+}
 
 #' @rdname callAPI
 #' @export
