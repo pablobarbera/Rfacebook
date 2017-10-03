@@ -57,7 +57,7 @@ updateStatus <- function(text, token, link=NULL) {
   }
   ## output
   if (url.data$status_code==200){
-    id <- fromJSON(rawToChar(url.data$content))$id
+    id <- fromJSON(rawToChar(url.data$content), simplifyVector=FALSE)$id
     if (is.null(id)){
       message("Failed update. OAuth token does not have permission to update status. ",
               "See ?fbOAuth for more details.")
@@ -65,8 +65,8 @@ updateStatus <- function(text, token, link=NULL) {
     message("Success! Link to status update: ", paste("http://www.facebook.com/", id, sep=""))
   }
   if (url.data$status_code==400){
-    error <- fromJSON(rawToChar(url.data$content))$error$code
-    message <- fromJSON(rawToChar(url.data$content))$error$message
+    error <- fromJSON(rawToChar(url.data$content), simplifyVector=FALSE)$error$code
+    message <- fromJSON(rawToChar(url.data$content), simplifyVector=FALSE)$error$message
     if (error==2500){
       message("Failed update. OAuth token does not have permission to update status. ",
               "See ?fbOAuth for more details.")

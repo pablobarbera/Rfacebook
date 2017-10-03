@@ -383,7 +383,7 @@ callAPI <- function(url, token, api=NULL){
 	if (class(token)[1]!="character" & class(token)[1]!="config" & class(token)[1]!="Token2.0"){
 		stop("Error in access token. See help for details.")
 	}
-	content <- rjson::fromJSON(rawToChar(url.data$content))
+	content <- jsonlite::fromJSON(rawToChar(url.data$content), simplifyVector=FALSE)
 	if (length(content$error)>0){
 		stop(content$error$message)
 	}	
