@@ -255,8 +255,8 @@ tagsDataToDF <- function(tags){
 
 replyDataToDF <- function(json){
   df <- data.frame(
-    from_id = json$from$id,
-    from_name = json$from$name,
+    from_id = ifelse(!is.null(json$from$id), json$from$id, NA),
+    from_name = ifelse(!is.null(json$from$name), json$from$name, NA),
     message = ifelse(!is.null(json$message),json$message, NA),
     created_time = json$created_time,
     likes_count = json$like_count,

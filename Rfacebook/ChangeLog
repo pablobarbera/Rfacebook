@@ -83,3 +83,5 @@
 2017-07-11 - version 0.6.17
     - getUsers now works with recent versions of API
     - getMembers function added (thanks Yan Turgeon)
+2018-02-08 - version 0.6.18
+    - getCommentReplies() returns NA for from field when API does not return it

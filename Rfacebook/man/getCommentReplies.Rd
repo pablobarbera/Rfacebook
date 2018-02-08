@@ -40,6 +40,10 @@ about the original comment: author, creation date, id, counts of likes and comme
 etc. Second, \code{replies} is a data frame with information about the replies
 to the comment (author, message, creation time, id). Finally, \code{likes} is 
 data frame that contains names and Facebook IDs of all the users that liked the comment.
+
+Note that user information (from_id and from_name) are only returned if the token used
+to authenticate is a Page access token. For more information, see: 
+\url{https://developers.facebook.com/docs/graph-api/reference/v2.10/comment}
 }
 \examples{
 \dontrun{
