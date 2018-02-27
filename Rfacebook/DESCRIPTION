@@ -11,7 +11,7 @@ BugReports: https://github.com/pablobarbera/Rfacebook/issues
 Depends:
     R (>= 2.12.0),
     httr,
-    rjson,
+    jsonlite,
     httpuv
 License: GPL-2
 RoxygenNote: 6.0.1

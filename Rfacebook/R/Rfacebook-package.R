@@ -12,7 +12,7 @@
 #' @aliases Rfacebook
 #' @docType package
 #' @author Pablo Barbera \email{pbarbera@@usc.edu}
-#' @import httr rjson httpuv
+#' @import httr jsonlite httpuv
 #' @importFrom utils URLencode packageVersion setTxtProgressBar txtProgressBar
 NULL
 
