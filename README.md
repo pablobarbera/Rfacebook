@@ -1,6 +1,10 @@
 Rfacebook: Access to Facebook API via R
 ---------
 
+Due to recent changes in Facebook's Graph API, all functions of the package now require a working app that has undergone App Review. More details are [available here](https://developers.facebook.com/docs/pages/).
+
+__NOTE:__ This package is currently not being maintained and issues are not monitored.
+
 This package provides a series of functions that allow R users to access Facebook's API to get information about public pages, groups, and posts, as well as some of the authenticated user's private data.
 
 Current CRAN release is 0.6.15. To install the most updated version (0.6.15) from GitHub using devtools, type:
