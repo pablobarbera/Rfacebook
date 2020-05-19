@@ -35,7 +35,7 @@ searchPages <- function(string, token, n=200)
   if (length(string)>1){ string <- paste(string, collapse=" ") }
   
   url <- paste("https://graph.facebook.com/search?q=", string,
-               "&type=page&limit=", sep="")
+               "&type=place&limit=", sep="")
   if (n<=200){
     url <- paste(url, n, sep="")
   }
