@@ -5,7 +5,7 @@
 \title{Extract replies to comments on page post}
 \usage{
 getCommentReplies(comment_id, token, n = 500, replies = TRUE,
-  likes = FALSE, n.likes = n, n.replies = n)
+  likes = FALSE, n.likes = n, n.replies = n, api = NULL)
 }
 \arguments{
 \item{comment_id}{A comment ID}
@@ -26,6 +26,8 @@ with likes for the post.}
 
 \item{n.replies}{numeric, maximum number of replies to return. Default is 
 \code{n}.}
+
+\item{api}{API version. e.g. "v2.8". \code{NULL} is the default.}
 }
 \description{
 \code{getCommentReplies} retrieves the list of comments replying to 
@@ -38,6 +40,10 @@ about the original comment: author, creation date, id, counts of likes and comme
 etc. Second, \code{replies} is a data frame with information about the replies
 to the comment (author, message, creation time, id). Finally, \code{likes} is 
 data frame that contains names and Facebook IDs of all the users that liked the comment.
+
+Note that user information (from_id and from_name) are only returned if the token used
+to authenticate is a Page access token. For more information, see: 
+\url{https://developers.facebook.com/docs/graph-api/reference/v2.10/comment}
 }
 \examples{
 \dontrun{
@@ -48,14 +54,13 @@ data frame that contains names and Facebook IDs of all the users that liked the 
 ## Getting information and likes/comments about most recent post
  post <- getPost(post=fb_page$id[1], n=2000, token=fb_oauth)
 ## Downloading list of replies to first comment
- replies <- getCommentReplies(comment_id=post$id[1], token=fb_oauth)
+ replies <- getCommentReplies(comment_id=post$comments$id[1], token=fb_oauth)
 }
 
-}
-\author{
-Yan Turgeon
 }
 \seealso{
 \code{\link{getPage}}, \code{\link{getPost}}
 }
-
+\author{
+Yan Turgeon
+}

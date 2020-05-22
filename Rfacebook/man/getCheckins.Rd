@@ -4,7 +4,7 @@
 \alias{getCheckins}
 \title{Extract list of checkins of a Facebook friend}
 \usage{
-getCheckins(user, n = 10, token, tags = FALSE)
+getCheckins(user, n = 10, token, tags = FALSE, api = NULL)
 }
 \arguments{
 \item{user}{A user ID or screen name.}
@@ -18,6 +18,8 @@ created with \code{fbOAuth}.}
 \item{tags}{If \code{TRUE}, output of function will be a list of two
 elements: a data frame with user's checkins and a list of data frames,
 where each element contains information about users tagged in each checkin.}
+
+\item{api}{API version. e.g. "v2.8". \code{NULL} is the default.}
 }
 \description{
 \code{getCheckins} retrieves information about a friend's checkins
@@ -35,10 +37,9 @@ Check-in search was deprecated with version 2.0 of the Facebook Graph API.
 }
 
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
-}
 \seealso{
 \code{\link{getFriends}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}
+}

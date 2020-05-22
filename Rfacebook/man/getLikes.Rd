@@ -2,12 +2,12 @@
 % Please edit documentation in R/getLikes.R
 \name{getLikes}
 \alias{getLikes}
-\title{Extract list of likes of a Facebook friend}
+\title{Extract list of likes of the authenticated Facebook user}
 \usage{
-getLikes(user, n = 500, token)
+getLikes(user = "me", n = 500, token)
 }
 \arguments{
-\item{user}{A user ID or screen name.}
+\item{user}{The name of the user. By default, "me".}
 
 \item{n}{Maximum number of likes to return for each user.}
 
@@ -16,13 +16,13 @@ getLikes(user, n = 500, token)
 created with \code{fbOAuth}.}
 }
 \description{
-\code{getLikes} retrieves information about a friend's likes.
-To retrieve the number of likes for a page, use \code{getUsers}
-with the page IDs.
+\code{getLikes} retrieves information about the authenticated use
+only (not any friend). To retrieve the number of likes for a page, 
+use \code{getUsers} with the page IDs.
 }
 \details{
 This function requires the use of an OAuth token with the following
-permissions: user_likes, friends_likes
+permission: user_likes
 }
 \examples{
 \dontrun{
@@ -31,10 +31,9 @@ permissions: user_likes, friends_likes
 }
 
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
-}
 \seealso{
 \code{\link{getFriends}}, \code{\link{fbOAuth}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}
+}

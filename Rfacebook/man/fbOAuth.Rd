@@ -5,7 +5,7 @@
 \title{Create OAuth token to Facebook R session}
 \usage{
 fbOAuth(app_id, app_secret, extended_permissions = FALSE,
-  legacy_permissions = FALSE)
+  legacy_permissions = FALSE, scope = NULL)
 }
 \arguments{
 \item{app_id}{numeric, App ID of application to be used to create OAUth token. Available
@@ -25,6 +25,8 @@ requires passing App Review (\url{https://developers.facebook.com/docs/facebook-
 
 \item{legacy_permissions}{For tokens created with old versions of the API, this option
 adds the "read_stream" permission}
+
+\item{scope}{Specify an explicit lists of permissions to ask (overrides extended_permissions)}
 }
 \description{
 \code{fbOAuth} creates a long-lived OAuth access token that enables R to make
@@ -88,10 +90,9 @@ me$username
 }
 
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
-}
 \seealso{
 \code{\link{getUsers}}, \code{\link{getPost}}, \code{\link{searchFacebook}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}
+}

@@ -51,7 +51,7 @@
 #'
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{getUsers}}, \code{\link{getPost}}, \code{\link{searchFacebook}}
 #'
 #' @param app_id numeric, App ID of application to be used to create OAUth token. Available
@@ -72,6 +72,7 @@
 #' @param legacy_permissions For tokens created with old versions of the API, this option
 #' adds the "read_stream" permission
 #'
+#' @param scope Specify an explicit lists of permissions to ask (overrides extended_permissions)
 #'
 #' @examples \dontrun{
 #' ## an example of an authenticated request after creating the OAuth token
@@ -90,8 +91,9 @@
 #'
 
 
-fbOAuth <- function(app_id, app_secret, extended_permissions=FALSE, legacy_permissions=FALSE)
+fbOAuth <- function(app_id, app_secret, extended_permissions=FALSE, legacy_permissions=FALSE, scope=NULL)
 {
+
 	## getting callback URL
 	full_url <- oauth_callback()
 	full_url <- gsub("(.*localhost:[0-9]{1,5}/).*", x=full_url, replacement="\\1")
@@ -104,16 +106,18 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=FALSE, legacy_permi
 	  authorize = "https://www.facebook.com/dialog/oauth",
 	  access = "https://graph.facebook.com/oauth/access_token")	
 	myapp <- oauth_app("facebook", app_id, app_secret)
-	if (extended_permissions==TRUE){
-		scope <- c("user_birthday", "user_hometown", "user_location", "user_relationships",
-			"publish_actions","user_status","user_likes")
+	if (is.null(scope)) {
+  	if (extended_permissions==TRUE){
+  		scope <- c("user_birthday", "user_hometown", "user_location", "user_relationships",
+  			"publish_actions","user_status","user_likes")
+  	}
+  	else { scope <- c("public_profile", "user_friends")}
+  	
+  	if (legacy_permissions==TRUE) {
+  	  scope <- c(scope, "read_stream")
+  	}
 	}
-	else { scope <- c("public_profile", "user_friends")}
 	
-	if (legacy_permissions==TRUE) {
-	  scope <- c(scope, "read_stream")
-	}
-
 	if (packageVersion('httr') < "1.2"){
 		stop("Rfacebook requires httr version 1.2.0 or greater")
 	}
@@ -123,7 +127,7 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=FALSE, legacy_permi
 	## with early httr versions
 	if (packageVersion('httr') <= "0.2"){
 		facebook_token <- oauth2.0_token(facebook, myapp,
-		  scope=scope, type = "application/x-www-form-urlencoded")
+		  scope=scope)
 		fb_oauth <- sign_oauth2.0(facebook_token$access_token) 
 		if (GET("https://graph.facebook.com/me", config=fb_oauth)$status==200){
 			message("Authentication successful.")
@@ -133,7 +137,7 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=FALSE, legacy_permi
 	## less early httr versions
 	if (packageVersion('httr') > "0.2" & packageVersion('httr') <= "0.6.1"){
 		fb_oauth <- oauth2.0_token(facebook, myapp,
-		  scope=scope, type = "application/x-www-form-urlencoded", cache=FALSE)	
+		  scope=scope, cache=FALSE)	
 		if (GET("https://graph.facebook.com/me", config(token=fb_oauth))$status==200){
 	      	message("Authentication successful.")
 	  	}	
@@ -143,7 +147,7 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=FALSE, legacy_permi
 	if (packageVersion('httr') > "0.6.1" & packageVersion('httr') < "1.2"){
 		Sys.setenv("HTTR_SERVER_PORT" = "1410/")
 		fb_oauth <- oauth2.0_token(facebook, myapp,
-		  scope=scope, type = "application/x-www-form-urlencoded", cache=FALSE)		
+		  scope=scope, cache=FALSE)		
 		if (GET("https://graph.facebook.com/me", config(token=fb_oauth))$status==200){
 	      	message("Authentication successful.")
 	  	}	
@@ -152,7 +156,7 @@ fbOAuth <- function(app_id, app_secret, extended_permissions=FALSE, legacy_permi
 	## httr version after 1.2
 	if (packageVersion('httr') >= "1.2"){
 		fb_oauth <- oauth2.0_token(facebook, myapp,
-		  scope=scope, type = "application/x-www-form-urlencoded", cache=FALSE)		
+		  scope=scope, cache=FALSE)		
 		if (GET("https://graph.facebook.com/me", config(token=fb_oauth))$status==200){
 	      	message("Authentication successful.")
 	  	}	

@@ -2,27 +2,27 @@
 #' @export
 #'
 #' @title 
-#' Extract list of likes of a Facebook friend
+#' Extract list of likes of the authenticated Facebook user
 #'
 #' @description
-#' \code{getLikes} retrieves information about a friend's likes.
-#' To retrieve the number of likes for a page, use \code{getUsers}
-#' with the page IDs.
+#' \code{getLikes} retrieves information about the authenticated use
+#' only (not any friend). To retrieve the number of likes for a page, 
+#' use \code{getUsers} with the page IDs.
 #'
 #' @details
 #' 
 #' This function requires the use of an OAuth token with the following
-#' permissions: user_likes, friends_likes
+#' permission: user_likes
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{getFriends}}, \code{\link{fbOAuth}}
 #'
 #' @param token Either a temporary access token created at
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
 #' created with \code{fbOAuth}.
 #'
-#' @param user A user ID or screen name.
+#' @param user The name of the user. By default, "me".
 #'
 #' @param n Maximum number of likes to return for each user.
 #'
@@ -32,7 +32,7 @@
 #' }
 #'
 
-getLikes <- function(user, n=500, token){
+getLikes <- function(user="me", n=500, token){
 	query <- paste0('https://graph.facebook.com/', user, 
 		'?fields=likes.limit(', n, ').fields(id,name,website)')
 	content <- callAPI(query, token)

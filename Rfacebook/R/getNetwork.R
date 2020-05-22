@@ -17,7 +17,7 @@
 #' only friends who are using the application will be returned.
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{getFriends}}, \code{\link{fbOAuth}}
 #'
 #' @param token Either a temporary access token created at

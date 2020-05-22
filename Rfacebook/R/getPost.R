@@ -9,16 +9,20 @@
 #' list of comments and likes.
 #'
 #' @details 
-#' \code{getPost} returns a list with three components: \code{post}, 
-#' \code{likes}, and \code{comments}. First, \code{post} contains information
-#' about the post: author, creation date, id, counts of likes, comments, and 
-#' shares, etc. Second, \code{likes} is a data frame that contains names and
-#' Facebook IDs of all the users that liked the post. Finally, \code{comments}
-#' is a data frame with information about the comments to the post (author, 
-#' message, creation time, id).
+#' \code{getPost} returns a list with up to four components: \code{post}, 
+#' \code{likes}, \code{comments}, and \code{reactions}. 
+#' \code{post} contains information about the post: author, creation date, id, 
+#' counts of likes, comments, and shares, etc.
+#' \code{likes} is a data frame that contains names and Facebook IDs of all
+#' the users that liked the post. 
+#' \code{comments} is a data frame with information about the comments to 
+#' the post (author, message, creation time, id). To download also the replies
+#' to specific comments, see \code{\link{getCommentReplies}}. Note that the total
+#' number of comments may be different from the number report in \code{comments_count}
+#' if some comments have been deleted.
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{getUsers}}, \code{\link{getPage}}, \code{\link{fbOAuth}}
 #'
 #' @param post A post ID
@@ -32,13 +36,21 @@
 #' @param comments logical, default is \code{TRUE}, which will return data frame
 #' with comments to the post.
 #'
-#' @param likes logical, default is \code{TRUE}, which will return data frame
+#' @param likes logical, default is \code{TRUE} unless reactions is true, which will return data frame
 #' with likes for the post.
+#' 
+#' @param reactions logical, default is \code{FALSE}, which will return data frame with reactions (like, love, etc) for the post
 #'
 #' @param n.likes numeric, maximum number of likes to return. Default is \code{n}.
 #'
-#' @param n.comments numeric, maximum number of likes to return. Default is 
+#' @param n.comments numeric, maximum number of comments to return. Default is 
 #' \code{n}.
+#' 
+#' @param n.reactions numeric, maximum number of reactions to return. Default is 
+#' \code{n}.
+#'
+#' @param api API version. e.g. "v2.8". \code{NULL} is the default.
+#' 
 #'
 #' @examples \dontrun{
 #' ## See examples for fbOAuth to know how token was created.
@@ -50,8 +62,8 @@
 #' }
 #'
 
-getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
-	n.comments=n){
+getPost <- function(post, token, n=500, comments=TRUE, likes=(!reactions), reactions=FALSE, n.likes=n,
+	n.comments=n, n.reactions=n, api=NULL){
 
 	url <- paste0("https://graph.facebook.com/", post,
 				"?fields=from,message,created_time,type,link,name,shares")
@@ -82,10 +94,20 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
 	if (likes==FALSE){
 		url <- paste0(url, ",likes.summary(true)")
 	}
-
+	if (reactions==TRUE){
+	  url <- paste0(url, ",reactions.summary(true).",
+	                "fields(id,type,name)")
+	  if (n.reactions>=2000){
+	    url <- paste0(url, ".limit(2000)")
+	  }
+	  if (n.reactions<2000){
+	    url <- paste0(url, ".limit(", n.likes, ")")
+	  }
+	}
+	
 	# making query
-	content <- callAPI(url=url, token=token)
-
+	content <- callAPI(url=url, token=token, api=api)
+  
 	# error traps: retry 3 times if error
 	error <- 0
 	while (length(content$error_code)>0){
@@ -110,19 +132,26 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
 	if (comments && n.likes > 0) n.c <- ifelse(!is.null(out$comments), dim(out$comments)[1], 0)
 	if (n.comments == 0) n.c <- 0
 	if (!comments) n.c <- Inf
+	if (reactions && n.reactions > 0) out[["reactions"]] <- reactionsDataToDF(content$reactions$data)
+	if (reactions && n.reactions > 0)  n.r <- ifelse(!is.null(out$reactions), dim(out$reactions)[1], 0)
+	if (n.reactions == 0) n.r <- 0
+	if (!reactions) n.r <- Inf
+	
 	
 	# paging if we n.comments OR n.likes haven't been downloaded
-	if (n.likes > n.l || n.comments > n.c){
+	if (n.likes > n.l || n.comments > n.c || n.reactions > n.r){
 		# saving URLs for next batch of likes and comments
 		if (likes) url.likes <- content$likes$paging$`next`
 		if (!likes) url.likes <- NULL
 		if (comments) url.comments <- content$comments$paging$`next`
 		if (!comments) url.comments <- NULL
+		if (reactions) url.reactions <- content$reactions$paging$`next`
+		if (!reactions) url.reactions <- NULL
 
-		if (!is.null(url.likes) && likes && n.likes > n.l){
+		if (!is.null(url.likes) && likes && n.l > 0 && n.likes > n.l){
 			# retrieving next batch of likes
 			url <- content$likes$paging$`next`
-			content <- callAPI(url=url.likes, token=token)
+			content <- callAPI(url=url.likes, token=token, api=api)
 			out[["likes"]] <- rbind(out[["likes"]],
 					likesDataToDF(content$data))
 			n.l <- dim(out$likes)[1]
@@ -136,9 +165,28 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
 				n.l <- dim(out$likes)[1]
 			}
 		}
-		if (!is.null(url.comments) && comments && n.comments > n.c){
+		
+		if (!is.null(url.reactions) && reactions && n.r > 0 && n.reactions > n.r){
+		  # retrieving next batch of reactions
+		  url <- content$reactions$paging$`next`
+		  content <- callAPI(url=url.reactions, token=token, api=api)
+		  out[["reactions"]] <- rbind(out[["reactions"]],
+		                          reactionsDataToDF(content$data))
+		  n.r <- dim(out$reactions)[1]
+		  # next reactions, in batches of 500
+		  while (length(content$data)>0 && n.r < n.reactions &
+		         !is.null(url <- content$paging$`next`)){
+		    url <- content$paging$`next`
+		    content <- callAPI(url=url, token=token, api=api)
+		    out[["reactions"]] <- rbind(out[["reactions"]],
+		                            reactionsDataToDF(content$data))
+		    n.r <- dim(out$reactions)[1]
+		  }
+		}
+		
+		if (!is.null(url.comments) && comments && n.c > 0 && n.comments > n.c){
 			# retriving next batch of comments
-			content <- callAPI(url=url.comments, token=token)
+			content <- callAPI(url=url.comments, token=token, api=api)
 			out[["comments"]] <- rbind(out[["comments"]],
 					commentsDataToDF(content$data))
 			n.c <- dim(out$comments)[1]
@@ -146,7 +194,7 @@ getPost <- function(post, token, n=500, comments=TRUE, likes=TRUE, n.likes=n,
 			while (n.c < n.comments & length(content$data)>0 &
 				!is.null(content$paging$`next`)){
 				url <- content$paging$`next`
-				content <- callAPI(url=url, token=token)
+				content <- callAPI(url=url, token=token, api=api)
 				out[["comments"]] <- rbind(out[["comments"]],
 					commentsDataToDF(content$data))
 				n.c <- dim(out$comments)[1]

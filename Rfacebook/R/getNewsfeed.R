@@ -9,7 +9,7 @@
 #' News Feed
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{fbOAuth}}, \code{\link{getPost}}
 #'
 #' @param token Either a temporary access token created at

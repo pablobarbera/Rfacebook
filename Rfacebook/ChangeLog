@@ -58,3 +58,30 @@
     - other minor fixes
 2016-07-12 - version 0.6.7
     - added getCommentReplies function to scrape nested comments
+2016-07-26 - version 0.6.8
+    - getGroup function now has feed option to return only admin posts
+2016-08-16 - version 0.6.9
+    - added story field to getPage
+2016-10-23 - version 0.6.10
+    - fixed bug in getPage with reactions=T in posts with no reactions
+2016-12-28 - version 0.6.11
+    - added verbose option to getPage
+2017-01-21 - version 0.6.12
+    - added support for reactions in getPost
+    - added support for multiple API versions in callAPI
+2017-02-17 - version 0.6.13
+    - fixes in getInsights
+2017-04-21 - version 0.6.14
+    - fixes in fbOAuth
+2017-05-24 - version 0.6.15
+    - adds getEvents
+    - updates in searchPages
+    - minor fixes
+2017-06-01 - version 0.6.16
+    - documentation updates
+    - searchGroups now returns 25+ results
+2017-07-11 - version 0.6.17
+    - getUsers now works with recent versions of API
+    - getMembers function added (thanks Yan Turgeon)
+2018-02-08 - version 0.6.18
+    - getCommentReplies() returns NA for from field when API does not return it

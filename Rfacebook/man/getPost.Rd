@@ -4,8 +4,9 @@
 \alias{getPost}
 \title{Extract information about a public Facebook post}
 \usage{
-getPost(post, token, n = 500, comments = TRUE, likes = TRUE,
-  n.likes = n, n.comments = n)
+getPost(post, token, n = 500, comments = TRUE, likes = (!reactions),
+  reactions = FALSE, n.likes = n, n.comments = n, n.reactions = n,
+  api = NULL)
 }
 \arguments{
 \item{post}{A post ID}
@@ -19,26 +20,37 @@ created with \code{fbOAuth}.}
 \item{comments}{logical, default is \code{TRUE}, which will return data frame
 with comments to the post.}
 
-\item{likes}{logical, default is \code{TRUE}, which will return data frame
+\item{likes}{logical, default is \code{TRUE} unless reactions is true, which will return data frame
 with likes for the post.}
+
+\item{reactions}{logical, default is \code{FALSE}, which will return data frame with reactions (like, love, etc) for the post}
 
 \item{n.likes}{numeric, maximum number of likes to return. Default is \code{n}.}
 
-\item{n.comments}{numeric, maximum number of likes to return. Default is 
+\item{n.comments}{numeric, maximum number of comments to return. Default is 
 \code{n}.}
+
+\item{n.reactions}{numeric, maximum number of reactions to return. Default is 
+\code{n}.}
+
+\item{api}{API version. e.g. "v2.8". \code{NULL} is the default.}
 }
 \description{
 \code{getPost} retrieves information about a public Facebook post, including
 list of comments and likes.
 }
 \details{
-\code{getPost} returns a list with three components: \code{post}, 
-\code{likes}, and \code{comments}. First, \code{post} contains information
-about the post: author, creation date, id, counts of likes, comments, and 
-shares, etc. Second, \code{likes} is a data frame that contains names and
-Facebook IDs of all the users that liked the post. Finally, \code{comments}
-is a data frame with information about the comments to the post (author, 
-message, creation time, id).
+\code{getPost} returns a list with up to four components: \code{post}, 
+\code{likes}, \code{comments}, and \code{reactions}. 
+\code{post} contains information about the post: author, creation date, id, 
+counts of likes, comments, and shares, etc.
+\code{likes} is a data frame that contains names and Facebook IDs of all
+the users that liked the post. 
+\code{comments} is a data frame with information about the comments to 
+the post (author, message, creation time, id). To download also the replies
+to specific comments, see \code{\link{getCommentReplies}}. Note that the total
+number of comments may be different from the number report in \code{comments_count}
+if some comments have been deleted.
 }
 \examples{
 \dontrun{
@@ -51,10 +63,9 @@ post <- getPost(post=fb_page$id[1], n=2000, token=fb_oauth)
 }
 
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
-}
 \seealso{
 \code{\link{getUsers}}, \code{\link{getPage}}, \code{\link{fbOAuth}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}
+}

@@ -41,6 +41,7 @@ pageDataToDF <- function(json){
 		type = unlistWithNA(json, 'type'),
 		link = unlistWithNA(json, 'link'),
 		id = unlistWithNA(json, 'id'),
+		story = unlistWithNA(json, 'story'),
 		likes_count = unlistWithNA(json, c('likes', 'summary', 'total_count')),
 		comments_count = unlistWithNA(json, c('comments', 'summary', 'total_count')),
 		shares_count = unlistWithNA(json, c('shares', 'count')),
@@ -112,6 +113,22 @@ postDataToDF <- function(json){
 	return(df)
 }
 
+reactionsDataToDF <- function(json){
+  if (!is.null(json)){
+    df <- data.frame(
+      from_name = unlistWithNA(json, "name"),
+      from_type = unlistWithNA(json, "type"),
+      from_id = unlistWithNA(json, "id"),
+      stringsAsFactors=F
+    )
+  }
+  if (length(json)==0){
+    df <- NULL
+  }
+  return(df)
+}
+
+
 likesDataToDF <- function(json){
 	if (!is.null(json)){
 		df <- data.frame(
@@ -171,8 +188,8 @@ userDataToDF <- function(user_data, private_info){
 		last_name = unlistWithNA(user_data, 'last_name'),
 		gender = unlistWithNA(user_data, 'gender'),
 		locale = unlistWithNA(user_data, 'locale'),
-		category = unlistWithNA(user_data, 'category'),
-		likes = unlistWithNA(user_data, 'likes'),
+		#category = unlistWithNA(user_data, 'category'),
+		likes = unlistWithNA(user_data, 'fan_count'),
 		picture = unlistWithNA(user_data, c('picture', 'data', 'url')),
 		stringsAsFactors=F)
 	if (private_info==TRUE){
@@ -238,8 +255,8 @@ tagsDataToDF <- function(tags){
 
 replyDataToDF <- function(json){
   df <- data.frame(
-    from_id = json$from$id,
-    from_name = json$from$name,
+    from_id = ifelse(!is.null(json$from$id), json$from$id, NA),
+    from_name = ifelse(!is.null(json$from$name), json$from$name, NA),
     message = ifelse(!is.null(json$message),json$message, NA),
     created_time = json$created_time,
     likes_count = json$like_count,
@@ -310,6 +327,24 @@ searchPageDataToDF <- function(json){
   return(df)
 }
 
+eventDataToDF <- function(json){
+  df <- data.frame(
+    id = unlistWithNA(json, 'id'),
+    name = unlistWithNA(json, 'name'),
+    description = unlistWithNA(json, 'description'),
+    start_time = unlistWithNA(json, 'start_time'),
+    end_time = unlistWithNA(json, 'end_time'),
+    place_name = unlistWithNA(json, c("place", "name")),
+    attending_count = unlistWithNA(json, 'attending_count'),
+    declined_count = unlistWithNA(json, 'declined_count'),
+    maybe_count = unlistWithNA(json, 'maybe_count'),
+    noreply_count = unlistWithNA(json, 'noreply_count'),
+    stringsAsFactors=F)
+  return(df)
+}
+
+
+
 #' @rdname callAPI
 #' @export
 #'
@@ -326,9 +361,14 @@ searchPageDataToDF <- function(json){
 #' created with \code{fbOAuth}. It needs to have extended permissions in order 
 #' to successfully post to the Facebook profile.
 #'
+#' @param api API version. e.g. "v2.8". \code{NULL} is the default.
 #'
 
-callAPI <- function(url, token){
+callAPI <- function(url, token, api=NULL){
+	if (!is.null(api) & !grepl("v2\\..", url)){
+		# if api version not in URL already
+		url <- gsub("facebook.com/", paste0("facebook.com/", api, "/"), url)
+	}
 	if (class(token)[1]=="config"){
 		url.data <- GET(url, config=token)
 	}

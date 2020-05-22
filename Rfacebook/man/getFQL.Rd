@@ -28,6 +28,5 @@ d <- getFQL("SELECT uid2 FROM friend WHERE uid1=me()", token=fb_oauth)
 
 }
 \author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
+Pablo Barbera \email{pbarbera@usc.edu}
 }
-

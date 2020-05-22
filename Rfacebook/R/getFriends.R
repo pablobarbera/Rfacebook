@@ -15,7 +15,7 @@
 #' token to query the API will be returned.
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{getUsers}}, \code{\link{fbOAuth}}
 #'
 #' @param token Either a temporary access token created at

@@ -4,7 +4,7 @@
 \alias{getReactions}
 \title{Extract total count of reactions to one or more Facebook posts}
 \usage{
-getReactions(post, token, verbose = TRUE)
+getReactions(post, token, verbose = TRUE, api = NULL)
 }
 \arguments{
 \item{post}{A post ID, or a vector of post IDs}
@@ -15,6 +15,8 @@ created with \code{fbOAuth}.}
 
 \item{verbose}{logical, default is \code{TRUE}, which will print additional
 information on the console.}
+
+\item{api}{API version. e.g. "v2.8". \code{NULL} is the default.}
 }
 \description{
 \code{getReactions} retrieves information from a single or multiple posts,
@@ -36,10 +38,9 @@ post <- getReactions(post=fb_page$id[1], token=fb_oauth)
 }
 
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
-}
 \seealso{
 \code{\link{getPage}}, \code{\link{getPost}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}
+}

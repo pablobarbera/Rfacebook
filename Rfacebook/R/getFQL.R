@@ -10,7 +10,7 @@
 #' an overview of the Facebook Query Language.
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #'
 #' @param query Text of query
 #'

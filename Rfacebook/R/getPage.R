@@ -18,8 +18,12 @@
 #' field in the post objects, and not the \code{created_time}. As a result, this function
 #' might return old posts that have been updated recently. 
 #'
+#' \code{comments_count} refers to the total of comments, including nested comments (replies).
+#' It might be different from the total number of comments available through the API if
+#' some comments have been deleted.
+#'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}
+#' Pablo Barbera \email{pbarbera@@usc.edu}
 #' @seealso \code{\link{getUsers}}, \code{\link{getPost}}, \code{\link{fbOAuth}}
 #'
 #' @param page A page ID or page name.
@@ -45,7 +49,10 @@
 #' @param reactions If \code{TRUE}, will add variables to the data frame with
 #' the total count of reactions: love, haha, wow, sad, angry.
 #'
+#' @param verbose If \code{TRUE}, will report a number of the posts retrieved.
 #'
+#' @param api API version. e.g. "v2.8". \code{NULL} is the default.
+#' 
 #' @examples \dontrun{
 #' ## See examples for fbOAuth to know how token was created.
 #' ## Getting information about Facebook's Facebook Page
@@ -61,14 +68,15 @@
 #'
 
 
-getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, reactions=FALSE){
+getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, reactions=FALSE, 
+	verbose=TRUE, api=NULL){
 
 	url <- paste0('https://graph.facebook.com/', page,
-		'/posts?fields=from,message,created_time,type,link,comments.summary(true)',
+		'/posts?fields=from,message,created_time,type,link,story,comments.summary(true)',
 		',likes.summary(true),shares')
 	if (feed){
 		url <- paste0('https://graph.facebook.com/', page,
-		'/feed?fields=from,message,created_time,type,link,comments.summary(true)',
+		'/feed?fields=from,message,created_time,type,link,story,comments.summary(true)',
 		',likes.summary(true),shares')
 	}
 	if (!is.null(until)){
@@ -84,8 +92,8 @@ getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, react
 		url <- paste0(url, "&limit=25")
 	}
 	# making query
-	content <- callAPI(url=url, token=token)
-	l <- length(content$data); cat(l, "posts ")
+	content <- callAPI(url=url, token=token, api=api)
+	l <- length(content$data); if (verbose) cat(l, "posts ")
 	
 	## retrying 3 times if error was found
 	error <- 0
@@ -97,7 +105,7 @@ getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, react
 		if (error==3){ stop(content$error_msg) }
 	}
 	if (length(content$data)==0){ 
-		message("No public posts were found")
+		message("No public posts were found : ", page)
 		return(data.frame())
 	}
 	df <- pageDataToDF(content$data)
@@ -122,9 +130,9 @@ getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, react
 			# waiting one second before making next API call...
 			Sys.sleep(0.5)
 			url <- content$paging$`next`
-			content <- callAPI(url=url, token=token)
+			content <- callAPI(url=url, token=token, api=api)
 			l <- l + length(content$data)
-			if (length(content$data)>0){ cat(l, "posts ") }
+			if (length(content$data)>0){ if (verbose) cat(l, "posts ") }
 
 			## retrying 3 times if error was found
 			error <- 0
@@ -132,7 +140,7 @@ getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, react
 				cat("Error!\n")
 				Sys.sleep(0.5)
 				error <- error + 1
-				content <- callAPI(url=url, token=token)		
+				content <- callAPI(url=url, token=token, api=api)
 				if (error==3){ stop(content$error_msg) }
 			}
 			new.df <- pageDataToDF(content$data)
@@ -158,7 +166,7 @@ getPage <- function(page, token, n=25, since=NULL, until=NULL, feed=FALSE, react
 
 	# adding reactions data
 	if (reactions==TRUE){
-		re = getReactions(df$id, token=token, verbose=FALSE)
+		re = getReactions(df$id, token=token, verbose=FALSE, api=api)
 		df <- merge(df, re, all.x=TRUE)
 		# sorting
 		df <- df[order(df$created_time),]

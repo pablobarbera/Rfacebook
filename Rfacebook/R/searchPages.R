@@ -8,11 +8,12 @@
 #' \code{searchPages} retrieves public pages that mention a given keyword
 #'
 #' @author
-#' Pablo Barbera \email{pablo.barbera@@nyu.edu}, Joel Gombin \email{joel.gombin@@gmail.com}
+#' Pablo Barbera \email{pbarbera@@usc.edu}, Joel Gombin \email{joel.gombin@@gmail.com}
 #' @seealso \code{\link{fbOAuth}}, \code{\link{searchFacebook}}
 #'
 #' @param string string or string vector containing keywords to search.
-#' Note that the returned results will contain any of the keywords. 
+#' When searching using multiple keywords, the returned results will be
+#' pages whose name contains all the keywords.
 #' 
 #' @param token Either a temporary access token created at
 #' \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
@@ -34,7 +35,7 @@ searchPages <- function(string, token, n=200)
   if (length(string)>1){ string <- paste(string, collapse=" ") }
   
   url <- paste("https://graph.facebook.com/search?q=", string,
-               "&type=page&limit=", sep="")
+               "&type=place&limit=", sep="")
   if (n<=200){
     url <- paste(url, n, sep="")
   }

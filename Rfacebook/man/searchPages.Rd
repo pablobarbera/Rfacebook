@@ -8,7 +8,8 @@ searchPages(string, token, n = 200)
 }
 \arguments{
 \item{string}{string or string vector containing keywords to search.
-Note that the returned results will contain any of the keywords.}
+When searching using multiple keywords, the returned results will be
+pages whose name contains all the keywords.}
 
 \item{token}{Either a temporary access token created at
 \url{https://developers.facebook.com/tools/explorer} or the OAuth token 
@@ -28,10 +29,9 @@ pages <- searchPages( string="facebook", token=fb_oauth, n=100 )
 }
 
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}, Joel Gombin \email{joel.gombin@gmail.com}
-}
 \seealso{
 \code{\link{fbOAuth}}, \code{\link{searchFacebook}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}, Joel Gombin \email{joel.gombin@gmail.com}
+}

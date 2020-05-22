@@ -33,6 +33,8 @@ that you must specify wich metric from insights you need and the period.
 To request multiple metrics at one time, pass a vector of metric names with a vector
 of periods of the same length. If only one period is supplied, it will apply to each metric.
 Please refer to Facebook's documentation for valid combinations of objects, metrics and periods.
+
+Note that some insights require a page access token, see \code{getPageToken}
 }
 \details{
 The current list of supported metrics and periods is: page_fan_adds, page_fan_removes, 
@@ -74,4 +76,3 @@ Danilo Silva \email{silvadaniloc@gmail.com}
 Eduardo Carvalho \email{eduardooc.86@gmail.com}
 Andrew Geisler \url{https://github.com/andrewgeisler}
 }
-

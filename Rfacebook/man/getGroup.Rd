@@ -5,7 +5,7 @@
 \title{Extract list of posts from a public Facebook group}
 \usage{
 getGroup(group_id, token, n = 25, since = NULL, until = NULL,
-  feed = TRUE)
+  feed = TRUE, api = NULL)
 }
 \arguments{
 \item{group_id}{Facebook ID for the group. Note that this is different from
@@ -29,6 +29,8 @@ accepted values, see: \url{http://php.net/manual/en/function.strtotime.php}}
 \item{feed}{If \code{TRUE}, the function will also return posts on the group
 that were made by others (not only the admin of the group). Note that, unlike
 in \code{getPage}, here \code{TRUE} is the default option.}
+
+\item{api}{API version. e.g. "v2.8". \code{NULL} is the default.}
 }
 \description{
 \code{getGroup} retrieves information from a public Facebook group.
@@ -46,10 +48,9 @@ ids <- searchGroup(name="rusers", token=fb_oauth)
 	since='2013/01/01', until='2013/01/31')
 }
 }
-\author{
-Pablo Barbera \email{pablo.barbera@nyu.edu}
-}
 \seealso{
 \code{\link{getUsers}}, \code{\link{getPost}}, \code{\link{fbOAuth}}
 }
-
+\author{
+Pablo Barbera \email{pbarbera@usc.edu}
+}
