@@ -259,8 +259,6 @@ replyDataToDF <- function(json){
     from_name = ifelse(!is.null(json$from$name), json$from$name, NA),
     message = ifelse(!is.null(json$message),json$message, NA),
     created_time = json$created_time,
-    likes_count = json$like_count,
-	comments_count = json$comment_count,
     id = json$id,
 	stringsAsFactors=F)
   return(df)

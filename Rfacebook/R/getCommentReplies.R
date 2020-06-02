@@ -61,7 +61,7 @@ getCommentReplies <- function(comment_id, token, n=500, replies=TRUE, likes=FALS
                      n.replies=n, api=NULL){
   
   url <- paste0("https://graph.facebook.com/", comment_id,
-                "?fields=from,message,created_time,like_count,comment_count") #return initial comments
+                "?fields=from,message,created_time") #return initial comments
   
   if (replies==TRUE){
     url <- paste0(url, ",comments.summary(true).",
