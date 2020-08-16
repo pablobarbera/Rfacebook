@@ -14,12 +14,8 @@
 #' Note that some insights require a page access token, see \code{getPageToken}
 #'
 #' @details
-#' The current list of supported metrics and periods is: page_fan_adds, page_fan_removes, 
-#' page_views_login, page_views_login, page_views_logout, page_views, page_story_adds, 
-#' page_impressions, page_posts_impressions, page_consumptions, post_consumptions_by_type, 
-#' page_consumptions, and page_fans_country.
-#'
-#' For more information, see: \url{https://developers.facebook.com/docs/graph-api/reference/v2.5/insights}
+#' For the current list of supported metrics and periods
+#' see: \url{https://developers.facebook.com/docs/graph-api/reference/v2.12/insights}
 #'
 #' @author
 #' Danilo Silva \email{silvadaniloc@@gmail.com}
@@ -39,7 +35,7 @@
 #' @param parms Optional argument that can be used to append additional
 #' parameters. For example, \code{&since=DATE&until=DATE}.
 #' 
-#' @param version specifies what API version to use in the request. Version 2.5 is default.
+#' @param version specifies what API version to use in the request. Version 2.3 is default.
 #' 
 #' @param n Number of time intervals of metric values to return. Note that all
 #' metrics returned will be multiple of 3, except for lifetime period. Default
